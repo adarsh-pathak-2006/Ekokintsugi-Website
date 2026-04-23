@@ -8,7 +8,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = Number(process.env.PORT) || 3000;
 
 // Initialize Supabase (Server-side)
 const supabaseUrl = process.env.VITE_SUPABASE_URL || "";
@@ -254,7 +254,7 @@ async function startServer() {
   }
 
   app.listen(PORT, "0.0.0.0", async () => {
-    console.log(`EkoKintsugi Backend running on http://localhost:${PORT}`);
+    console.log(`EkoKintsugi Backend running on http://0.0.0.0:${PORT}`);
     
     // Background Auto-Seeder
     const dummyId = "00000000-0000-0000-0000-000000000000";
