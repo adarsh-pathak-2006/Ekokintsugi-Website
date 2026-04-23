@@ -95,12 +95,12 @@ export default function ImpactPage() {
              <div className="absolute inset-0 bg-[url('/images/sections/forest.jpg')] bg-cover opacity-10 mix-blend-overlay" />
              <div className="relative z-10 flex flex-col h-full justify-between">
                 <div>
-                  <TreePine className="w-12 h-12 text-white mb-6" />
-                  <h3 className="text-4xl font-serif font-bold text-white mb-2 leading-tight">One Sneaker =<br/>One Tree Parent</h3>
-                  <p className="text-white/80 italic mb-8 border-l-2 border-white/20 pl-4">The Talking to the Tree Program.</p>
+                  <TreePine className="w-12 h-12 text-accent-foreground mb-6" />
+                  <h3 className="text-4xl font-serif font-bold text-accent-foreground mb-2 leading-tight">One Sneaker =<br/>One Tree Parent</h3>
+                  <p className="text-accent-foreground/80 italic mb-8 border-l-2 border-accent-foreground/30 pl-4">The Talking to the Tree Program.</p>
                 </div>
                 
-                <div className="space-y-3 font-medium text-white/90 bg-primary/20 backdrop-blur p-6 rounded-2xl">
+                <div className="space-y-3 font-medium text-accent-foreground/90 bg-primary/20 backdrop-blur p-6 rounded-2xl">
                    <p>• Every RESCHUH pair has a unique QR code.</p>
                    <p>• Customers virtually "Adopt a Tree" in an Indian plantation.</p>
                    <p>• They can track growth and social impact.</p>

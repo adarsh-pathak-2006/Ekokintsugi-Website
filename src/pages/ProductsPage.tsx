@@ -54,7 +54,7 @@ export default function ProductsPage() {
 
         {/* Pricing Strategy */}
         <div className="bg-card border text-center border-border/50 p-12 rounded-[2.5rem] shadow-sm mb-20 grid md:grid-cols-2 gap-12">
-           <div className="p-8 bg-primary text-white rounded-3xl relative overflow-hidden">
+           <div className="p-8 bg-primary text-primary-foreground rounded-3xl relative overflow-hidden">
              <Euro className="w-10 h-10 text-accent mb-6 opacity-80" />
              <h3 className="text-2xl font-serif font-bold mb-2">Cost & Value</h3>
              <p className="text-5xl font-black mb-4 tracking-tighter">€20-€35</p>
@@ -97,7 +97,7 @@ export default function ProductsPage() {
             <div className="text-center py-20 bg-card rounded-[2rem] border border-border">
                <p className="text-muted-foreground font-mono">No products available for this category.</p>
                {categoryFilter && (
-                 <button onClick={removeFilter} className="mt-4 px-6 py-2 bg-primary text-white rounded-full text-xs font-mono tracking-widest uppercase hover:bg-accent transition-colors">
+                 <button onClick={removeFilter} className="mt-4 px-6 py-2 bg-primary text-primary-foreground rounded-full text-xs font-mono tracking-widest uppercase hover:bg-accent hover:text-accent-foreground transition-colors">
                    View All Products
                  </button>
                )}
@@ -134,7 +134,7 @@ export default function ProductsPage() {
         </div>
 
         {/* Kaleidoscope feature */}
-        <div className="bg-primary p-12 lg:p-20 rounded-[3rem] text-white overflow-hidden relative flex flex-col md:flex-row items-center gap-12">
+        <div className="bg-primary p-12 lg:p-20 rounded-[3rem] text-primary-foreground overflow-hidden relative flex flex-col md:flex-row items-center gap-12">
           <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-5">
              <div className="w-[800px] h-[800px] bg-accent rotate-45 -ml-64 -mt-64" />
           </div>

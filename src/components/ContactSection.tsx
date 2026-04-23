@@ -54,7 +54,7 @@ export default function ContactSection() {
                   <label className="block text-[10px] font-black text-primary mb-3 font-mono uppercase tracking-[0.2em]">Message</label>
                   <textarea required rows={5} placeholder="Project details and message..." className="w-full px-6 py-5 rounded-xl bg-transparent border-2 border-border focus:border-primary focus:ring-4 focus:ring-primary/5 outline-none transition-all resize-none font-medium text-lg placeholder:text-muted-foreground/50" />
                 </div>
-                <button type="submit" className="w-full py-6 bg-primary text-white font-black text-[12px] tracking-[0.3em] uppercase rounded-2xl flex items-center justify-center gap-4 hover:bg-accent hover:text-accent-foreground transition-all shadow-xl group">
+                <button type="submit" className="w-full py-6 bg-primary text-primary-foreground font-black text-[12px] tracking-[0.3em] uppercase rounded-2xl flex items-center justify-center gap-4 hover:bg-accent hover:text-accent-foreground transition-all shadow-xl group">
                   Send Inquiry <Send className="w-6 h-6 group-hover:translate-x-2 group-hover:-translate-y-2 transition-all duration-300" />
                 </button>
               </form>
@@ -80,7 +80,7 @@ export default function ContactSection() {
           </motion.div>
 
           <div className="flex flex-col gap-10">
-            <div className="p-12 bg-primary text-white rounded-[2.5rem] shadow-strong relative overflow-hidden group">
+            <div className="p-12 bg-primary text-primary-foreground rounded-[2.5rem] shadow-strong relative overflow-hidden group">
               <div className="absolute top-0 left-0 w-full h-full bg-accent/20 translate-y-full group-hover:translate-y-0 transition-transform duration-700" />
               <div className="relative z-10">
                 <h3 className="text-3xl font-serif mb-12 font-bold decoration-accent decoration-2">Direct Contact</h3>

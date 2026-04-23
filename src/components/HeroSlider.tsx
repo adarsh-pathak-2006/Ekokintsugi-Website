@@ -55,8 +55,8 @@ export default function HeroSlider() {
               style={{ backgroundImage: `url(${slides[index].image})` }}
             />
             {/* Rich Colorful Overlays from screenshot colors */}
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/60 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-primary to-transparent opacity-60" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-black/60 to-transparent" />
             
             <div className="relative z-10 h-full flex flex-col justify-center px-16 md:px-32 max-w-4xl">
               <motion.div
@@ -96,7 +96,7 @@ export default function HeroSlider() {
               >
                 <button 
                   onClick={() => navigate('/products')}
-                  className="bg-accent text-accent-foreground px-10 py-5 rounded-full text-[10px] font-mono tracking-widest uppercase font-bold hover:bg-white hover:text-primary transition-all shadow-xl"
+                  className="bg-accent text-accent-foreground px-10 py-5 rounded-full text-[10px] font-mono tracking-widest uppercase font-bold hover:bg-primary-foreground hover:text-primary transition-all shadow-xl"
                 >
                   Explore Collection
                 </button>

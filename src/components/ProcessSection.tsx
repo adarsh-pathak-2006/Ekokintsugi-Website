@@ -59,7 +59,7 @@ export default function ProcessSection() {
               </div>
               <div className="relative z-10">
                 <div className="flex items-start gap-6 mb-8">
-                  <div className="p-4 rounded-xl bg-primary text-white shadow-lg group-hover:bg-accent transition-colors">
+                  <div className="p-4 rounded-xl bg-primary text-primary-foreground shadow-lg group-hover:bg-accent group-hover:text-accent-foreground transition-colors">
                     <item.icon className="w-10 h-10" />
                   </div>
                   <div>

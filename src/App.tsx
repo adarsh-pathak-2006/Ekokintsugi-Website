@@ -23,7 +23,7 @@ export default function App() {
   return (
     <Router>
       <ScrollToTop />
-      <div className="min-h-screen bg-background text-foreground selection:bg-accent selection:text-white flex flex-col">
+      <div className="min-h-screen bg-background text-foreground selection:bg-accent selection:text-accent-foreground flex flex-col">
         <Navbar onImpactClick={() => setIsImpactOpen(true)} />
         
         <main className="pt-20 flex-grow">

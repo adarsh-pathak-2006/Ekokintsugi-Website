@@ -19,7 +19,7 @@ export default function Navbar({ onImpactClick }: { onImpactClick: () => void })
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/50">
       <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
         <Link to="/" className="flex items-center group">
-          <img src="/logo.png" alt="EkoKintsugi Logo" className="h-12 w-auto transition-transform duration-500 group-hover:scale-105" />
+          <img src="/logo.png" alt="EkoKintsugi Logo" className="h-20 w-auto transition-transform duration-500 group-hover:scale-105" />
         </Link>
 
         <nav className="hidden md:flex items-center space-x-10">
@@ -54,7 +54,7 @@ export default function Navbar({ onImpactClick }: { onImpactClick: () => void })
           </button>
           <Link 
             to="/contact"
-            className="bg-primary text-white px-7 py-2.5 rounded text-[10px] font-mono tracking-widest uppercase font-bold hover:bg-accent hover:text-accent-foreground transition-all shadow-md"
+            className="bg-primary text-primary-foreground px-7 py-2.5 rounded text-[10px] font-mono tracking-widest uppercase font-bold hover:bg-accent hover:text-accent-foreground transition-all shadow-md"
           >
             Get in Touch
           </Link>

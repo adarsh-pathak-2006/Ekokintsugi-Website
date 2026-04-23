@@ -40,7 +40,7 @@ export default function AboutPage() {
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="p-12 bg-primary text-white rounded-[2.5rem] shadow-strong relative overflow-hidden"
+            className="p-12 bg-primary text-primary-foreground rounded-[2.5rem] shadow-strong relative overflow-hidden"
           >
             <div className="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl -mr-32 -mt-32" />
             <Target className="w-12 h-12 text-accent mb-8" />

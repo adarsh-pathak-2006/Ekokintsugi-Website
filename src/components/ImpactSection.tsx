@@ -44,9 +44,9 @@ export default function ImpactSection() {
       <div className="absolute top-0 left-0 w-full h-full opacity-40 bg-[radial-gradient(circle_at_20%_20%,var(--color-accent)_0%,transparent_50%)]" />
       <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/40 to-transparent" />
       
-      <div className="max-w-7xl mx-auto px-6 relative z-10 text-white">
+      <div className="max-w-7xl mx-auto px-6 relative z-10 text-primary-foreground">
         <div className="text-center mb-24">
-          <div className="inline-block px-5 py-2 mb-8 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 shadow-xl">
+          <div className="inline-block px-5 py-2 mb-8 rounded-full bg-primary-foreground/10 backdrop-blur-xl border border-primary-foreground/20 shadow-xl">
             <span className="text-[10px] font-mono tracking-[0.4em] uppercase text-accent font-black">Environmental Stewardship</span>
           </div>
           <h2 className="text-6xl md:text-8xl font-serif font-bold mb-8 leading-none">Making a <span className="italic text-accent">Real</span> Impact</h2>
@@ -63,7 +63,7 @@ export default function ImpactSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="p-10 text-center bg-white/5 backdrop-blur-md border border-white/10 rounded-[2.5rem] hover:bg-white/15 hover:scale-105 transition-all shadow-xl group"
+              className="p-10 text-center bg-primary-foreground/10 backdrop-blur-md border border-primary-foreground/15 rounded-[2.5rem] hover:bg-primary-foreground/20 hover:scale-105 transition-all shadow-xl group"
             >
               <div className="flex justify-center mb-10">
                 <div className="p-5 rounded-3xl bg-accent text-accent-foreground shadow-lg group-hover:rotate-12 transition-transform">
@@ -77,17 +77,17 @@ export default function ImpactSection() {
           ))}
         </div>
 
-        <div className="p-16 rounded-[3rem] bg-black/20 backdrop-blur-xl border border-white/10 shadow-2xl">
+        <div className="p-16 rounded-[3rem] bg-black/20 backdrop-blur-xl border border-primary-foreground/20 shadow-2xl">
           <div className="flex items-center gap-6 mb-16 px-4">
-            <div className="h-px flex-1 bg-white/20" />
+            <div className="h-px flex-1 bg-primary-foreground/20" />
             <h3 className="text-3xl font-serif text-center font-bold px-6">Certifications & Standards</h3>
-            <div className="h-px flex-1 bg-white/20" />
+            <div className="h-px flex-1 bg-primary-foreground/20" />
           </div>
           <div className="grid md:grid-cols-3 gap-10">
             {certs.map((c, i) => (
-              <div key={i} className="flex items-center gap-6 p-6 rounded-2xl bg-white/5 border border-white/5 group hover:bg-accent/20 hover:border-accent/40 transition-all cursor-default">
+              <div key={i} className="flex items-center gap-6 p-6 rounded-2xl bg-primary-foreground/10 border border-primary-foreground/10 group hover:bg-accent/20 hover:border-accent/40 transition-all cursor-default">
                 <div className="w-3 h-3 rounded-full bg-accent shadow-[0_0_15px_var(--color-accent)] group-hover:scale-150 transition-transform" />
-                <span className="font-mono text-[11px] tracking-[0.2em] uppercase font-black group-hover:text-white transition-colors">{c}</span>
+                <span className="font-mono text-[11px] tracking-[0.2em] uppercase font-black group-hover:text-accent-foreground transition-colors">{c}</span>
               </div>
             ))}
           </div>

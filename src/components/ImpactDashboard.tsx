@@ -48,7 +48,7 @@ const StatCard = ({ icon: Icon, label, value, unit, delay = 0 }: any) => (
 const TimelineItem = ({ date, title, impact, icon: Icon, isLast }: any) => (
   <div className="flex gap-6 relative">
     {!isLast && <div className="absolute left-[24px] top-[48px] bottom-0 w-0.5 bg-border/40" />}
-    <div className={`z-10 p-3 rounded-full h-fit shadow-lg ${title.includes('Tree') ? 'bg-accent text-white' : 'bg-primary text-white'}`}>
+    <div className={`z-10 p-3 rounded-full h-fit shadow-lg ${title.includes('Tree') ? 'bg-accent text-accent-foreground' : 'bg-primary text-primary-foreground'}`}>
       <Icon className="w-6 h-6" />
     </div>
     <div className="pb-10">
@@ -92,7 +92,7 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
       className="fixed inset-0 z-[60] bg-background flex flex-col md:flex-row overflow-hidden"
     >
       {/* Sidebar Navigation */}
-      <div className="w-full md:w-80 bg-primary p-8 flex flex-col text-white border-r border-white/10">
+      <div className="w-full md:w-80 bg-primary p-8 flex flex-col text-primary-foreground border-r border-primary-foreground/10">
         <div className="flex items-center gap-4 mb-16">
           <img src="/logo.png" alt="Logo" className="h-10 w-auto" />
           <h2 className="text-xl font-serif font-bold">Impact Hub</h2>
@@ -109,7 +109,7 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
               key={item.id}
               onClick={() => setActiveTab(item.id as any)}
               className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl transition-all cursor-pointer font-bold uppercase text-[10px] tracking-[0.2em] ${
-                activeTab === item.id ? 'bg-accent text-white shadow-lg translate-x-2' : 'hover:bg-white/5 opacity-70'
+                activeTab === item.id ? 'bg-accent text-accent-foreground shadow-lg translate-x-2' : 'hover:bg-primary-foreground/10 opacity-70'
               }`}
             >
               <item.icon className="w-5 h-5" />
@@ -120,7 +120,7 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
 
         <button 
           onClick={onClose}
-          className="mt-auto flex items-center gap-4 px-6 py-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all font-mono text-[10px] tracking-widest uppercase font-bold"
+          className="mt-auto flex items-center gap-4 px-6 py-4 rounded-xl bg-primary-foreground/10 hover:bg-primary-foreground/20 transition-all font-mono text-[10px] tracking-widest uppercase font-bold"
         >
           Exit Dashboard
         </button>
@@ -183,15 +183,15 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
                     <h3 className="text-2xl font-serif font-bold text-primary mb-10 flex items-center gap-3">
                       <Share2 className="text-accent" /> Share Your Footprint
                     </h3>
-                    <div className="bg-primary p-12 rounded-[2.5rem] text-white relative overflow-hidden group">
+                    <div className="bg-primary p-12 rounded-[2.5rem] text-primary-foreground relative overflow-hidden group">
                       <div className="absolute top-0 right-0 w-40 h-40 bg-accent/20 rounded-full -mr-20 -mt-20 blur-3xl" />
                       <div className="relative z-10 flex flex-col h-full">
                         <p className="font-mono text-[10px] tracking-[0.4em] uppercase mb-6 text-accent">Social Impact Card</p>
                         <h4 className="text-4xl font-serif font-bold mb-6">"I'm building a greener future with EkoKintsugi."</h4>
-                        <div className="mt-auto pt-8 border-t border-white/10 flex justify-between items-center">
+                        <div className="mt-auto pt-8 border-t border-primary-foreground/20 flex justify-between items-center">
                           <div className="flex gap-2">
-                            <div className="p-3 bg-white/10 rounded-xl hover:bg-accent transition-colors"><Share2 className="w-5 h-5" /></div>
-                            <div className="p-3 bg-white/10 rounded-xl hover:bg-accent transition-colors"><Download className="w-5 h-5" /></div>
+                            <div className="p-3 bg-primary-foreground/10 rounded-xl hover:bg-accent transition-colors"><Share2 className="w-5 h-5" /></div>
+                            <div className="p-3 bg-primary-foreground/10 rounded-xl hover:bg-accent transition-colors"><Download className="w-5 h-5" /></div>
                           </div>
                           <img src="/logo.png" className="h-8" />
                         </div>
@@ -274,7 +274,7 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
                 </header>
 
                 <div className="grid md:grid-cols-5 gap-8 mb-12">
-                  <div className="md:col-span-3 bg-primary text-white p-12 rounded-[2.5rem] shadow-strong relative overflow-hidden flex flex-col justify-between">
+                  <div className="md:col-span-3 bg-primary text-primary-foreground p-12 rounded-[2.5rem] shadow-strong relative overflow-hidden flex flex-col justify-between">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl -mr-32 -mt-32" />
                     
                     <div className="relative z-10 flex justify-between items-start mb-16">
@@ -291,10 +291,10 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
                     </div>
 
                     <div className="relative z-10 flex gap-4">
-                      <button className="bg-accent text-accent-foreground px-8 py-4 rounded-xl font-mono text-[10px] tracking-widest uppercase font-bold hover:bg-white hover:text-primary transition-all">
+                      <button className="bg-accent text-accent-foreground px-8 py-4 rounded-xl font-mono text-[10px] tracking-widest uppercase font-bold hover:bg-primary-foreground hover:text-primary transition-all">
                         Redeem Credits
                       </button>
-                      <button className="bg-white/10 px-8 py-4 rounded-xl font-mono text-[10px] tracking-widest uppercase font-bold hover:bg-white/20 transition-all flex items-center gap-2">
+                      <button className="bg-primary-foreground/10 px-8 py-4 rounded-xl font-mono text-[10px] tracking-widest uppercase font-bold hover:bg-primary-foreground/20 transition-all flex items-center gap-2">
                         <QrCode className="w-4 h-4" /> Receive
                       </button>
                     </div>
