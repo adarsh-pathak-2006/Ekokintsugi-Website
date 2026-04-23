@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-serif: "Noto Serif", serif;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-mono: "Space Grotesk", monospace;
+
+  /* HSL Palette from Brand Guidelines */
+  --color-background: hsl(40 30% 97%);
+  --color-foreground: hsl(150 15% 15%);
+  --color-card: hsl(0 0% 100%);
+  --color-primary: hsl(150 40% 25%);
+  --color-primary-foreground: hsl(150 30% 95%);
+  --color-secondary: hsl(30 25% 45%);
+  --color-accent: hsl(35 85% 55%);
+  --color-accent-foreground: hsl(150 15% 15%);
+  --color-muted: hsl(40 20% 90%);
+  --color-muted-foreground: hsl(150 10% 40%);
+  --color-border: hsl(40 20% 85%);
+  
+  --radius-lg: 0.75rem;
+  --shadow-soft: 0 10px 40px -10px hsl(150 40% 25% / 0.15);
+  --shadow-strong: 0 20px 60px -15px hsl(150 40% 25% / 0.25);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased transition-colors duration-500;
+  }
+
+  .dark {
+    --color-background: hsl(150 15% 8%);
+    --color-foreground: hsl(40 20% 95%);
+    --color-card: hsl(150 15% 12%);
+    --color-primary: hsl(150 20% 90%);
+    --color-primary-foreground: hsl(150 40% 15%); 
+    --color-secondary: hsl(30 25% 65%);
+    --color-accent: hsl(35 85% 60%);
+    --color-accent-foreground: hsl(150 15% 5%);
+    --color-muted: hsl(150 15% 15%);         
+    --color-muted-foreground: hsl(150 10% 65%);
+    --color-border: hsl(150 20% 20%);
+  }
+}
+
+.gradient-hero {
+  background: linear-gradient(135deg, hsl(150 40% 25%) 0%, hsl(150 35% 35%) 100%);
+}
+
+.gradient-accent {
+  background: linear-gradient(135deg, hsl(35 85% 55%) 0%, hsl(30 80% 50%) 100%);
+}
+
+.kintsugi-line {
+  @apply h-px bg-accent/20;
+}
