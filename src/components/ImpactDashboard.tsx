@@ -155,6 +155,7 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
     if (!isOpen || authLoading) return;
 
     const controller = new AbortController();
+    const timeoutId = window.setTimeout(() => controller.abort(), 10000);
 
     async function loadImpact() {
       setLoading(true);
@@ -177,29 +178,35 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
 
         setStats(normalizeImpactStats(payload));
       } catch (fetchError: any) {
-        if (controller.signal.aborted) return;
-
         setStats(emptyImpactStats);
-        setError(fetchError?.message || "Unable to load impact data right now.");
+        setError(
+          controller.signal.aborted
+            ? "Impact data took too long to load. Please try again."
+            : fetchError?.message || "Unable to load impact data right now."
+        );
       } finally {
-        if (!controller.signal.aborted) {
-          setLoading(false);
-        }
+        setLoading(false);
+        window.clearTimeout(timeoutId);
       }
     }
 
     loadImpact();
 
-    return () => controller.abort();
+    return () => {
+      window.clearTimeout(timeoutId);
+      controller.abort();
+    };
   }, [authLoading, isDemo, isOpen, session?.access_token]);
 
   if (!isOpen) return null;
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[60] bg-background flex flex-col md:flex-row overflow-hidden">
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[60] surface-gradient flex flex-col md:flex-row overflow-hidden">
       <div className="w-full md:w-80 bg-primary p-8 flex flex-col text-primary-foreground border-r border-primary-foreground/10">
         <div className="flex items-center gap-4 mb-16">
-          <img src="/logo.png" alt="Logo" className="h-10 w-auto" />
+          <span className="logo-surface px-2.5 py-2">
+            <img src="/logo.png" alt="Logo" className="h-8 w-auto" />
+          </span>
           <div>
             <h2 className="text-xl font-serif font-bold">Impact Hub</h2>
             <p className="text-[10px] font-mono tracking-widest uppercase text-primary-foreground/60">
@@ -270,7 +277,7 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
         </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-8 md:p-16 bg-muted/20">
+      <div className="flex-1 overflow-y-auto p-8 md:p-16 surface-gradient">
         {loading || authLoading ? (
           <div className="flex items-center justify-center h-full">
             <div className="w-12 h-12 border-4 border-accent border-t-transparent rounded-full animate-spin" />

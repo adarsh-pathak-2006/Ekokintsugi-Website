@@ -22,6 +22,13 @@ const slides = [
     description: "Redefining elegance with purpose.",
     image: "https://lh3.googleusercontent.com/aida-public/AB6AXuD95TpaobW1Eb61gXnmlX4KytkwRE1WKgFfjNtM1G1LA3xIizvSEscAqTb5PiFKDL5PztiKNZjXOzdAEtv1wJz0BHE2X2lZ9m9hIwcpDDXN4r2i4SEiKe4cspv39gnd_HV3P8JOb5pvGe0WCzB-BgChl_LHQf0uqGRwEz2dbmIdfdF-tilvglhMpTFu0Uff_QmINDVesjdu96py_Hnt_2WBe7vvE6mQDdq10l9DKDfAcBr3G24X7199BZcL3HfNHzRbTsgjP7UBiPs0",
     link: "#products"
+  },
+  {
+    id: 4,
+    title: "Circular Footwear Edition",
+    description: "Signature sneakers reimagined through reclaimed leather and precision craft.",
+    image: "/images/products/signature-sneaker.jpg",
+    link: "#products"
   }
 ];
 

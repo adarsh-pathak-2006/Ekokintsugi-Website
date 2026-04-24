@@ -9,7 +9,7 @@
   --font-mono: "Space Grotesk", monospace;
 
   /* HSL Palette from Brand Guidelines */
-  --color-background: hsl(40 30% 97%);
+  --color-background: hsl(120 28% 96%);
   --color-foreground: hsl(150 15% 15%);
   --color-card: hsl(0 0% 100%);
   --color-primary: hsl(150 40% 25%);
@@ -17,35 +17,72 @@
   --color-secondary: hsl(30 25% 45%);
   --color-accent: hsl(35 85% 55%);
   --color-accent-foreground: hsl(150 15% 15%);
-  --color-muted: hsl(40 20% 90%);
+  --color-muted: hsl(120 18% 91%);
   --color-muted-foreground: hsl(150 10% 40%);
-  --color-border: hsl(40 20% 85%);
+  --color-border: hsl(120 18% 85%);
   
   --radius-lg: 0.75rem;
   --shadow-soft: 0 10px 40px -10px hsl(150 40% 25% / 0.15);
   --shadow-strong: 0 20px 60px -15px hsl(150 40% 25% / 0.25);
+
+  --page-glow-1: hsl(140 42% 88% / 0.9);
+  --page-glow-2: hsl(95 35% 90% / 0.75);
+  --page-base-start: hsl(120 30% 97%);
+  --page-base-mid: hsl(135 24% 95%);
+  --page-base-end: hsl(105 22% 94%);
+
+  --surface-bg: hsl(123 32% 84%);
+  --surface-glow-1: hsl(142 48% 68% / 0.98);
+  --surface-glow-2: hsl(106 40% 72% / 0.9);
+  --surface-base-start: hsl(128 34% 88%);
+  --surface-base-mid: hsl(134 32% 82%);
+  --surface-base-end: hsl(108 30% 76%);
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
   }
+
   body {
     @apply bg-background text-foreground font-sans antialiased transition-colors duration-500;
+    background-image:
+      radial-gradient(circle at top left, var(--page-glow-1), transparent 38%),
+      radial-gradient(circle at top right, var(--page-glow-2), transparent 30%),
+      linear-gradient(180deg, var(--page-base-start) 0%, var(--page-base-mid) 52%, var(--page-base-end) 100%);
+    background-attachment: fixed;
+    color-scheme: light;
   }
 
   .dark {
-    --color-background: hsl(150 15% 8%);
-    --color-foreground: hsl(40 20% 95%);
-    --color-card: hsl(150 15% 12%);
-    --color-primary: hsl(150 20% 90%);
-    --color-primary-foreground: hsl(150 40% 15%); 
-    --color-secondary: hsl(30 25% 65%);
-    --color-accent: hsl(35 85% 60%);
-    --color-accent-foreground: hsl(150 15% 5%);
-    --color-muted: hsl(150 15% 15%);         
-    --color-muted-foreground: hsl(150 10% 65%);
-    --color-border: hsl(150 20% 20%);
+    --color-background: hsl(150 20% 8%);
+    --color-foreground: hsl(105 20% 92%);
+    --color-card: hsl(148 18% 12%);
+    --color-primary: hsl(145 38% 78%);
+    --color-primary-foreground: hsl(150 28% 10%);
+    --color-secondary: hsl(34 28% 67%);
+    --color-accent: hsl(37 88% 62%);
+    --color-accent-foreground: hsl(150 20% 8%);
+    --color-muted: hsl(148 16% 16%);
+    --color-muted-foreground: hsl(120 12% 72%);
+    --color-border: hsl(148 18% 22%);
+
+    --shadow-soft: 0 12px 45px -14px hsl(150 70% 4% / 0.55);
+    --shadow-strong: 0 24px 70px -18px hsl(150 80% 3% / 0.75);
+
+    --page-glow-1: hsl(150 42% 22% / 0.65);
+    --page-glow-2: hsl(105 34% 20% / 0.45);
+    --page-base-start: hsl(148 24% 11%);
+    --page-base-mid: hsl(152 22% 9%);
+    --page-base-end: hsl(140 20% 7%);
+
+    --surface-bg: hsl(148 22% 12%);
+    --surface-glow-1: hsl(151 44% 18% / 0.7);
+    --surface-glow-2: hsl(108 34% 17% / 0.55);
+    --surface-base-start: hsl(148 22% 14%);
+    --surface-base-mid: hsl(150 20% 11%);
+    --surface-base-end: hsl(140 18% 9%);
+    color-scheme: dark;
   }
 }
 
@@ -59,4 +96,16 @@
 
 .kintsugi-line {
   @apply h-px bg-accent/20;
+}
+
+.surface-gradient {
+  background-color: var(--surface-bg);
+  background-image:
+    radial-gradient(circle at top left, var(--surface-glow-1), transparent 44%),
+    radial-gradient(circle at top right, var(--surface-glow-2), transparent 36%),
+    linear-gradient(180deg, var(--surface-base-start) 0%, var(--surface-base-mid) 50%, var(--surface-base-end) 100%);
+}
+
+.logo-surface {
+  @apply inline-flex items-center justify-center rounded-2xl bg-white border border-black/5 shadow-sm;
 }

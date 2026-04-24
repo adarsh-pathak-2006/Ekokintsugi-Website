@@ -52,7 +52,7 @@ function AppShell() {
   return (
     <>
       <ScrollToTop />
-      <div className="min-h-screen bg-background text-foreground selection:bg-accent selection:text-accent-foreground flex flex-col">
+      <div className="min-h-screen surface-gradient text-foreground selection:bg-accent selection:text-accent-foreground flex flex-col">
         <Navbar onImpactClick={openImpactDashboard} />
 
         <main className="pt-20 flex-grow">

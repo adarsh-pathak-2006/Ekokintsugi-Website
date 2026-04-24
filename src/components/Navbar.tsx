@@ -21,7 +21,9 @@ export default function Navbar({ onImpactClick }: { onImpactClick: () => void })
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/50">
       <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
         <Link to="/" className="flex items-center group">
-          <img src="/logo.png" alt="EkoKintsugi Logo" className="h-20 w-auto transition-transform duration-500 group-hover:scale-105" />
+          <span className="logo-surface px-3 py-2 transition-transform duration-500 group-hover:scale-105">
+            <img src="/logo.png" alt="EkoKintsugi Logo" className="h-16 w-auto" />
+          </span>
         </Link>
 
         <nav className="hidden md:flex items-center space-x-10">

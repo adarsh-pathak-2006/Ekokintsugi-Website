@@ -12,7 +12,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="py-20 min-h-screen bg-background">
+    <div className="py-20 min-h-screen surface-gradient">
       <div className="max-w-7xl mx-auto px-6">
 
         <div className="text-center mb-24">

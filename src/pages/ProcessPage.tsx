@@ -3,7 +3,7 @@ import { Cpu, Repeat, MapPin, Truck, CheckCircle2 } from "lucide-react";
 
 export default function ProcessPage() {
   return (
-    <div className="py-20 min-h-screen bg-background">
+    <div className="py-20 min-h-screen surface-gradient">
       <div className="max-w-7xl mx-auto px-6">
         
         <header className="mb-20">

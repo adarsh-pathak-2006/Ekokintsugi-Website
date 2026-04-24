@@ -21,7 +21,7 @@ export default function AboutPage() {
   ];
 
   return (
-    <div className="py-20 min-h-screen bg-background">
+    <div className="py-20 min-h-screen surface-gradient">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}

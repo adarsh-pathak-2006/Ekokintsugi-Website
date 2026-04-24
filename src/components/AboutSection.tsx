@@ -26,7 +26,7 @@ const features = [
 
 export default function AboutSection() {
   return (
-    <section id="about" className="py-32 bg-background overflow-hidden relative border-t border-border/50">
+    <section id="about" className="py-32 surface-gradient overflow-hidden relative border-t border-border/50">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-20 items-center">
           <motion.div

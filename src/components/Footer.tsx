@@ -10,7 +10,9 @@ export default function Footer() {
         <div className="grid md:grid-cols-4 gap-12 mb-16">
           <div className="md:col-span-2">
             <div className="mb-6">
-              <img src="/logo.png" alt="EkoKintsugi Logo" className="h-16 w-auto" />
+              <span className="logo-surface px-3 py-2">
+                <img src="/logo.png" alt="EkoKintsugi Logo" className="h-12 w-auto" />
+              </span>
             </div>
             <p className="text-muted-foreground text-lg max-w-sm leading-relaxed">
               Transforming waste into beautiful, sustainable products through AI material intelligence and artisan craftsmanship.
