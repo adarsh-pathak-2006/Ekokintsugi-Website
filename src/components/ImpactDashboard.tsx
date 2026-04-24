@@ -5,6 +5,7 @@ import {
   Download,
   History,
   Leaf,
+  LogOut,
   QrCode,
   Share2,
   TreePine,
@@ -131,13 +132,19 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
   const [stats, setStats] = useState<ImpactStats>(emptyImpactStats);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const { session, user, displayName, isLoading: authLoading } = useAuth();
+  const { session, user, displayName, isLoading: authLoading, signOut } = useAuth();
 
   const isDemo = !user;
   const walletSuffix = user?.id.split("-")[0] ?? "DEMO";
   const certificateName = isDemo ? "Artisan Voyager" : displayName;
   const authHref = `/auth?mode=signin&next=impact`;
   const signupHref = `/auth?mode=signup&next=impact`;
+
+  const handleSignOut = async () => {
+    await signOut();
+    onClose();
+    navigate("/", { replace: false });
+  };
 
   useEffect(() => {
     if (!isOpen) return;
@@ -242,6 +249,17 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
               </Link>
             </div>
           </div>
+        )}
+
+        {!isDemo && (
+          <button
+            type="button"
+            onClick={handleSignOut}
+            className="mt-8 w-full flex items-center justify-center gap-3 rounded-2xl border border-white/15 bg-white/10 px-6 py-4 font-mono text-[10px] tracking-widest uppercase font-black text-primary-foreground hover:bg-white/15 transition-colors"
+          >
+            <LogOut className="w-4 h-4" />
+            Log Out
+          </button>
         )}
 
         <button

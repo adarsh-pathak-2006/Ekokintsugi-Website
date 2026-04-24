@@ -58,6 +58,29 @@ const demoStats: ImpactStats = {
   records: demoRecords
 };
 
+const loggedNotices = new Set<string>();
+
+function logNoticeOnce(key: string, message: string) {
+  if (loggedNotices.has(key)) return;
+  loggedNotices.add(key);
+  console.log(message);
+}
+
+function isMissingTableError(error: { code?: string; message?: string } | null | undefined) {
+  if (!error) return false;
+
+  const normalizedMessage = JSON.stringify(error).toLowerCase();
+
+  return (
+    error.code === "PGRST205" ||
+    error.code === "42P01" ||
+    normalizedMessage.includes("schema cache") ||
+    normalizedMessage.includes("could not find the table") ||
+    normalizedMessage.includes("relation") && normalizedMessage.includes("does not exist") ||
+    normalizedMessage.includes("esg_records")
+  );
+}
+
 function getAccessToken(req: Request) {
   const header = req.headers.authorization;
   if (!header?.startsWith("Bearer ")) return null;
@@ -200,6 +223,11 @@ async function handleImpactRequest(req: Request, res: Response) {
     const stats = await getImpactStatsForUser(authenticatedUserId);
     return res.json(stats);
   } catch (error: any) {
+    if (isMissingTableError(error)) {
+      logNoticeOnce("missing-impact-tables", "Notice: Supabase impact tables are not set up yet. Falling back to demo or empty dashboard data.");
+      return res.json(useDemoFallback ? demoStats : emptyStats);
+    }
+
     if (useDemoFallback) {
       return res.json(demoStats);
     }
@@ -325,7 +353,11 @@ async function startServer() {
     try {
       const { count, error: countErr } = await supabase.from("esg_records").select("*", { count: "exact", head: true });
       if (countErr) {
-        console.log("Notice: Supabase tables pending setup. Auto-seeder paused.");
+        if (isMissingTableError(countErr)) {
+          logNoticeOnce("missing-seed-tables", "Notice: Supabase tables pending setup. Auto-seeder paused until you run supabase_schema.sql.");
+          return;
+        }
+        console.log("Notice: Auto-seeder paused due to a Supabase error.");
         return;
       }
       

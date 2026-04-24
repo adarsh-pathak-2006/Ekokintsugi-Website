@@ -1,7 +1,9 @@
 -- EkoKintsugi Production ESG Schema
 
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 -- 1. Users Profile (Linked to Auth.Users)
-CREATE TABLE public.profiles (
+CREATE TABLE IF NOT EXISTS public.profiles (
   id UUID REFERENCES auth.users ON DELETE CASCADE PRIMARY KEY,
   name TEXT,
   email TEXT,
@@ -9,7 +11,7 @@ CREATE TABLE public.profiles (
 );
 
 -- 2. Products Catalog
-CREATE TABLE public.products (
+CREATE TABLE IF NOT EXISTS public.products (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT NOT NULL,
   co2_factor FLOAT NOT NULL, -- kg per unit
@@ -22,7 +24,7 @@ CREATE TABLE public.products (
 );
 
 -- 3. Trees Registry
-CREATE TABLE public.trees (
+CREATE TABLE IF NOT EXISTS public.trees (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   user_id UUID REFERENCES auth.users,
   location TEXT,
@@ -31,7 +33,7 @@ CREATE TABLE public.trees (
 );
 
 -- 4. Orders
-CREATE TABLE public.orders (
+CREATE TABLE IF NOT EXISTS public.orders (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   user_id UUID REFERENCES auth.users NOT NULL,
   product_id UUID REFERENCES public.products NOT NULL,
@@ -41,7 +43,7 @@ CREATE TABLE public.orders (
 );
 
 -- 5. ESG Records (The Impact Ledger)
-CREATE TABLE public.esg_records (
+CREATE TABLE IF NOT EXISTS public.esg_records (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   order_id UUID REFERENCES public.orders ON DELETE CASCADE,
   user_id UUID REFERENCES auth.users,
@@ -52,7 +54,7 @@ CREATE TABLE public.esg_records (
 );
 
 -- 6. Carbon Credit Ledger
-CREATE TABLE public.carbon_ledger (
+CREATE TABLE IF NOT EXISTS public.carbon_ledger (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   user_id UUID REFERENCES auth.users,
   credits_earned FLOAT DEFAULT 0,
@@ -74,21 +76,33 @@ ALTER TABLE public.trees ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.carbon_ledger ENABLE ROW LEVEL SECURITY;
 
 -- Allow Anon Key (Backend API) to read and insert data
+DROP POLICY IF EXISTS "Enable read access for all users" ON public.products;
+DROP POLICY IF EXISTS "Enable insert access for all users" ON public.products;
 CREATE POLICY "Enable read access for all users" ON public.products FOR SELECT USING (true);
 CREATE POLICY "Enable insert access for all users" ON public.products FOR INSERT WITH CHECK (true);
 
+DROP POLICY IF EXISTS "Enable read access for all users" ON public.profiles;
+DROP POLICY IF EXISTS "Enable insert access for all users" ON public.profiles;
 CREATE POLICY "Enable read access for all users" ON public.profiles FOR SELECT USING (true);
 CREATE POLICY "Enable insert access for all users" ON public.profiles FOR INSERT WITH CHECK (true);
 
+DROP POLICY IF EXISTS "Enable read access for all users" ON public.orders;
+DROP POLICY IF EXISTS "Enable insert access for all users" ON public.orders;
 CREATE POLICY "Enable read access for all users" ON public.orders FOR SELECT USING (true);
 CREATE POLICY "Enable insert access for all users" ON public.orders FOR INSERT WITH CHECK (true);
 
+DROP POLICY IF EXISTS "Enable read access for all users" ON public.esg_records;
+DROP POLICY IF EXISTS "Enable insert access for all users" ON public.esg_records;
 CREATE POLICY "Enable read access for all users" ON public.esg_records FOR SELECT USING (true);
 CREATE POLICY "Enable insert access for all users" ON public.esg_records FOR INSERT WITH CHECK (true);
 
+DROP POLICY IF EXISTS "Enable read access for all users" ON public.trees;
+DROP POLICY IF EXISTS "Enable insert access for all users" ON public.trees;
 CREATE POLICY "Enable read access for all users" ON public.trees FOR SELECT USING (true);
 CREATE POLICY "Enable insert access for all users" ON public.trees FOR INSERT WITH CHECK (true);
 
+DROP POLICY IF EXISTS "Enable read access for all users" ON public.carbon_ledger;
+DROP POLICY IF EXISTS "Enable insert access for all users" ON public.carbon_ledger;
 CREATE POLICY "Enable read access for all users" ON public.carbon_ledger FOR SELECT USING (true);
 CREATE POLICY "Enable insert access for all users" ON public.carbon_ledger FOR INSERT WITH CHECK (true);
 
@@ -99,18 +113,5 @@ INSERT INTO public.products (id, name, co2_factor, waste_factor, base_price, ima
 ('d3f9f0a2-3456-6c7d-8e9f-0a1b2c3d4e5f', 'Decorative Bowl', 2.8, 0.8, 3200, 'https://images.unsplash.com/photo-1574362848149-11496d93a7c7')
 ON CONFLICT (id) DO NOTHING;
 
--- Seed Data for Placeholder User (00000000-0000-0000-0000-000000000000)
--- NOTE: If foreign key constraints on auth.users fail, you may need to create this user in the Supabase Auth panel first.
-
--- Helper to insert dummy trees
-INSERT INTO public.trees (id, user_id, location, status) VALUES
-(gen_random_uuid(), '00000000-0000-0000-0000-000000000000', 'Agra Zone A-1', 'sapling'),
-(gen_random_uuid(), '00000000-0000-0000-0000-000000000000', 'Agra Zone B-2', 'seed'),
-(gen_random_uuid(), '00000000-0000-0000-0000-000000000000', 'Agra Zone C-3', 'grown'),
-(gen_random_uuid(), '00000000-0000-0000-0000-000000000000', 'Agra Zone D-4', 'sapling'),
-(gen_random_uuid(), '00000000-0000-0000-0000-000000000000', 'Agra Zone E-5', 'seed')
-ON CONFLICT DO NOTHING;
-
--- Since orders and impact records depend on UUIDs, we recommend using the "Seed" button in the Dashboard once or running the auto-seeder in server.ts.
--- I have enabled an auto-seeder in the backend that runs on first load if the DB is empty.
-
+-- Intentionally no demo rows tied to a fake auth.users UUID.
+-- Create a real user through Supabase Auth first, then insert user-linked demo data if needed.
