@@ -285,7 +285,7 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
                     Welcome, <span className="italic text-accent">{certificateName}</span>
                   </h1>
                   <p className="text-muted-foreground text-lg italic">
-                    {isDemo ? "Demo impact data is visible until you sign in." : "Your personal carbon-positive dashboard is synced with Supabase."}
+                    {isDemo ? "Demo impact data is visible until you sign in." : "Your personal carbon-positive dashboard is live and tailored to your journey."}
                   </p>
                 </header>
 
