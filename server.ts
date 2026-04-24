@@ -1,4 +1,4 @@
-import express from "express";
+import express, { type Request, type Response } from "express";
 import { createServer as createViteServer } from "vite";
 import path from "path";
 import cors from "cors";
@@ -18,10 +18,98 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 app.use(cors());
 app.use(express.json());
 
+type ImpactRecord = {
+  id: string;
+  created_at: string;
+  co2_saved_kg: number;
+  waste_diverted_kg: number;
+  tree_id: string | null;
+};
+
+type ImpactStats = {
+  totalCo2: number;
+  totalWaste: number;
+  treeCount: number;
+  credits: number;
+  records: ImpactRecord[];
+};
+
+const emptyStats: ImpactStats = {
+  totalCo2: 0,
+  totalWaste: 0,
+  treeCount: 0,
+  credits: 0,
+  records: []
+};
+
+const demoRecords: ImpactRecord[] = [
+  { id: "mock-record-1", created_at: "2026-04-18T09:00:00.000Z", co2_saved_kg: 7.6, waste_diverted_kg: 2.3, tree_id: "tree-1" },
+  { id: "mock-record-2", created_at: "2026-04-15T09:00:00.000Z", co2_saved_kg: 5.9, waste_diverted_kg: 1.9, tree_id: null },
+  { id: "mock-record-3", created_at: "2026-04-12T09:00:00.000Z", co2_saved_kg: 8.2, waste_diverted_kg: 2.8, tree_id: "tree-2" },
+  { id: "mock-record-4", created_at: "2026-04-09T09:00:00.000Z", co2_saved_kg: 6.4, waste_diverted_kg: 2.1, tree_id: null },
+  { id: "mock-record-5", created_at: "2026-04-06T09:00:00.000Z", co2_saved_kg: 9.1, waste_diverted_kg: 3.0, tree_id: "tree-3" }
+];
+
+const demoStats: ImpactStats = {
+  totalCo2: demoRecords.reduce((sum, record) => sum + record.co2_saved_kg, 0),
+  totalWaste: demoRecords.reduce((sum, record) => sum + record.waste_diverted_kg, 0),
+  treeCount: demoRecords.filter((record) => Boolean(record.tree_id)).length,
+  credits: demoRecords.reduce((sum, record) => sum + record.co2_saved_kg, 0) / 1000,
+  records: demoRecords
+};
+
+function getAccessToken(req: Request) {
+  const header = req.headers.authorization;
+  if (!header?.startsWith("Bearer ")) return null;
+  return header.slice("Bearer ".length).trim();
+}
+
+async function getAuthenticatedUserId(req: Request) {
+  const accessToken = getAccessToken(req);
+  if (!accessToken) return null;
+
+  const { data, error } = await supabase.auth.getUser(accessToken);
+  if (error || !data.user) return null;
+
+  return data.user.id;
+}
+
+async function getImpactStatsForUser(userId: string): Promise<ImpactStats> {
+  const [{ data: records, error: recordsError }, { data: ledger, error: ledgerError }] = await Promise.all([
+    supabase.from("esg_records").select("*").eq("user_id", userId).order("created_at", { ascending: false }),
+    supabase.from("carbon_ledger").select("credits_earned").eq("user_id", userId)
+  ]);
+
+  if (recordsError || ledgerError) {
+    throw recordsError || ledgerError;
+  }
+
+  const safeRecords = Array.isArray(records) ? records : [];
+  const safeLedger = Array.isArray(ledger) ? ledger : [];
+
+  return {
+    totalCo2: safeRecords.reduce((sum, record) => sum + Number(record.co2_saved_kg || 0), 0),
+    totalWaste: safeRecords.reduce((sum, record) => sum + Number(record.waste_diverted_kg || 0), 0),
+    treeCount: safeRecords.filter((record) => Boolean(record.tree_id)).length,
+    credits: safeLedger.reduce((sum, entry) => sum + Number(entry.credits_earned || 0), 0),
+    records: safeRecords
+  };
+}
+
 // API Routes: Production ESG Engine
 // Create Order & Impact Logic
 app.post("/api/orders/create", async (req, res) => {
-  const { userId, productId, quantity } = req.body;
+  const authenticatedUserId = await getAuthenticatedUserId(req);
+  const { productId, quantity } = req.body ?? {};
+
+  if (!authenticatedUserId) {
+    return res.status(401).json({ error: "Please sign in to create an order." });
+  }
+
+  const normalizedQuantity = Number(quantity);
+  if (!productId || !Number.isInteger(normalizedQuantity) || normalizedQuantity <= 0) {
+    return res.status(400).json({ error: "A valid product and quantity are required." });
+  }
 
   try {
     // 1. Get Product CO2 Factors
@@ -33,17 +121,17 @@ app.post("/api/orders/create", async (req, res) => {
 
     if (pError || !product) throw new Error("Product not found");
 
-    const totalPrice = product.base_price * quantity;
-    const co2Saved = product.co2_factor * quantity;
-    const wasteDiverted = product.waste_factor * quantity;
+    const totalPrice = Number(product.base_price) * normalizedQuantity;
+    const co2Saved = Number(product.co2_factor) * normalizedQuantity;
+    const wasteDiverted = Number(product.waste_factor) * normalizedQuantity;
 
     // 2. Create Order
     const { data: order, error: oError } = await supabase
       .from("orders")
       .insert({
-        user_id: userId,
+        user_id: authenticatedUserId,
         product_id: productId,
-        quantity,
+        quantity: normalizedQuantity,
         total_price: totalPrice
       })
       .select()
@@ -55,7 +143,7 @@ app.post("/api/orders/create", async (req, res) => {
     const { data: tree, error: tError } = await supabase
       .from("trees")
       .insert({
-        user_id: userId,
+        user_id: authenticatedUserId,
         location: "Agra Reforest Zone B-12",
         status: "seed"
       })
@@ -69,7 +157,7 @@ app.post("/api/orders/create", async (req, res) => {
       .from("esg_records")
       .insert({
         order_id: order.id,
-        user_id: userId,
+        user_id: authenticatedUserId,
         co2_saved_kg: co2Saved,
         waste_diverted_kg: wasteDiverted,
         tree_id: tree.id
@@ -82,7 +170,7 @@ app.post("/api/orders/create", async (req, res) => {
     const { error: lError } = await supabase
       .from("carbon_ledger")
       .insert({
-        user_id: userId,
+        user_id: authenticatedUserId,
         credits_earned: creditsEarned,
         source_order_id: order.id
       });
@@ -95,59 +183,35 @@ app.post("/api/orders/create", async (req, res) => {
   }
 });
 
-// Fetch Comprehensive Impact Stats
-app.get("/api/impact/:userId", async (req, res) => {
-  const { userId } = req.params;
+async function handleImpactRequest(req: Request, res: Response) {
+  const useDemoFallback = req.query.demo === "true";
+  const authenticatedUserId = await getAuthenticatedUserId(req);
+  const requestedUserId = req.params.userId;
+
   try {
-    const { data: records, error } = await supabase
-      .from("esg_records")
-      .select("*")
-      .eq("user_id", userId);
-
-    const { data: ledger } = await supabase
-      .from("carbon_ledger")
-      .select("credits_earned")
-      .eq("user_id", userId);
-
-    if (error) {
-      console.log("Notice: Supabase tables pending setup. Using internal fallback ESG data.");
+    if (!authenticatedUserId) {
+      return res.json(useDemoFallback ? demoStats : emptyStats);
     }
 
-    const safeRecords = Array.isArray(records) && records.length > 0 ? records : [];
-    const safeLedger = Array.isArray(ledger) && ledger.length > 0 ? ledger : [];
-
-    // Fallback exactly 10 records as requested if DB is empty or RLS blocks
-    if (safeRecords.length === 0) {
-      const fallbackRecords = Array.from({ length: 10 }).map((_, i) => ({
-        id: `mock-record-${i}`,
-        created_at: new Date(Date.now() - i * 86400000).toISOString(),
-        co2_saved_kg: parseFloat((Math.random() * 8 + 3).toFixed(1)),
-        waste_diverted_kg: parseFloat((Math.random() * 4 + 1).toFixed(1)),
-        tree_id: i % 2 === 0 ? `tree-${i}` : null
-      }));
-
-      return res.json({
-        totalCo2: fallbackRecords.reduce((sum, r) => sum + r.co2_saved_kg, 0),
-        totalWaste: fallbackRecords.reduce((sum, r) => sum + r.waste_diverted_kg, 0),
-        treeCount: 5, // 5 out of 10 have trees
-        credits: fallbackRecords.reduce((sum, r) => sum + r.co2_saved_kg, 0) / 1000,
-        records: fallbackRecords
-      });
+    if (requestedUserId && requestedUserId !== authenticatedUserId) {
+      return res.status(403).json({ error: "You can only view your own impact data." });
     }
 
-    const stats = {
-      totalCo2: safeRecords.reduce((sum, r) => sum + r.co2_saved_kg, 0),
-      totalWaste: safeRecords.reduce((sum, r) => sum + r.waste_diverted_kg, 0),
-      treeCount: safeRecords.length,
-      credits: safeLedger.reduce((sum, l) => sum + l.credits_earned, 0) || 0,
-      records: safeRecords // Timeline entries
-    };
-
-    res.json(stats);
+    const stats = await getImpactStatsForUser(authenticatedUserId);
+    return res.json(stats);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    if (useDemoFallback) {
+      return res.json(demoStats);
+    }
+
+    console.error("Impact API error:", error.message);
+    return res.json(emptyStats);
   }
-});
+}
+
+// Fetch Comprehensive Impact Stats
+app.get("/api/impact", handleImpactRequest);
+app.get("/api/impact/:userId", handleImpactRequest);
 
 // Seed Data Endpoint (Utility)
 app.post("/api/admin/seed", async (req, res) => {

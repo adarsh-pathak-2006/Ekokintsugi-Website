@@ -3,11 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ImpactDashboard from "./components/ImpactDashboard";
-import { useState } from "react";
 import ScrollToTop from "./components/ScrollToTop";
 
 import LandingPage from "./pages/LandingPage";
@@ -16,16 +15,46 @@ import ProductsPage from "./pages/ProductsPage";
 import ProcessPage from "./pages/ProcessPage";
 import ImpactPage from "./pages/ImpactPage";
 import ContactPage from "./pages/ContactPage";
+import AuthPage from "./pages/AuthPage";
 
-export default function App() {
-  const [isImpactOpen, setIsImpactOpen] = useState(false);
+function AppShell() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const searchParams = new URLSearchParams(location.search);
+  const isImpactOpen = searchParams.get("impact") === "open";
+
+  const openImpactDashboard = () => {
+    const nextParams = new URLSearchParams(location.search);
+    nextParams.set("impact", "open");
+
+    navigate(
+      {
+        pathname: location.pathname,
+        search: `?${nextParams.toString()}`
+      },
+      { replace: false }
+    );
+  };
+
+  const closeImpactDashboard = () => {
+    const nextParams = new URLSearchParams(location.search);
+    nextParams.delete("impact");
+
+    navigate(
+      {
+        pathname: location.pathname,
+        search: nextParams.toString() ? `?${nextParams.toString()}` : ""
+      },
+      { replace: false }
+    );
+  };
 
   return (
-    <Router>
+    <>
       <ScrollToTop />
       <div className="min-h-screen bg-background text-foreground selection:bg-accent selection:text-accent-foreground flex flex-col">
-        <Navbar onImpactClick={() => setIsImpactOpen(true)} />
-        
+        <Navbar onImpactClick={openImpactDashboard} />
+
         <main className="pt-20 flex-grow">
           <Routes>
             <Route path="/" element={<LandingPage />} />
@@ -34,12 +63,21 @@ export default function App() {
             <Route path="/process" element={<ProcessPage />} />
             <Route path="/impact" element={<ImpactPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/auth" element={<AuthPage />} />
           </Routes>
         </main>
 
         <Footer />
-        <ImpactDashboard isOpen={isImpactOpen} onClose={() => setIsImpactOpen(false)} />
+        <ImpactDashboard isOpen={isImpactOpen} onClose={closeImpactDashboard} />
       </div>
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <Router>
+      <AppShell />
     </Router>
   );
 }
