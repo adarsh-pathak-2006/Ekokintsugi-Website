@@ -13,7 +13,8 @@ const PORT = Number(process.env.PORT) || 3000;
 // Initialize Supabase (Server-side)
 const supabaseUrl = process.env.VITE_SUPABASE_URL || "";
 const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY || "";
-const supabase = createClient(supabaseUrl, supabaseKey);
+const isSupabaseConfigured = Boolean(supabaseUrl && supabaseKey);
+const supabase = isSupabaseConfigured ? createClient(supabaseUrl, supabaseKey) : null;
 
 app.use(cors());
 app.use(express.json());
@@ -88,6 +89,8 @@ function getAccessToken(req: Request) {
 }
 
 async function getAuthenticatedUserId(req: Request) {
+  if (!supabase) return null;
+
   const accessToken = getAccessToken(req);
   if (!accessToken) return null;
 
@@ -98,6 +101,10 @@ async function getAuthenticatedUserId(req: Request) {
 }
 
 async function getImpactStatsForUser(userId: string): Promise<ImpactStats> {
+  if (!supabase) {
+    return emptyStats;
+  }
+
   const [{ data: records, error: recordsError }, { data: ledger, error: ledgerError }] = await Promise.all([
     supabase.from("esg_records").select("*").eq("user_id", userId).order("created_at", { ascending: false }),
     supabase.from("carbon_ledger").select("credits_earned").eq("user_id", userId)
@@ -122,6 +129,10 @@ async function getImpactStatsForUser(userId: string): Promise<ImpactStats> {
 // API Routes: Production ESG Engine
 // Create Order & Impact Logic
 app.post("/api/orders/create", async (req, res) => {
+  if (!supabase) {
+    return res.status(503).json({ error: "Supabase is not configured on the server yet." });
+  }
+
   const authenticatedUserId = await getAuthenticatedUserId(req);
   const { productId, quantity } = req.body ?? {};
 
@@ -243,6 +254,10 @@ app.get("/api/impact/:userId", handleImpactRequest);
 
 // Seed Data Endpoint (Utility)
 app.post("/api/admin/seed", async (req, res) => {
+  if (!supabase) {
+    return res.status(503).json({ error: "Supabase is not configured on the server yet." });
+  }
+
   const userId = "00000000-0000-0000-0000-000000000000";
   
   try {
@@ -309,6 +324,10 @@ const sampleProducts = [
 ];
 
 app.get("/api/catalog", async (req, res) => {
+  if (!supabase) {
+    return res.json(sampleProducts);
+  }
+
   try {
     const { data: existing, error } = await supabase.from("products").select("*");
     
@@ -347,6 +366,10 @@ async function startServer() {
 
   app.listen(PORT, "0.0.0.0", async () => {
     console.log(`EkoKintsugi Backend running on http://0.0.0.0:${PORT}`);
+    if (!supabase) {
+      console.log("Notice: Supabase environment variables are missing. API features that require Supabase will stay in fallback mode.");
+      return;
+    }
     
     // Background Auto-Seeder
     const dummyId = "00000000-0000-0000-0000-000000000000";

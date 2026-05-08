@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 import { ArrowRight, CheckCircle2, LockKeyhole, Mail, UserRound } from "lucide-react";
 import { FormEvent, useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { supabase } from "../lib/supabase";
+import { supabase, supabaseConfigMessage } from "../lib/supabase";
 import { useAuth } from "../lib/AuthContext";
 
 type AuthMode = "signin" | "signup";
@@ -138,6 +138,12 @@ export default function AuthPage() {
     setStatus("");
     setShowSignInHint(false);
     setIsSubmitting(true);
+
+    if (!supabase) {
+      setError(supabaseConfigMessage);
+      setIsSubmitting(false);
+      return;
+    }
 
     const trimmedName = name.trim();
     const normalizedEmail = email.trim().toLowerCase();
@@ -276,6 +282,11 @@ export default function AuthPage() {
                   ? "Demo data stays visible for visitors. Your real dashboard appears after sign in."
                   : "Your account is stored in Supabase Auth and linked to a profile record."}
               </p>
+              {!supabase && (
+                <div className="mt-5 rounded-2xl border border-amber-300 bg-amber-50 px-5 py-4 text-sm text-amber-900">
+                  {supabaseConfigMessage}
+                </div>
+              )}
               {nextDestination === "impact" && (
                 <div className="mt-5 rounded-2xl border border-accent/20 bg-accent/10 px-5 py-4 text-sm text-primary">
                   You&apos;ll return to the Impact Dashboard right after authentication.
@@ -354,7 +365,7 @@ export default function AuthPage() {
 
               <button
                 type="submit"
-                disabled={isSubmitting || isLoading}
+                disabled={isSubmitting || isLoading || !supabase}
                 className="w-full rounded-2xl bg-primary px-8 py-6 text-primary-foreground font-mono text-[11px] uppercase tracking-[0.3em] font-black hover:bg-accent hover:text-accent-foreground transition-all shadow-xl disabled:opacity-60 flex items-center justify-center gap-3"
               >
                 {isSubmitting || isLoading ? "Processing" : mode === "signin" ? "Sign In" : "Create Account"}

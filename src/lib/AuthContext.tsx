@@ -20,6 +20,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let isMounted = true;
 
+    if (!supabase) {
+      setSession(null);
+      setIsLoading(false);
+      return () => {
+        isMounted = false;
+      };
+    }
+
     supabase.auth
       .getSession()
       .then(({ data }) => {
@@ -56,6 +64,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       isLoading,
       displayName: name,
       signOut: async () => {
+        if (!supabase) return;
         await supabase.auth.signOut();
       }
     };
