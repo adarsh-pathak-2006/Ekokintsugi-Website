@@ -46,8 +46,8 @@ export default function HeroSlider() {
   }, []);
 
   return (
-    <section className="w-full max-w-7xl mx-auto px-6 py-12">
-      <div className="relative h-[650px] rounded-3xl overflow-hidden border border-primary/10 bg-primary group shadow-strong">
+    <section className="w-full max-w-6xl mx-auto px-6 py-8 md:py-10">
+      <div className="relative h-[480px] md:h-[540px] rounded-3xl overflow-hidden border border-primary/10 bg-primary group shadow-strong">
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={index}
@@ -65,7 +65,7 @@ export default function HeroSlider() {
             <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/45 to-transparent" />
             <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-black/60 to-transparent" />
             
-            <div className="relative z-10 h-full flex flex-col justify-center px-16 md:px-32 max-w-4xl">
+            <div className="relative z-10 h-full flex flex-col justify-center px-8 md:px-20 max-w-3xl">
               <motion.div
                 initial={{ x: -30, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
@@ -80,7 +80,7 @@ export default function HeroSlider() {
                 initial={{ x: 30, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: 0.5, duration: 0.8 }}
-                className="text-6xl md:text-8xl font-serif font-bold text-white mb-6 leading-[0.9]"
+                className="text-5xl md:text-7xl font-serif font-bold text-white mb-5 leading-[0.9]"
               >
                 {slides[index].title.split(' ')[0]}<br />
                 <span className="text-accent">{slides[index].title.split(' ').slice(1).join(' ')}</span>
@@ -90,7 +90,7 @@ export default function HeroSlider() {
                 initial={{ x: 20, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: 0.6, duration: 0.8 }}
-                className="text-xl text-primary-foreground font-sans mb-12 max-w-lg opacity-80 leading-relaxed"
+                className="text-lg md:text-xl text-primary-foreground font-sans mb-10 max-w-lg opacity-80 leading-relaxed"
               >
                 {slides[index].description}
               </motion.p>
@@ -115,7 +115,7 @@ export default function HeroSlider() {
         </AnimatePresence>
 
         {/* Improved Smooth Horizontal Indicators */}
-        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-8 z-20">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-6 z-20">
           {slides.map((_, i) => (
             <button
               key={i}
