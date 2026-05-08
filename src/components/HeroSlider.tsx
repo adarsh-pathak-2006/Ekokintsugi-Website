@@ -6,21 +6,21 @@ const slides = [
     id: 1,
     title: "Artisan Decoratives",
     description: "Everyday luxury from reclaimed materials.",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuABjZg_EVC7CS60xYWzEG-Po2G7_kJVkBK-Vn0VbCuHJMHBO8hP0_F_ieUYD3rktQz1W4iCHw2LLnZyDIeTHrr5Z--cTSN6rJSGsTKyB9-etRmZgHcnI5gz15Oku-Y9DYMQGTaPLcaTj1j8GrlEmrsoFt_3cRsR6eP1b-3UmxAS-fiGnJULh4yXeclGSS6hp7RRSBPio4euI1bykNdUa5ggM52HUaUCO6hubjOZdGT5uv01JABck3c4B6g52kT8B8Vla19UEx7d3kUA",
+    image: "/images/hero/hero-1.jpg",
     link: "#products"
   },
   {
     id: 2,
     title: "Sustainable Living",
     description: "Crafted for durability and style.",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCnptbM23Mnw2DdVp_o-CpzHvBeeh7UvOc4gL-oE__P5wL5G8TeMFmBgyzIAvqFzYFbjksjv-gFPmV9RDHTtl-aJgxjlJ5kzev-nryfHX9BYvqPBK-IfqFjfRP1UXNatouRe1KZ_7yZPpbsl5ktHIgnBJiXKMMh2uLoWCeyOHrjEE4cIs4dIOBVQ6RQYvyOnl3J_ILO0Kw8BK7iJXGZbClTVQCBVfjyaN6s8gAgCa91QjJ87TQIIrDs7qnA2MwU-Hd-rLQQVmgaVaGC",
+    image: "/images/hero/hero-2.jpg",
     link: "#products"
   },
   {
     id: 3,
     title: "Eco Luxury Craft",
     description: "Redefining elegance with purpose.",
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuD95TpaobW1Eb61gXnmlX4KytkwRE1WKgFfjNtM1G1LA3xIizvSEscAqTb5PiFKDL5PztiKNZjXOzdAEtv1wJz0BHE2X2lZ9m9hIwcpDDXN4r2i4SEiKe4cspv39gnd_HV3P8JOb5pvGe0WCzB-BgChl_LHQf0uqGRwEz2dbmIdfdF-tilvglhMpTFu0Uff_QmINDVesjdu96py_Hnt_2WBe7vvE6mQDdq10l9DKDfAcBr3G24X7199BZcL3HfNHzRbTsgjP7UBiPs0",
+    image: "/images/hero/hero-3.jpg",
     link: "#products"
   },
   {
