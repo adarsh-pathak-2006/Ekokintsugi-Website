@@ -1,9 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
+import { PRODUCT_CATEGORIES } from "../lib/productCatalog";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const navigate = useNavigate();
-  
+
   return (
     <footer className="py-20 bg-card border-t border-border">
       <div className="max-w-7xl mx-auto px-6">
@@ -15,7 +16,8 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-muted-foreground text-lg max-w-sm leading-relaxed">
-              Transforming waste into beautiful, sustainable products through AI material intelligence and artisan craftsmanship.
+              Transforming waste into beautiful, sustainable products through AI material intelligence and artisan
+              craftsmanship.
             </p>
           </div>
 
@@ -31,7 +33,7 @@ export default function Footer() {
                 { name: "Contact", path: "/contact" }
               ].map((link) => (
                 <li key={link.name}>
-                  <Link 
+                  <Link
                     to={link.path}
                     className="text-muted-foreground hover:text-accent transition-colors font-medium cursor-pointer"
                   >
@@ -45,25 +47,19 @@ export default function Footer() {
           <div>
             <h4 className="font-serif text-primary text-xl font-bold mb-6">Products</h4>
             <ul className="space-y-4">
-              {[
-                { name: "Accessories & Keychains", query: "Keychains" },
-                { name: "Men's Wallets", query: "Wallet" },
-                { name: "Sustainable Bags", query: "Bags" },
-                { name: "Ladies' Handbags", query: "Handbag" },
-                { name: "View All Collections", query: "" }
-              ].map((product) => (
-                <li key={product.name}>
-                  <button 
+              {[...PRODUCT_CATEGORIES, { slug: "", shortTitle: "View All Products" }].map((product) => (
+                <li key={product.slug || product.shortTitle}>
+                  <button
                     onClick={() => {
-                      if (product.query) {
-                        navigate(`/products?category=${encodeURIComponent(product.query)}`);
+                      if (product.slug) {
+                        navigate(`/products/category/${product.slug}`);
                       } else {
-                        navigate(`/products`);
+                        navigate("/products");
                       }
                     }}
                     className="text-muted-foreground hover:text-accent transition-colors text-left"
                   >
-                    {product.name}
+                    {product.shortTitle}
                   </button>
                 </li>
               ))}
@@ -73,9 +69,7 @@ export default function Footer() {
 
         <div className="pt-8 border-t border-border/50">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <p className="text-sm text-muted-foreground">
-              © {currentYear} EkoKintsugi LLP. All rights reserved.
-            </p>
+            <p className="text-sm text-muted-foreground">Copyright {currentYear} EkoKintsugi LLP. All rights reserved.</p>
             <div className="flex gap-8">
               <Link to="/" className="text-sm text-muted-foreground hover:text-accent transition-colors font-medium">
                 Privacy Policy

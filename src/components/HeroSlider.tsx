@@ -105,7 +105,7 @@ export default function HeroSlider() {
                   onClick={() => navigate('/products')}
                   className="bg-accent text-accent-foreground px-10 py-5 rounded-full text-[10px] font-mono tracking-widest uppercase font-bold hover:bg-primary-foreground hover:text-primary transition-all shadow-xl"
                 >
-                  Explore Collection
+                  View Products
                 </button>
                 <div className="w-16 h-px bg-white/20" />
                 <span className="text-[10px] font-mono tracking-widest uppercase text-white/50">Verified Tech</span>

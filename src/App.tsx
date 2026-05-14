@@ -12,6 +12,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import LandingPage from "./pages/LandingPage";
 import AboutPage from "./pages/AboutPage";
 import ProductsPage from "./pages/ProductsPage";
+import ProductCategoryPage from "./pages/ProductCategoryPage";
 import ProcessPage from "./pages/ProcessPage";
 import ImpactPage from "./pages/ImpactPage";
 import ContactPage from "./pages/ContactPage";
@@ -60,6 +61,7 @@ function AppShell() {
             <Route path="/" element={<LandingPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/products" element={<ProductsPage />} />
+            <Route path="/products/category/:slug" element={<ProductCategoryPage />} />
             <Route path="/process" element={<ProcessPage />} />
             <Route path="/impact" element={<ImpactPage />} />
             <Route path="/contact" element={<ContactPage />} />

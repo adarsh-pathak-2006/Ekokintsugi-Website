@@ -28,7 +28,9 @@ export default function Navbar({ onImpactClick }: { onImpactClick: () => void })
 
         <nav className="hidden md:flex items-center space-x-10">
           {navLinks.map((link) => {
-            const isActive = location.pathname === link.path;
+            const isActive = link.path === "/products"
+              ? location.pathname === "/products" || location.pathname.startsWith("/products/")
+              : location.pathname === link.path;
             return (
               <Link
                 key={link.name}
