@@ -1,6 +1,9 @@
 # Dependencies
 node_modules/
 
+# Local working asset folders
+product_images/
+
 # Build outputs
 dist/
 build/

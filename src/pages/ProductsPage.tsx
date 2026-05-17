@@ -23,13 +23,13 @@ export default function ProductsPage() {
     <div className="py-20 min-h-screen bg-muted/10">
       <div className="max-w-7xl mx-auto px-6">
         <header className="text-center mb-20">
-          <span className="text-[10px] font-mono tracking-[0.4em] uppercase text-accent font-bold mb-4 block">
-            EkoKintsugi Products
+          <span className="section-badge mb-4">
+            <span className="section-badge-label">EkoKintsugi Products</span>
           </span>
           <h1 className="text-5xl md:text-7xl font-serif text-primary font-bold mb-6">Product Categories</h1>
           <p className="text-xl text-muted-foreground italic max-w-3xl mx-auto">
-            Choose a product family first, then explore a focused product page built around that category. The layout
-            stays clean, responsive, and consistent with the rest of the site.
+            Choose a product family first, then explore a focused page for leather backpacks, leather bags, wallets,
+            accessories, and distinct men's and women's footwear collections.
           </p>
         </header>
 
@@ -56,7 +56,7 @@ export default function ProductsPage() {
               <p className="text-3xl font-serif font-bold mb-1">
                 {isLoading ? "Syncing..." : error ? "Offline" : `${products.length} Products`}
               </p>
-              <p className="text-sm opacity-80">Live grouping across bags, wallets, accessories, and separate men's and women's footwear lines.</p>
+              <p className="text-sm opacity-80">Live grouping across leather backpacks, leather bags, wallets, accessories, and separate men's and women's footwear lines.</p>
             </div>
           </div>
         </div>
@@ -82,6 +82,7 @@ export default function ProductsPage() {
                       src={category.image}
                       alt={category.shortTitle}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      style={{ objectPosition: category.imagePosition ?? "center" }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-primary/10 to-transparent" />
                     <div className="absolute left-6 bottom-6 right-6">

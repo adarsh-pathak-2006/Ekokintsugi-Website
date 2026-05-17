@@ -6,7 +6,9 @@ export default function ImpactPage() {
     <div className="py-20 min-h-screen bg-muted/10">
       <div className="max-w-7xl mx-auto px-6">
         <header className="mb-20 text-center">
-          <span className="text-[10px] font-mono tracking-[0.4em] uppercase text-accent font-bold mb-4 block">Environmental Framework</span>
+          <span className="section-badge mb-4">
+            <span className="section-badge-label">Environmental Framework</span>
+          </span>
           <h1 className="text-5xl md:text-7xl font-serif text-primary font-bold mb-6">Solving the Leather Crisis</h1>
           <p className="text-xl text-muted-foreground italic max-w-2xl mx-auto">
             Leather is one of the world's most polluting materials. Millions of tonnes are landfilled annually, with high CO₂ footprints and chemical permanence.

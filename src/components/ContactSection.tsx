@@ -8,7 +8,9 @@ export default function ContactSection() {
 
       <div className="max-w-7xl mx-auto px-6">
         <header className="mb-20 text-center">
-          <span className="text-[10px] font-mono tracking-[0.4em] uppercase text-accent font-bold mb-4 block">Let's Build The Future</span>
+          <span className="section-badge mb-4">
+            <span className="section-badge-label">Let's Build The Future</span>
+          </span>
           <h2 className="text-5xl md:text-7xl font-serif text-primary font-bold mb-6">Partnership Invitation</h2>
           <p className="text-xl text-muted-foreground italic max-w-2xl mx-auto">
             This proposal is built upon a decade of trust, shared values, and a vision for a more sustainable world.

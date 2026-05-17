@@ -109,3 +109,29 @@
 .logo-surface {
   @apply inline-flex items-center justify-center;
 }
+
+.section-badge {
+  @apply inline-flex items-center rounded-full px-4 py-2 border shadow-sm backdrop-blur-md;
+  background: color-mix(in srgb, var(--color-card) 54%, transparent);
+  border-color: color-mix(in srgb, var(--color-accent) 28%, var(--color-border));
+  box-shadow: 0 12px 30px -18px hsl(150 40% 25% / 0.35);
+}
+
+.section-badge-label {
+  @apply font-mono uppercase font-black;
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  color: color-mix(in srgb, var(--color-primary) 72%, var(--color-accent) 28%);
+  text-shadow: 0 1px 0 hsl(0 0% 100% / 0.24);
+}
+
+.dark .section-badge {
+  background: color-mix(in srgb, var(--color-card) 78%, transparent);
+  border-color: color-mix(in srgb, var(--color-accent) 34%, var(--color-border));
+  box-shadow: 0 16px 34px -20px hsl(150 80% 2% / 0.8);
+}
+
+.dark .section-badge-label {
+  color: color-mix(in srgb, white 82%, var(--color-accent) 18%);
+  text-shadow: none;
+}

@@ -13,7 +13,7 @@ const slides = [
     id: 2,
     title: "Sustainable Living",
     description: "Crafted for durability and style.",
-    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/products/mosaic-bifold-wallet.jpeg",
+    image: "/images/products/wallet-zip.jpg",
     link: "#products"
   },
   {

@@ -16,8 +16,8 @@ export default function ContactPage() {
       <div className="max-w-7xl mx-auto px-6">
 
         <div className="text-center mb-24">
-          <div className="inline-block px-4 py-1.5 mb-6 rounded-full bg-primary/10 border border-primary/20 text-primary font-bold">
-            <span className="text-[10px] font-mono tracking-[0.3em] uppercase">Connect With Us</span>
+          <div className="section-badge mb-6">
+            <span className="section-badge-label">Connect With Us</span>
           </div>
           <h1 className="text-5xl font-serif text-primary md:text-7xl mb-8 font-bold leading-tight">Let's Create <br /><span className="text-accent underline decoration-4 underline-offset-8 transition-all hover:decoration-primary">Together</span></h1>
           <p className="text-xl text-muted-foreground italic max-w-2xl mx-auto">

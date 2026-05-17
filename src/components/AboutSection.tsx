@@ -35,8 +35,8 @@ export default function AboutSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <div className="inline-block px-4 py-1.5 mb-6 rounded-full bg-accent/20 border border-accent/20">
-              <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-accent font-bold">The Heritage</span>
+            <div className="section-badge mb-6">
+              <span className="section-badge-label">The Heritage</span>
             </div>
             <h2 className="text-5xl md:text-7xl font-serif leading-[1.1] mb-10 font-bold text-primary">
               Redefining Waste <br />as a <span className="italic text-accent">Resource</span>

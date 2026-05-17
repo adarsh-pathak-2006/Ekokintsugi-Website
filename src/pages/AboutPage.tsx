@@ -28,7 +28,9 @@ export default function AboutPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center max-w-3xl mx-auto mb-20"
         >
-          <span className="text-[10px] font-mono tracking-[0.4em] uppercase text-accent font-bold mb-4 block">Company Profile</span>
+          <span className="section-badge mb-4">
+            <span className="section-badge-label">Company Profile</span>
+          </span>
           <h1 className="text-5xl md:text-7xl font-serif text-primary font-bold mb-6">Who is EkoKintsugi LLP?</h1>
           <p className="text-xl text-muted-foreground italic">
             An Indian circular-economy footwear manufacturer that turns industry waste leather into high-quality sneakers. 
@@ -108,7 +110,9 @@ export default function AboutPage() {
           <div className="bg-card border border-border rounded-[2.5rem] p-10 md:p-12 shadow-sm">
             <div className="flex flex-col md:flex-row gap-10 items-center">
               <div className="flex-1">
-                <p className="text-[10px] font-mono tracking-[0.4em] uppercase text-accent font-bold mb-4">Mobile Experience</p>
+                <p className="section-badge mb-4">
+                  <span className="section-badge-label">Mobile Experience</span>
+                </p>
                 <h3 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">Scan to Download the App</h3>
                 <p className="text-muted-foreground mb-6 max-w-xl">
                   Use this QR as a visual demo of our future mobile onboarding flow for partners and customers.

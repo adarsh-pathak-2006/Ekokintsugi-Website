@@ -16,25 +16,44 @@ export interface ProductCategory {
   eyebrow: string;
   description: string;
   image: string;
+  imagePosition?: string;
   categoryLabels: string[];
   queryTerms: string[];
 }
 
 export const PRODUCT_CATEGORIES: ProductCategory[] = [
   {
-    slug: "bags",
-    title: "Bag Products",
-    shortTitle: "Bags",
-    eyebrow: "Carry Systems",
+    slug: "leather-backpacks",
+    title: "Leather Backpack Products",
+    shortTitle: "Leather Backpacks",
+    eyebrow: "Structured Carry",
     description:
-      "Structured sling bags, totes, backpacks, briefcases, and travel-ready silhouettes built from reclaimed leather mosaics.",
+      "Commuter-ready and travel-oriented backpacks built from reclaimed leather mosaics with structured silhouettes and premium utility.",
     image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/products/mosaic-city-backpack.jpeg",
-    categoryLabels: ["bags", "bag"],
+    imagePosition: "center 32%",
+    categoryLabels: ["leather backpacks", "leather backpack", "backpacks", "backpack"],
+    queryTerms: [
+      "backpack",
+      "backpacks",
+      "commuter backpack",
+      "utility backpack",
+      "travel backpack",
+      "zip backpack"
+    ]
+  },
+  {
+    slug: "leather-bags",
+    title: "Leather Bag Products",
+    shortTitle: "Leather Bags",
+    eyebrow: "Carry Collection",
+    description:
+      "Totes, slings, messenger bags, duffels, bucket bags, and briefcase-inspired silhouettes crafted from circular leather materials.",
+    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/products/mosaic-structured-tote.jpeg",
+    imagePosition: "center 36%",
+    categoryLabels: ["leather bags", "leather bag", "bags", "bag"],
     queryTerms: [
       "bag",
       "bags",
-      "backpack",
-      "backpacks",
       "tote",
       "shopper",
       "crossbody",
@@ -42,7 +61,9 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
       "briefcase",
       "duffel",
       "belt bag",
-      "sling"
+      "sling",
+      "bucket bag",
+      "camera bag"
     ]
   },
   {
@@ -85,7 +106,8 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     eyebrow: "Floral Flats",
     description:
       "Ballet flats finished with floral patchwork uppers, softer palettes, and lightweight comfort for everyday dressing.",
-    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/products/indigo-floral-ballet-flats.jpeg",
+    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/products/sunrise-floral-ballet-flats.jpeg",
+    imagePosition: "center 24%",
     categoryLabels: ["women's footwear", "womens footwear", "women footwear"],
     queryTerms: ["women", "women's", "womens", "flats", "ballet flats", "ballerina", "floral flats"]
   }
@@ -127,12 +149,14 @@ export function getCategoryFromQuery(query: string | null | undefined) {
 
 export function productBelongsToCategory(product: CatalogProduct, category: ProductCategory) {
   const normalizedCategory = normalizeText(product.category);
+  const haystack = normalizeText([product.category, product.name, product.description].filter(Boolean).join(" "));
 
   if (normalizedCategory) {
-    return category.categoryLabels.some((label) => normalizedCategory === normalizeText(label));
+    if (category.categoryLabels.some((label) => normalizedCategory === normalizeText(label))) {
+      return true;
+    }
   }
 
-  const haystack = normalizeText([product.name, product.description].filter(Boolean).join(" "));
   return category.queryTerms.some((term) => haystack.includes(normalizeText(term)));
 }
 

@@ -10,13 +10,14 @@ export default function ProductSection() {
     <section id="products" className="py-32 bg-primary">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-20 text-primary-foreground">
-          <div className="inline-block px-4 py-1.5 mb-6 rounded-full bg-accent/20 border border-accent/30 text-accent font-bold">
-            <span className="text-xs font-mono tracking-widest uppercase">Eko Luxury Products</span>
+          <div className="section-badge mb-6">
+            <span className="section-badge-label">Eko Luxury Products</span>
           </div>
           <h2 className="text-5xl font-serif md:text-6xl mb-6">Browse By Category</h2>
           <p className="text-xl text-primary-foreground max-w-3xl mx-auto opacity-80 italic">
-            Explore dedicated product pages for bags, wallets, accessories, and distinct men's and women's footwear
-            collections. Each category opens into a focused page with only the relevant products.
+            Explore dedicated product pages for leather backpacks, leather bags, wallets, accessories, and distinct
+            men's and women's footwear collections. Each category opens into a focused page with only the relevant
+            products.
           </p>
         </div>
 
@@ -38,6 +39,7 @@ export default function ProductSection() {
                   src={category.image}
                   alt={category.shortTitle}
                   className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                  style={{ objectPosition: category.imagePosition ?? "center" }}
                 />
                 <div className="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-colors duration-500" />
               </div>

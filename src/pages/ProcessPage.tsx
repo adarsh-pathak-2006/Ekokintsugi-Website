@@ -7,7 +7,9 @@ export default function ProcessPage() {
       <div className="max-w-7xl mx-auto px-6">
         
         <header className="mb-20">
-          <span className="text-[10px] font-mono tracking-[0.4em] uppercase text-accent font-bold mb-4 block text-center">Operational Architecture</span>
+          <span className="section-badge mb-4">
+            <span className="section-badge-label">Operational Architecture</span>
+          </span>
           <h1 className="text-5xl md:text-7xl font-serif text-primary font-bold text-center mb-6">Dual-State Efficiency.</h1>
           <p className="text-xl text-muted-foreground italic text-center max-w-2xl mx-auto">
             A hybrid model that unlocks government subsidies, guarantees the lowest cost per pair, and ensures high quality consistency across India.

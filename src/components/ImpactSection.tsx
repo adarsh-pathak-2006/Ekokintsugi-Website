@@ -99,8 +99,8 @@ export default function ImpactSection() {
 
       <div className="max-w-7xl mx-auto px-6 relative z-10 text-primary-foreground">
         <div className="text-center mb-24">
-          <div className="inline-block px-5 py-2 mb-8 rounded-full bg-primary-foreground/10 backdrop-blur-xl border border-primary-foreground/20 shadow-xl">
-            <span className="text-[10px] font-mono tracking-[0.4em] uppercase text-accent dark:text-primary-foreground font-black">
+          <div className="section-badge mb-8">
+            <span className="section-badge-label">
               Environmental Stewardship
             </span>
           </div>

@@ -49,7 +49,12 @@ export default function ProductCategoryPage() {
         <section className="bg-card border border-border/50 rounded-[2.75rem] overflow-hidden shadow-soft mb-16">
           <div className="grid lg:grid-cols-[1.15fr_1fr] items-stretch">
             <div className="relative min-h-[22rem] lg:min-h-[28rem]">
-              <img src={category.image} alt={category.shortTitle} className="w-full h-full object-cover" />
+              <img
+                src={category.image}
+                alt={category.shortTitle}
+                className="w-full h-full object-cover"
+                style={{ objectPosition: category.imagePosition ?? "center" }}
+              />
               <div className="absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/35 to-transparent" />
             </div>
 

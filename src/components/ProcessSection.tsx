@@ -37,8 +37,8 @@ export default function ProcessSection() {
     <section id="process" className="py-32 bg-muted/20 border-y border-border/40">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-24">
-          <div className="inline-block px-4 py-1.5 mb-6 rounded-full bg-primary/10 border border-primary/20 text-primary font-bold">
-            <span className="text-xs font-mono tracking-widest uppercase">The Circular Lifecycle</span>
+          <div className="section-badge mb-6">
+            <span className="section-badge-label">The Circular Lifecycle</span>
           </div>
           <h2 className="text-5xl font-serif text-primary md:text-7xl mb-6">From Waste to Wonder</h2>
           <p className="text-xl text-muted-foreground max-w-xl mx-auto">A seamless orchestration of AI-enabled technology and generational craftsmanship.</p>

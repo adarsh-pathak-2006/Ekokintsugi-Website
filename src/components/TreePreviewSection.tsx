@@ -7,8 +7,8 @@ export default function TreePreviewSection() {
     <section className="py-28 surface-gradient border-t border-border/50">
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-14 text-center">
-          <span className="inline-block rounded-full border border-primary/15 bg-primary/10 px-4 py-2 text-[10px] font-mono font-black uppercase tracking-[0.35em] text-accent dark:text-primary">
-            Tree Plantation Preview
+          <span className="section-badge">
+            <span className="section-badge-label">Tree Plantation Preview</span>
           </span>
           <h2 className="mt-6 text-5xl md:text-6xl font-serif font-bold text-primary">Reforestation Tracker</h2>
           <p className="mt-5 max-w-2xl mx-auto text-lg text-muted-foreground italic">
