@@ -15,8 +15,8 @@ export default function ProductSection() {
           </div>
           <h2 className="text-5xl font-serif md:text-6xl mb-6">Browse By Category</h2>
           <p className="text-xl text-primary-foreground max-w-3xl mx-auto opacity-80 italic">
-            Explore dedicated product pages for wallets, bags, shoes, and accessories. Each category opens into a focused
-            page with only the relevant products.
+            Explore dedicated product pages for bags, wallets, accessories, and distinct men's and women's footwear
+            collections. Each category opens into a focused page with only the relevant products.
           </p>
         </div>
 

@@ -47,7 +47,7 @@ export default function ContactSection() {
               ))}
             </ul>
 
-            <p className="opacity-60 text-sm max-w-md font-mono mt-8">
+            <p className="text-primary-foreground/80 text-sm max-w-md font-mono mt-8">
               Your decision will always be respected. We will move at your comfort and convenience.
             </p>
           </div>

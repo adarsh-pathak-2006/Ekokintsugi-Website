@@ -52,11 +52,11 @@ export default function ProductsPage() {
             </div>
 
             <div className="bg-primary text-primary-foreground rounded-3xl px-6 py-5 min-w-56">
-              <p className="text-[10px] font-mono tracking-[0.35em] uppercase opacity-70 mb-2">Product Status</p>
+              <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-primary-foreground/85 mb-2">Product Status</p>
               <p className="text-3xl font-serif font-bold mb-1">
                 {isLoading ? "Syncing..." : error ? "Offline" : `${products.length} Products`}
               </p>
-              <p className="text-sm opacity-80">Live grouping across wallets, bags, shoes, and accessories.</p>
+              <p className="text-sm opacity-80">Live grouping across bags, wallets, accessories, and separate men's and women's footwear lines.</p>
             </div>
           </div>
         </div>

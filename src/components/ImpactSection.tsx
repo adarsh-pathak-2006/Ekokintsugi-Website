@@ -1,11 +1,11 @@
-import { TrendingDown, Leaf, Users, Award } from "lucide-react";
+import { TrendingDown, Leaf, Users, Award, BadgeCheck, Building2, Rocket, Scale, ShieldCheck, Globe2, Landmark, Sprout, CircleCheckBig } from "lucide-react";
 import { motion } from "motion/react";
 
 const metrics = [
   {
     icon: TrendingDown,
     value: "5.3kg",
-    label: "CO₂ Saved Per Piece",
+    label: "CO2 Saved Per Piece",
     desc: "Achieved via material intelligence"
   },
   {
@@ -29,28 +29,85 @@ const metrics = [
 ];
 
 const certs = [
-  "EU Digital Product Passport",
-  "MSME-Udyam Certified",
-  "Startup India Recognized",
-  "ISO Quality Standards",
-  "Fair Trade Practices",
-  "Carbon Neutral Operations"
+  {
+    title: "EU Digital Product Passport",
+    mark: "DPP",
+    icon: Globe2,
+    accent: "EU"
+  },
+  {
+    title: "MSME-Udyam Certified",
+    mark: "MSME",
+    icon: Landmark,
+    accent: "UDYAM"
+  },
+  {
+    title: "Startup India Recognized",
+    mark: "SI",
+    icon: Rocket,
+    accent: "INDIA"
+  },
+  {
+    title: "ISO Quality Standards",
+    mark: "ISO",
+    icon: CircleCheckBig,
+    accent: "9001"
+  },
+  {
+    title: "Fair Trade Practices",
+    mark: "FT",
+    icon: Scale,
+    accent: "FAIR"
+  },
+  {
+    title: "Carbon Neutral Operations",
+    mark: "CN",
+    icon: Sprout,
+    accent: "ZERO"
+  }
 ];
+
+function CertificationLogo({
+  mark,
+  accent,
+  icon: Icon
+}: {
+  mark: string;
+  accent: string;
+  icon: typeof Globe2;
+}) {
+  return (
+    <div className="flex items-center gap-3 text-primary-foreground">
+      <Icon className="w-6 h-6 text-accent dark:text-primary-foreground/90 shrink-0" strokeWidth={1.8} />
+      <div className="leading-none">
+        <div className="font-mono text-[9px] tracking-[0.38em] uppercase text-primary-foreground/55">
+          {accent}
+        </div>
+        <div className="font-serif text-2xl font-bold tracking-[0.18em] text-primary-foreground/92">
+          {mark}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function ImpactSection() {
   return (
     <section id="impact" className="py-32 relative overflow-hidden bg-primary">
-      {/* Rich vivid gradients for color */}
       <div className="absolute top-0 left-0 w-full h-full opacity-40 bg-[radial-gradient(circle_at_20%_20%,var(--color-accent)_0%,transparent_50%)]" />
       <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/40 to-transparent" />
-      
+
       <div className="max-w-7xl mx-auto px-6 relative z-10 text-primary-foreground">
         <div className="text-center mb-24">
           <div className="inline-block px-5 py-2 mb-8 rounded-full bg-primary-foreground/10 backdrop-blur-xl border border-primary-foreground/20 shadow-xl">
-            <span className="text-[10px] font-mono tracking-[0.4em] uppercase text-accent font-black">Environmental Stewardship</span>
+            <span className="text-[10px] font-mono tracking-[0.4em] uppercase text-accent dark:text-primary-foreground font-black">
+              Environmental Stewardship
+            </span>
           </div>
-          <h2 className="text-6xl md:text-8xl font-serif font-bold mb-8 leading-none">Making a <span className="italic text-accent">Real</span> Impact</h2>
-          <p className="text-xl text-primary-foreground/70 max-w-2xl mx-auto font-medium leading-relaxed italic">
+          <h2 className="text-6xl md:text-8xl font-serif font-bold mb-8 leading-none">
+            Making a <span className="italic text-accent dark:text-primary-foreground">Real</span> Impact
+          </h2>
+          <p className="text-xl text-primary-foreground/80 dark:text-primary-foreground/90 max-w-2xl mx-auto font-medium leading-relaxed italic">
             Every decorative piece contributes to a circular economy, supporting traditional craft with modern environmental science.
           </p>
         </div>
@@ -71,8 +128,12 @@ export default function ImpactSection() {
                 </div>
               </div>
               <p className="text-6xl font-black font-serif mb-3 tracking-tighter">{item.value}</p>
-              <p className="text-lg font-bold mb-4 uppercase tracking-widest text-accent">{item.label}</p>
-              <p className="text-sm text-primary-foreground/60 leading-relaxed font-medium">{item.desc}</p>
+              <p className="text-lg font-bold mb-4 uppercase tracking-widest text-accent dark:text-primary-foreground">
+                {item.label}
+              </p>
+              <p className="text-sm text-primary-foreground/75 dark:text-primary-foreground/85 leading-relaxed font-medium">
+                {item.desc}
+              </p>
             </motion.div>
           ))}
         </div>
@@ -84,10 +145,22 @@ export default function ImpactSection() {
             <div className="h-px flex-1 bg-primary-foreground/20" />
           </div>
           <div className="grid md:grid-cols-3 gap-10">
-            {certs.map((c, i) => (
-              <div key={i} className="flex items-center gap-6 p-6 rounded-2xl bg-primary-foreground/10 border border-primary-foreground/10 group hover:bg-accent/20 hover:border-accent/40 transition-all cursor-default">
-                <div className="w-3 h-3 rounded-full bg-accent shadow-[0_0_15px_var(--color-accent)] group-hover:scale-150 transition-transform" />
-                <span className="font-mono text-[11px] tracking-[0.2em] uppercase font-black group-hover:text-accent-foreground transition-colors">{c}</span>
+            {certs.map((cert, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-6 p-6 rounded-2xl border border-primary-foreground/12 bg-gradient-to-r from-primary-foreground/6 via-primary-foreground/4 to-transparent group hover:border-accent/35 hover:from-accent/10 hover:via-primary-foreground/8 hover:to-transparent transition-all cursor-default"
+              >
+                <div className="shrink-0 group-hover:translate-x-1 transition-transform">
+                  <CertificationLogo mark={cert.mark} accent={cert.accent} icon={cert.icon} />
+                </div>
+                <div>
+                  <span className="block font-mono text-[11px] tracking-[0.2em] uppercase font-black group-hover:text-primary-foreground transition-colors">
+                    {cert.title}
+                  </span>
+                  <span className="block mt-2 text-xs text-primary-foreground/60 italic">
+                    Compliance-ready identity integrated into the circular supply story.
+                  </span>
+                </div>
               </div>
             ))}
           </div>

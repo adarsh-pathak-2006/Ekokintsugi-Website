@@ -12,7 +12,7 @@ export default function Footer() {
           <div className="md:col-span-2">
             <div className="mb-6">
               <span className="logo-surface px-3 py-2">
-                <img src="/logo.png" alt="EkoKintsugi Logo" className="h-12 w-auto" />
+                <img src="/logo_eko.png" alt="EkoKintsugi Logo" className="h-12 w-auto" />
               </span>
             </div>
             <p className="text-muted-foreground text-lg max-w-sm leading-relaxed">

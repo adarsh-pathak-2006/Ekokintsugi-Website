@@ -22,7 +22,7 @@ export default function Navbar({ onImpactClick }: { onImpactClick: () => void })
       <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
         <Link to="/" className="flex items-center group">
           <span className="logo-surface px-3 py-2 transition-transform duration-500 group-hover:scale-105">
-            <img src="/logo.png" alt="EkoKintsugi Logo" className="h-16 w-auto" />
+            <img src="/logo_eko.png" alt="EkoKintsugi Logo" className="h-16 w-auto" />
           </span>
         </Link>
 
@@ -35,7 +35,7 @@ export default function Navbar({ onImpactClick }: { onImpactClick: () => void })
               <Link
                 key={link.name}
                 to={link.path}
-                className="text-[10px] font-mono tracking-[0.25em] uppercase transition-all duration-300 py-1 text-primary/70 hover:text-accent font-bold relative group/link"
+                className="text-[10px] font-mono tracking-[0.25em] uppercase transition-all duration-300 py-1 text-primary/85 hover:text-accent font-bold relative group/link"
               >
                 {link.name}
                 <span className={`absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover/link:w-full ${isActive ? 'w-full' : ''}`} />

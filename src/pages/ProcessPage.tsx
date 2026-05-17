@@ -33,7 +33,7 @@ export default function ProcessPage() {
               <li className="flex gap-3 items-center"><CheckCircle2 className="w-5 h-5 text-accent" /> Tribal workforce empowerment</li>
             </ul>
              <div className="mt-8 border-t border-border pt-4">
-              <span className="text-xs font-mono tracking-widest font-bold uppercase opacity-60">Lead Time: 30 Days</span>
+              <span className="text-xs font-mono tracking-widest font-bold uppercase text-muted-foreground">Lead Time: 30 Days</span>
             </div>
           </motion.div>
 
@@ -46,7 +46,7 @@ export default function ProcessPage() {
           >
             <MapPin className="text-primary-foreground/50 w-10 h-10 mb-6" />
             <h3 className="text-3xl font-serif font-bold mb-2">Uttar Pradesh</h3>
-            <p className="text-accent font-mono text-xs font-bold tracking-widest uppercase mb-8">Cutting, Assembly & Export</p>
+            <p className="text-accent dark:text-primary-foreground font-mono text-xs font-bold tracking-widest uppercase mb-8">Cutting, Assembly & Export</p>
             
             <ul className="space-y-4 font-sans text-primary-foreground/80 text-sm flex flex-col gap-2">
               <li className="flex gap-3 items-center"><CheckCircle2 className="w-5 h-5 text-accent" /> Upper construction</li>
@@ -56,8 +56,8 @@ export default function ProcessPage() {
               <li className="flex gap-3 items-center"><CheckCircle2 className="w-5 h-5 text-accent" /> Export documentation & logistics</li>
             </ul>
             <div className="mt-8 border-t border-primary-foreground/20 pt-4 flex gap-6">
-              <span className="text-xs font-mono tracking-widest font-bold uppercase opacity-60">Lead Time: 30 Days</span>
-              <span className="text-xs font-mono tracking-widest font-bold uppercase text-accent flex items-center gap-2"><Truck className="w-4 h-4"/> Transport: 45 Days</span>
+              <span className="text-xs font-mono tracking-widest font-bold uppercase text-primary-foreground/80">Lead Time: 30 Days</span>
+              <span className="text-xs font-mono tracking-widest font-bold uppercase text-accent dark:text-primary-foreground flex items-center gap-2"><Truck className="w-4 h-4"/> Transport: 45 Days</span>
             </div>
           </motion.div>
         </div>

@@ -217,13 +217,13 @@ export default function AuthPage() {
             <div className="absolute top-0 right-0 w-80 h-80 bg-accent/20 rounded-full blur-3xl -mr-40 -mt-40" />
             <div className="relative z-10 h-full flex flex-col justify-between gap-16">
               <div>
-                <p className="text-[10px] font-mono tracking-[0.4em] uppercase text-accent font-black mb-6">
+                <p className="text-[10px] font-mono tracking-[0.4em] uppercase text-accent dark:text-primary-foreground font-black mb-6">
                   Member Impact
                 </p>
                 <h1 className="text-5xl md:text-7xl font-serif font-bold leading-none mb-8">
                   Your Circular Journey, Verified.
                 </h1>
-                <p className="text-lg md:text-xl text-primary-foreground/75 italic max-w-xl leading-relaxed">
+                <p className="text-lg md:text-xl text-primary-foreground/80 dark:text-primary-foreground/90 italic max-w-xl leading-relaxed">
                   Sign in to connect your personal dashboard with carbon savings, reclaimed waste, tree support, and carbon wallet activity.
                 </p>
               </div>
@@ -236,7 +236,7 @@ export default function AuthPage() {
                   "Verified certificates"
                 ].map((item) => (
                   <div key={item} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/10 p-4 backdrop-blur">
-                    <CheckCircle2 className="w-5 h-5 text-accent shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-accent dark:text-primary-foreground shrink-0" />
                     <span className="font-mono text-[10px] uppercase tracking-widest font-bold">{item}</span>
                   </div>
                 ))}

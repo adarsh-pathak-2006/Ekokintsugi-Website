@@ -205,11 +205,11 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
       <div className="w-full md:w-80 bg-primary p-8 flex flex-col text-primary-foreground border-r border-primary-foreground/10">
         <div className="flex items-center gap-4 mb-16">
           <span className="logo-surface px-2.5 py-2">
-            <img src="/logo.png" alt="Logo" className="h-8 w-auto" />
+            <img src="/logo_eko.png" alt="Logo" className="h-8 w-auto" />
           </span>
           <div>
             <h2 className="text-xl font-serif font-bold">Impact Hub</h2>
-            <p className="text-[10px] font-mono tracking-widest uppercase text-primary-foreground/60">
+            <p className="text-[10px] font-mono tracking-widest uppercase text-primary-foreground/80">
               {isDemo ? "Demo Visitor Mode" : "Personal Dashboard"}
             </p>
           </div>
@@ -237,8 +237,8 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
 
         {isDemo && (
           <div className="mt-8 rounded-3xl border border-white/10 bg-white/8 p-5">
-            <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-accent font-black mb-3">Unlock Your Data</p>
-            <p className="text-sm text-primary-foreground/75 leading-relaxed mb-4">
+            <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-accent dark:text-primary-foreground font-black mb-3">Unlock Your Data</p>
+            <p className="text-sm text-primary-foreground/80 dark:text-primary-foreground/90 leading-relaxed mb-4">
               Sign in to replace the preview metrics with your own tracked orders, certificates, trees, and wallet history.
             </p>
             <div className="flex gap-3">
@@ -329,11 +329,11 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
                     <div className="rounded-[2.5rem] bg-primary text-primary-foreground p-8 shadow-strong overflow-hidden relative">
                       <div className="absolute top-0 right-0 w-36 h-36 rounded-full bg-accent/20 blur-3xl" />
                       <div className="relative z-10">
-                        <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-accent font-black mb-4">What Unlocks</p>
+                        <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-accent dark:text-primary-foreground font-black mb-4">What Unlocks</p>
                         <ul className="space-y-4">
                           {["Personal impact timeline", "Profile-linked certificates", "Real wallet balance", "Your own reforestation history"].map((item) => (
                             <li key={item} className="flex items-start gap-3 text-sm">
-                              <Leaf className="w-4 h-4 text-accent mt-0.5 shrink-0" />
+                              <Leaf className="w-4 h-4 text-accent dark:text-primary-foreground mt-0.5 shrink-0" />
                               <span>{item}</span>
                             </li>
                           ))}
@@ -392,7 +392,7 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
                     <div className="bg-primary p-12 rounded-[2.5rem] text-primary-foreground relative overflow-hidden group">
                       <div className="absolute top-0 right-0 w-40 h-40 bg-accent/20 rounded-full -mr-20 -mt-20 blur-3xl" />
                       <div className="relative z-10 flex flex-col h-full">
-                        <p className="font-mono text-[10px] tracking-[0.4em] uppercase mb-6 text-accent">Social Impact Card</p>
+                        <p className="font-mono text-[10px] tracking-[0.4em] uppercase mb-6 text-accent dark:text-primary-foreground">Social Impact Card</p>
                         <h4 className="text-4xl font-serif font-bold mb-6">"I&apos;m building a greener future with EkoKintsugi."</h4>
                         <div className="mt-auto pt-8 border-t border-primary-foreground/20 flex justify-between items-center">
                           <div className="flex gap-2">
@@ -403,7 +403,7 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
                               <Download className="w-5 h-5" />
                             </button>
                           </div>
-                          <img src="/logo.png" className="h-8" alt="EkoKintsugi logo" />
+                          <img src="/logo_eko.png" className="h-8" alt="EkoKintsugi logo" />
                         </div>
                       </div>
                     </div>
@@ -427,7 +427,7 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
                       <div className="flex justify-between items-center mb-8">
                         <div>
                           <h4 className="text-2xl font-serif font-bold text-primary">Live Sapling Stats</h4>
-                          <p className="text-sm font-mono text-accent font-bold">Allocated Trees: {stats.treeCount}</p>
+                          <p className="text-sm font-mono text-accent dark:text-primary font-bold">Allocated Trees: {stats.treeCount}</p>
                         </div>
                         <div className="bg-primary/5 px-4 py-2 rounded-lg text-primary text-[10px] font-black uppercase tracking-widest">Active Growth</div>
                       </div>
@@ -460,7 +460,7 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
                   <div className="bg-card p-16 rounded-[4rem] shadow-strong border-[16px] border-primary relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-bl-[100px]" />
                     <div className="text-center mb-16">
-                      <img src="/logo.png" className="h-16 mx-auto mb-10" alt="Logo" />
+                      <img src="/logo_eko.png" className="h-16 mx-auto mb-10" alt="Logo" />
                       <h2 className="text-xs font-mono tracking-[0.5em] uppercase font-black text-accent mb-6">Official Carbon Certificate</h2>
                       <h3 className="text-5xl font-serif font-bold text-primary mb-4 italic">{certificateName}</h3>
                       <div className="w-20 h-px bg-accent mx-auto" />
@@ -468,11 +468,11 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
 
                     <div className="space-y-10 mb-16">
                       <div className="flex justify-between items-center border-b border-border pb-6">
-                        <span className="text-[10px] font-mono tracking-widest uppercase font-bold opacity-50">Total Verified Impact</span>
+                        <span className="text-[10px] font-mono tracking-widest uppercase font-bold text-muted-foreground">Total Verified Impact</span>
                         <span className="text-xl font-serif font-bold text-primary">{stats.totalCo2.toFixed(1)} KG CO2 Saved</span>
                       </div>
                       <div className="flex justify-between items-center border-b border-border pb-6">
-                        <span className="text-[10px] font-mono tracking-widest uppercase font-bold opacity-50">Cert Status</span>
+                        <span className="text-[10px] font-mono tracking-widest uppercase font-bold text-muted-foreground">Cert Status</span>
                         <span className="text-lg font-serif">{stats.totalCo2 > 0 ? "PLATINUM LEVEL" : "PENDING"}</span>
                       </div>
                     </div>
@@ -499,10 +499,10 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
 
                     <div className="relative z-10 flex justify-between items-start mb-16">
                       <div>
-                        <p className="font-mono text-[10px] tracking-widest uppercase opacity-70 mb-2">Available Balance</p>
+                        <p className="font-mono text-[10px] tracking-widest uppercase text-primary-foreground/85 mb-2">Available Balance</p>
                         <div className="flex items-baseline gap-2">
                           <span className="text-6xl md:text-8xl font-serif font-black tracking-tighter">{stats.credits.toFixed(3)}</span>
-                          <span className="text-accent font-bold tracking-widest uppercase">CC</span>
+                          <span className="text-accent dark:text-primary-foreground font-bold tracking-widest uppercase">CC</span>
                         </div>
                       </div>
                       <Wallet className="w-10 h-10 opacity-50" />
@@ -550,7 +550,7 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
                             </div>
                             <div className="text-right">
                               <p className="font-bold text-accent font-mono">+ {creditsEarned} CC</p>
-                              <p className="text-[10px] text-muted-foreground uppercase opacity-70">Verified</p>
+                              <p className="text-[10px] text-muted-foreground uppercase">Verified</p>
                             </div>
                           </div>
                         );

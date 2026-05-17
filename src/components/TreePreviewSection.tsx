@@ -7,7 +7,7 @@ export default function TreePreviewSection() {
     <section className="py-28 surface-gradient border-t border-border/50">
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-14 text-center">
-          <span className="inline-block rounded-full border border-primary/15 bg-primary/10 px-4 py-2 text-[10px] font-mono font-black uppercase tracking-[0.35em] text-accent">
+          <span className="inline-block rounded-full border border-primary/15 bg-primary/10 px-4 py-2 text-[10px] font-mono font-black uppercase tracking-[0.35em] text-accent dark:text-primary">
             Tree Plantation Preview
           </span>
           <h2 className="mt-6 text-5xl md:text-6xl font-serif font-bold text-primary">Reforestation Tracker</h2>
@@ -29,7 +29,7 @@ export default function TreePreviewSection() {
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
                 <div>
                   <h3 className="text-2xl font-serif font-bold text-primary">Live Sapling Stats</h3>
-                  <p className="text-sm font-mono text-accent font-bold">Allocated Trees: {previewTreeCount}</p>
+                  <p className="text-sm font-mono text-accent dark:text-primary font-bold">Allocated Trees: {previewTreeCount}</p>
                 </div>
                 <div className="bg-primary/5 px-4 py-2 rounded-lg text-primary text-[10px] font-black uppercase tracking-widest">
                   Active Growth
@@ -60,7 +60,7 @@ export default function TreePreviewSection() {
             <div className="bg-primary text-primary-foreground rounded-3xl p-8 shadow-strong relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-accent/20 blur-3xl" />
               <div className="relative z-10">
-                <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-accent font-black mb-4">Dashboard Access</p>
+                <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-accent dark:text-primary-foreground font-black mb-4">Dashboard Access</p>
                 <h3 className="text-3xl font-serif font-bold mb-4">Track your assigned plantation zone and impact story.</h3>
                 <p className="text-primary-foreground/75 leading-relaxed mb-6">
                   Sign in to unlock your personal reforestation data, tree history, and the full live plantation dashboard.

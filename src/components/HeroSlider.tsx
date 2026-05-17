@@ -13,14 +13,14 @@ const slides = [
     id: 2,
     title: "Sustainable Living",
     description: "Crafted for durability and style.",
-    image: "/images/hero/hero-2.jpg",
+    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/products/mosaic-bifold-wallet.jpeg",
     link: "#products"
   },
   {
     id: 3,
     title: "Eco Luxury Craft",
     description: "Redefining elegance with purpose.",
-    image: "/images/hero/hero-3.jpg",
+    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/products/indigo-floral-ballet-flats.jpeg",
     link: "#products"
   },
   {
