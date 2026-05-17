@@ -152,11 +152,27 @@ export function productBelongsToCategory(product: CatalogProduct, category: Prod
   const haystack = normalizeText([product.category, product.name, product.description].filter(Boolean).join(" "));
 
   if (normalizedCategory) {
-    if (category.categoryLabels.some((label) => normalizedCategory === normalizeText(label))) {
-      return true;
+    // Older DB rows may still use the generic "Bags" label. Split those rows
+    // into the new categories by product content instead of treating all of them
+    // as leather bags.
+    if (normalizedCategory === "bags" || normalizedCategory === "bag") {
+      const isBackpackLike = ["backpack", "commuter backpack", "utility backpack", "travel backpack", "zip backpack"].some((term) =>
+        haystack.includes(normalizeText(term))
+      );
+
+      if (category.slug === "leather-backpacks") {
+        return isBackpackLike;
+      }
+
+      if (category.slug === "leather-bags") {
+        return !isBackpackLike;
+      }
     }
+
+    return category.categoryLabels.some((label) => normalizedCategory === normalizeText(label));
   }
 
+  // Only fall back to text inference when the product has no category at all.
   return category.queryTerms.some((term) => haystack.includes(normalizeText(term)));
 }
 
