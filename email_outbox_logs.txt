@@ -202,3 +202,38 @@ ENVIRONMENTAL DIVIDEND:
 This order request has been generated dynamically by the EkoKintsugi app.
 ======================================================================
 
+
+--- EMAIL SENT [30/5/2026, 1:44:54 am] ---
+FROM: indianpsyco2000@gmail.com
+TO: adarshpathak2006@gmail.com
+VIA: Gmail SMTP
+
+======================================================================
+NEW CIRCULAR ORDER DISPATCH REQUEST
+======================================================================
+DATE/TIME: 30/5/2026, 1:44:54 am
+ORDER REF : ord-8zg5q7xb0
+TRACKING  : EK-396550
+
+CLIENT INFORMATION:
+-------------------
+Name   : Render SMTP Test Client
+Email  : render-client@ekokintsugi.com
+Address: 456 Render Cloud Highway, Node-V20
+Notes  : None
+
+ORDER SELECTION:
+----------------
+• Hexagon Patchwork Keychain (Qty: 1) - Category: Accessories
+
+ENVIRONMENTAL DIVIDEND:
+-----------------------
+• CO2 Diverted  : 0.2 kg
+• Waste Reclaimed: 0.0 kg
+• Saplings Allocated in Agra: 1 sapling(s)
+• Applied Carbon Discount: 0.000 CC
+
+----------------------------------------------------------------------
+This order request has been generated dynamically by the EkoKintsugi app.
+======================================================================
+

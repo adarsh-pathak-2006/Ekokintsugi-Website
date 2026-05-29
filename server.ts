@@ -6,8 +6,14 @@ import { createClient } from "@supabase/supabase-js";
 import dotenv from "dotenv";
 import fs from "fs";
 import nodemailer from "nodemailer";
+import dns from "dns";
 
 dotenv.config();
+
+// Globally prefer IPv4 DNS resolution to avoid IPv6 connection issues (e.g. ENETUNREACH)
+if (typeof dns.setDefaultResultOrder === "function") {
+  dns.setDefaultResultOrder("ipv4first");
+}
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
@@ -26,11 +32,20 @@ const isGmailConfigured = Boolean(gmailUser && gmailAppPassword && !gmailUser.in
 
 const mailTransporter = isGmailConfigured
   ? nodemailer.createTransport({
-      service: "gmail",
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
       auth: {
         user: gmailUser,
         pass: gmailAppPassword,
       },
+      connectionTimeout: 5000, // 5 seconds connection timeout
+      greetingTimeout: 5000,   // 5 seconds greeting timeout
+      socketTimeout: 5000,     // 5 seconds socket inactivity timeout
+      // Force connection over IPv4 to bypass local IPv6 routing limits
+      lookup: (hostname, options, callback) => {
+        dns.lookup(hostname, { family: 4 }, callback);
+      }
     })
   : null;
 
@@ -560,20 +575,19 @@ This order request has been generated dynamically by the EkoKintsugi app.
 </div>
 `;
 
-    // Send real email if Gmail is configured, otherwise log to terminal
+    // Send real email in the background if Gmail is configured, otherwise log to terminal
     if (mailTransporter) {
-      try {
-        await mailTransporter.sendMail({
-          from: `"EkoKintsugi Orders" <${gmailUser}>`,
-          to: recipientAddr,
-          subject: `🌿 New Circular Order [${trackingNumber}] — ${shippingDetails.name}`,
-          text: plainTextBody,
-          html: htmlBody,
-        });
+      mailTransporter.sendMail({
+        from: `"EkoKintsugi Orders" <${gmailUser}>`,
+        to: recipientAddr,
+        subject: `🌿 New Circular Order [${trackingNumber}] — ${shippingDetails.name}`,
+        text: plainTextBody,
+        html: htmlBody,
+      }).then(() => {
         console.log(`✅ Order email sent via Gmail to ${recipientAddr}`);
-      } catch (mailErr: any) {
+      }).catch((mailErr: any) => {
         console.error(`⚠️ Gmail send failed (order still saved): ${mailErr.message}`);
-      }
+      });
     } else {
       // Fallback: print styled box to terminal
       const terminalEmailBox = `
