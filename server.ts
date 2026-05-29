@@ -42,9 +42,11 @@ const mailTransporter = isGmailConfigured
       connectionTimeout: 5000, // 5 seconds connection timeout
       greetingTimeout: 5000,   // 5 seconds greeting timeout
       socketTimeout: 5000,     // 5 seconds socket inactivity timeout
-      // Force connection over IPv4 to bypass local IPv6 routing limits
+      // Force connection over IPv4 to bypass Render container IPv6 routing limits
       lookup: (hostname, options, callback) => {
-        dns.lookup(hostname, { family: 4 }, callback);
+        const actualCallback = typeof options === "function" ? options : callback;
+        const actualOptions = typeof options === "object" ? options : {};
+        dns.lookup(hostname, { ...actualOptions, family: 4 }, actualCallback);
       }
     })
   : null;
