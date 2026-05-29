@@ -81,15 +81,19 @@ export default function Navbar({ onImpactClick }: { onImpactClick: () => void })
           </button>
           {user ? (
             <div className="flex items-center gap-2">
-              <div className="hidden xl:flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-primary">
+              <Link
+                to="/account"
+                className="flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-primary hover:text-accent hover:border-accent hover:scale-[1.02] transition-all duration-300 cursor-pointer"
+                title="View Account"
+              >
                 <UserRound className="w-4 h-4 text-accent" />
-                <span className="max-w-28 truncate text-[10px] font-mono tracking-widest uppercase font-black">
+                <span className="hidden sm:inline max-w-28 truncate text-[10px] font-mono tracking-widest uppercase font-black">
                   {displayName}
                 </span>
-              </div>
+              </Link>
               <button
                 onClick={signOut}
-                className="p-2.5 rounded-full border border-border/50 text-muted-foreground hover:text-primary hover:border-border transition-colors bg-card"
+                className="p-2.5 rounded-full border border-border/50 text-muted-foreground hover:text-primary hover:border-border transition-colors bg-card cursor-pointer"
                 title="Sign out"
               >
                 <LogOut size={18} />

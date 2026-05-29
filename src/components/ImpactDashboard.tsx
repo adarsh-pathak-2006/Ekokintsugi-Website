@@ -12,6 +12,7 @@ import {
   TrendingDown,
   Wallet,
   Sparkles,
+  UserRound,
   X
 } from "lucide-react";
 import { type FC, useEffect, useState } from "react";
@@ -356,11 +357,19 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
             { id: "overview", icon: TrendingDown, label: "Impact Overview" },
             { id: "tree", icon: TreePine, label: "Tree Tracking" },
             { id: "certificate", icon: Award, label: "Carbon Certificates" },
-            { id: "wallet", icon: Wallet, label: "Carbon Wallet" }
+            { id: "wallet", icon: Wallet, label: "Carbon Wallet" },
+            { id: "account", icon: UserRound, label: "My Account" }
           ].map((item) => (
             <button
               key={item.id}
-              onClick={() => setActiveTab(item.id as "overview" | "tree" | "certificate" | "wallet")}
+              onClick={() => {
+                if (item.id === "account") {
+                  onClose();
+                  navigate("/account");
+                } else {
+                  setActiveTab(item.id as "overview" | "tree" | "certificate" | "wallet");
+                }
+              }}
               className={`w-full flex items-center gap-4 px-6 py-4 rounded-2xl transition-all cursor-pointer font-bold uppercase text-[10px] tracking-[0.2em] ${
                 activeTab === item.id ? "bg-accent text-accent-foreground shadow-lg translate-x-2" : "hover:bg-primary-foreground/10 opacity-70"
               }`}

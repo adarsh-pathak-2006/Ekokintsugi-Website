@@ -20,6 +20,7 @@ import AuthPage from "./pages/AuthPage";
 import { CartProvider } from "./lib/CartContext";
 import CartDrawer from "./components/CartDrawer";
 import ProductDetailPage from "./pages/ProductDetailPage";
+import AccountPage from "./pages/AccountPage";
 
 function AppShell() {
   const location = useLocation();
@@ -69,6 +70,7 @@ function AppShell() {
             <Route path="/impact" element={<ImpactPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/auth" element={<AuthPage />} />
+            <Route path="/account" element={<AccountPage />} />
             <Route path="/products/item/:id" element={<ProductDetailPage />} />
           </Routes>
         </main>

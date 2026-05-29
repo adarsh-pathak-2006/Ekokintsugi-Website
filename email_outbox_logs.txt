@@ -237,3 +237,108 @@ ENVIRONMENTAL DIVIDEND:
 This order request has been generated dynamically by the EkoKintsugi app.
 ======================================================================
 
+
+--- EMAIL SENT [30/5/2026, 1:50:28 am] ---
+FROM: indianpsyco2000@gmail.com
+TO: adarshpathak2006@gmail.com
+VIA: Gmail SMTP
+
+======================================================================
+NEW CIRCULAR ORDER DISPATCH REQUEST
+======================================================================
+DATE/TIME: 30/5/2026, 1:50:28 am
+ORDER REF : ord-cdmjhm389
+TRACKING  : EK-926628
+
+CLIENT INFORMATION:
+-------------------
+Name   : Artisan Eco
+Email  : artisan.eco@gmail.com
+Address: sdfdsf
+Notes  : sdfsdfsd
+
+ORDER SELECTION:
+----------------
+• Urban Backpack (Qty: 1) - Category: Bags
+
+ENVIRONMENTAL DIVIDEND:
+-----------------------
+• CO2 Diverted  : 6.8 kg
+• Waste Reclaimed: 1.2 kg
+• Saplings Allocated in Agra: 4 sapling(s)
+• Applied Carbon Discount: 0.000 CC
+
+----------------------------------------------------------------------
+This order request has been generated dynamically by the EkoKintsugi app.
+======================================================================
+
+
+--- EMAIL SENT [30/5/2026, 2:04:36 am] ---
+FROM: indianpsyco2000@gmail.com
+TO: adarshpathak2006@gmail.com
+VIA: Gmail SMTP
+
+======================================================================
+NEW CIRCULAR ORDER DISPATCH REQUEST
+======================================================================
+DATE/TIME: 30/5/2026, 2:04:36 am
+ORDER REF : ord-hhvc3cfil
+TRACKING  : EK-511591
+
+CLIENT INFORMATION:
+-------------------
+Name   : Circular Artisan
+Email  : artisan-test@ekokintsugi.com
+Address: 123 Eco Road, Green City, 56789
+Notes  : None
+
+ORDER SELECTION:
+----------------
+• Urban Backpack (Qty: 1) - Category: Bags
+
+ENVIRONMENTAL DIVIDEND:
+-----------------------
+• CO2 Diverted  : 6.8 kg
+• Waste Reclaimed: 1.2 kg
+• Saplings Allocated in Agra: 4 sapling(s)
+• Applied Carbon Discount: 0.000 CC
+
+----------------------------------------------------------------------
+This order request has been generated dynamically by the EkoKintsugi app.
+======================================================================
+
+
+--- EMAIL SENT [30/5/2026, 2:34:51 am] ---
+FROM: indianpsyco2000@gmail.com
+TO: adarshpathak2006@gmail.com
+VIA: Gmail SMTP
+
+======================================================================
+NEW CIRCULAR ORDER DISPATCH REQUEST
+======================================================================
+DATE/TIME: 30/5/2026, 2:34:51 am
+ORDER REF : ord-4a9yb6z2i
+TRACKING  : EK-987339
+
+CLIENT INFORMATION:
+-------------------
+Name   : Test User
+Email  : test@ekokintsugi.com
+Address: sadas
+Notes  : dadasd
+
+ORDER SELECTION:
+----------------
+• Mosaic City Backpack (Qty: 5) - Category: Leather Backpacks
+
+ENVIRONMENTAL DIVIDEND:
+-----------------------
+• CO2 Diverted  : 24.5 kg
+• Waste Reclaimed: 5.0 kg
+• Saplings Allocated in Agra: 13 sapling(s)
+• Applied Carbon Discount: 0.000 CC
+
+----------------------------------------------------------------------
+This order request has been generated dynamically by the EkoKintsugi app.
+======================================================================
+

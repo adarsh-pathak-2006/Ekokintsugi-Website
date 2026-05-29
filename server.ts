@@ -734,6 +734,66 @@ async function handleImpactRequest(req: Request, res: Response) {
 app.get("/api/impact", handleImpactRequest);
 app.get("/api/impact/:userId", handleImpactRequest);
 
+// Fetch All User Orders (Local Fallback & Supabase Enriched)
+app.get("/api/orders", async (req, res) => {
+  const authenticatedUserId = await getAuthenticatedUserId(req);
+  if (!authenticatedUserId) {
+    return res.status(401).json({ error: "Please sign in to view your orders." });
+  }
+
+  try {
+    const localDb = loadLocalDb();
+    const userOrders = localDb.orders.filter(o => o.user_id === authenticatedUserId);
+
+    let dbOrders: any[] = [];
+    if (supabase) {
+      try {
+        const { data } = await supabase
+          .from("orders")
+          .select("*, products(*)")
+          .eq("user_id", authenticatedUserId)
+          .order("created_at", { ascending: false });
+        dbOrders = data || [];
+      } catch {
+        // silent bypass
+      }
+    }
+
+    // Enrich local orders with product info from sampleProducts
+    const enrichedLocalOrders = userOrders.map(order => {
+      const product = sampleProducts.find(p => p.name === order.product_id || p.name.toLowerCase().replace(/\s+/g, "-") === order.product_id);
+      return {
+        id: order.id,
+        user_id: order.user_id,
+        product_id: order.product_id,
+        quantity: order.quantity,
+        total_price: order.total_price,
+        created_at: order.created_at,
+        product: product || { name: "Circular Product", base_price: order.total_price / order.quantity }
+      };
+    });
+
+    // Format DB orders to match enriched structure
+    const formattedDbOrders = dbOrders.map(order => ({
+      id: order.id,
+      user_id: order.user_id,
+      product_id: order.product_id,
+      quantity: order.quantity,
+      total_price: order.total_price,
+      created_at: order.created_at,
+      product: order.products || { name: "Circular Product", base_price: order.total_price / order.quantity }
+    }));
+
+    // Merge both and sort by newest first
+    const allOrders = [...enrichedLocalOrders, ...formattedDbOrders];
+    allOrders.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+
+    res.json(allOrders);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Seed Data Endpoint (Utility)
 app.post("/api/admin/seed", async (req, res) => {
   if (!supabase) {
