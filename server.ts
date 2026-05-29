@@ -603,21 +603,32 @@ This order request has been generated dynamically by the EkoKintsugi app.
 </div>
 `;
 
-    // Send real email in the background if Gmail is configured, otherwise log to terminal
+    const isHostedOnRender = Boolean(process.env.RENDER || process.env.NODE_ENV === "production");
+
+    // Send real email and await result, making it a strict requirement if configured or hosted
     if (mailTransporter) {
-      mailTransporter.sendMail({
-        from: `"EkoKintsugi Orders" <${gmailUser}>`,
-        to: recipientAddr,
-        subject: `🌿 New Circular Order [${trackingNumber}] — ${shippingDetails.name}`,
-        text: plainTextBody,
-        html: htmlBody,
-      }).then(() => {
+      try {
+        await mailTransporter.sendMail({
+          from: `"EkoKintsugi Orders" <${gmailUser}>`,
+          to: recipientAddr,
+          subject: `🌿 New Circular Order [${trackingNumber}] — ${shippingDetails.name}`,
+          text: plainTextBody,
+          html: htmlBody,
+        });
         console.log(`✅ Order email sent via Gmail to ${recipientAddr}`);
-      }).catch((mailErr: any) => {
-        console.error(`⚠️ Gmail send failed (order still saved): ${mailErr.message}`);
+      } catch (mailErr: any) {
+        console.error(`⚠️ Gmail send failed: ${mailErr.message}`);
+        return res.status(500).json({
+          error: `Order recorded locally, but email dispatch failed: ${mailErr.message}. Please verify your server credentials.`
+        });
+      }
+    } else if (isHostedOnRender) {
+      console.warn("⚠️ Checkout attempted but Gmail SMTP is not configured on Render.");
+      return res.status(503).json({
+        error: "Gmail SMTP environment variables (GMAIL_USER and GMAIL_APP_PASSWORD) are not configured on Render. Please add them in Render settings to enable email notifications."
       });
     } else {
-      // Fallback: print styled box to terminal
+      // Local fallback: print styled box to terminal
       const terminalEmailBox = `
 ┌─────────────────────────── EMAIL OUTBOX ───────────────────────────┐
 │ FROM: ${senderAddr.padEnd(52)} │
