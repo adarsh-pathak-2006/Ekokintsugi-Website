@@ -376,6 +376,7 @@ app.post("/api/orders/checkout", async (req, res) => {
     const orderIds: string[] = [];
     let totalCo2Saved = 0;
     let totalWasteReclaimed = 0;
+    let firstDbOrderId: string | undefined;
 
     for (const item of items) {
       const prod = item.product;
@@ -439,6 +440,10 @@ app.post("/api/orders/checkout", async (req, res) => {
           }).select().single();
 
           if (dbOrder) {
+            if (!firstDbOrderId) {
+              firstDbOrderId = dbOrder.id;
+            }
+
             const { data: dbTree } = await supabase.from("trees").insert({
               user_id: authenticatedUserId,
               location: "Agra Reforest Zone B-12",
@@ -483,6 +488,29 @@ app.post("/api/orders/checkout", async (req, res) => {
     }
 
     saveLocalDb(localDb);
+
+    // Supabase Parallel Sync for Carbon Ledger
+    if (supabase) {
+      try {
+        await supabase.from("carbon_ledger").insert({
+          user_id: authenticatedUserId,
+          credits_earned: creditsEarned,
+          credits_used: 0,
+          source_order_id: firstDbOrderId || null
+        });
+
+        if (creditsToDeduct > 0) {
+          await supabase.from("carbon_ledger").insert({
+            user_id: authenticatedUserId,
+            credits_earned: 0,
+            credits_used: creditsToDeduct,
+            source_order_id: firstDbOrderId || null
+          });
+        }
+      } catch {
+        // silent bypass
+      }
+    }
 
     // ─── Email Dispatch ─────────────────────────────────────────────
     const senderAddr = gmailUser || "orders@ekokintsugi.com";
