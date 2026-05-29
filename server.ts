@@ -10,10 +10,17 @@ import dns from "dns";
 
 dotenv.config();
 
-// Globally prefer IPv4 DNS resolution to avoid IPv6 connection issues (e.g. ENETUNREACH)
-if (typeof dns.setDefaultResultOrder === "function") {
-  dns.setDefaultResultOrder("ipv4first");
-}
+// Globally override dns.lookup to strictly force IPv4 and prevent outbound IPv6 connection failures (e.g. ENETUNREACH)
+const originalDnsLookup = dns.lookup;
+// @ts-ignore
+dns.lookup = function (hostname, options, callback) {
+  if (typeof options === "function") {
+    callback = options;
+    options = {};
+  }
+  const actualOptions = typeof options === "object" ? options : {};
+  return originalDnsLookup(hostname, { ...actualOptions, family: 4 }, callback);
+};
 
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
