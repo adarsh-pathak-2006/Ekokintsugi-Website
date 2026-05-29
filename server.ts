@@ -33,15 +33,15 @@ const isGmailConfigured = Boolean(gmailUser && gmailAppPassword && !gmailUser.in
 const mailTransporter = isGmailConfigured
   ? nodemailer.createTransport({
       host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
+      port: 587,
+      secure: false, // Set to false for port 587 (upgrades automatically via STARTTLS)
       auth: {
         user: gmailUser,
         pass: gmailAppPassword,
       },
-      connectionTimeout: 5000, // 5 seconds connection timeout
-      greetingTimeout: 5000,   // 5 seconds greeting timeout
-      socketTimeout: 5000,     // 5 seconds socket inactivity timeout
+      connectionTimeout: 10000, // 10 seconds connection timeout
+      greetingTimeout: 10000,   // 10 seconds greeting timeout
+      socketTimeout: 10000,     // 10 seconds socket inactivity timeout
       // Force connection over IPv4 to bypass Render container IPv6 routing limits
       lookup: (hostname, options, callback) => {
         const actualCallback = typeof options === "function" ? options : callback;
