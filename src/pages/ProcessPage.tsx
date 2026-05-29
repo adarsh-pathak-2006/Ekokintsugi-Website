@@ -6,7 +6,7 @@ export default function ProcessPage() {
     <div className="py-20 min-h-screen surface-gradient">
       <div className="max-w-7xl mx-auto px-6">
         
-        <header className="mb-20">
+        <header className="mb-20 text-center">
           <span className="section-badge mb-4">
             <span className="section-badge-label">Operational Architecture</span>
           </span>
@@ -21,9 +21,12 @@ export default function ProcessPage() {
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="p-10 border-2 border-border/80 rounded-[2.5rem] relative overflow-hidden bg-card"
+            whileHover={{ y: -8, scale: 1.015 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            className="p-10 border-2 border-border/80 rounded-[2.5rem] relative overflow-hidden bg-card group cursor-pointer hover:border-accent/40 hover:shadow-strong transition-all duration-300"
           >
-            <MapPin className="text-accent w-10 h-10 mb-6" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32 transition-transform duration-700 group-hover:scale-125 group-hover:bg-primary/10" />
+            <MapPin className="text-accent w-10 h-10 mb-6 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-12" />
             <h3 className="text-3xl font-serif font-bold mb-2">Jharkhand</h3>
             <p className="text-accent font-mono text-xs font-bold tracking-widest uppercase mb-8">Processing & Recycling</p>
             
@@ -43,10 +46,12 @@ export default function ProcessPage() {
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="p-10 border-2 border-primary rounded-[2.5rem] relative overflow-hidden bg-primary text-primary-foreground"
+            whileHover={{ y: -8, scale: 1.015 }}
+            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            className="p-10 border-2 border-primary rounded-[2.5rem] relative overflow-hidden bg-primary text-primary-foreground group cursor-pointer hover:shadow-[0_24px_50px_-12px_rgba(0,0,0,0.35)] transition-shadow duration-300"
           >
-            <MapPin className="text-primary-foreground/50 w-10 h-10 mb-6" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-accent/15 rounded-full blur-3xl -mr-32 -mt-32 transition-transform duration-700 group-hover:scale-125 group-hover:bg-accent/25" />
+            <MapPin className="text-primary-foreground/50 w-10 h-10 mb-6 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-12" />
             <h3 className="text-3xl font-serif font-bold mb-2">Uttar Pradesh</h3>
             <p className="text-accent dark:text-primary-foreground font-mono text-xs font-bold tracking-widest uppercase mb-8">Cutting, Assembly & Export</p>
             
@@ -77,12 +82,22 @@ export default function ProcessPage() {
                { title: "DPP Ready", desc: "Built straight into the database for the 2026 Passport mandates." },
                { title: "Yield Analytics", desc: "Production forecasting down to the gram." },
                { title: "EU Exclusive", desc: "Exclusive technology access tailored for Taleco Handles GmbH." }
-             ].map((tech, i) => (
-               <div key={i} className="p-6 rounded-2xl bg-muted/40 hover:bg-muted/80 transition-colors">
-                  <h4 className="font-bold text-primary font-mono text-sm tracking-tight mb-2 flex items-center gap-2"><Repeat className="w-4 h-4 text-accent" /> {tech.title}</h4>
-                  <p className="text-muted-foreground text-sm">{tech.desc}</p>
-               </div>
-             ))}
+              ].map((tech, i) => (
+                <motion.div 
+                  key={i} 
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.05, type: "spring", stiffness: 300, damping: 20 }}
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  className="p-6 rounded-2xl bg-muted/40 hover:bg-muted/80 transition-all duration-300 group cursor-pointer hover:shadow-soft border border-transparent hover:border-accent/10"
+                >
+                   <h4 className="font-bold text-primary font-mono text-sm tracking-tight mb-2 flex items-center gap-2">
+                     <Repeat className="w-4 h-4 text-accent transition-transform duration-500 group-hover:rotate-180" /> {tech.title}
+                   </h4>
+                   <p className="text-muted-foreground text-sm">{tech.desc}</p>
+                </motion.div>
+              ))}
           </div>
         </section>
 

@@ -1,15 +1,8 @@
 import { motion } from "motion/react";
 import type { CatalogProduct } from "../lib/productCatalog";
+import { Link } from "react-router-dom";
 
-function formatPrice(value: CatalogProduct["base_price"]) {
-  const numericValue = typeof value === "string" ? Number.parseFloat(value) : value;
 
-  if (typeof numericValue !== "number" || Number.isNaN(numericValue)) {
-    return "Price on request";
-  }
-
-  return `EUR ${numericValue}`;
-}
 
 function formatImpactValue(value: CatalogProduct["co2_factor"] | CatalogProduct["waste_factor"], unit: string) {
   const numericValue = typeof value === "string" ? Number.parseFloat(value) : value;
@@ -66,39 +59,33 @@ export default function ProductCatalogueGrid({
           key={item.id || `${item.name}-${idx}`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: idx * 0.05 }}
-          className="bg-card border border-border/50 rounded-[2rem] overflow-hidden group hover:border-accent/40 shadow-soft transition-all flex flex-col"
+          whileHover={{ y: -8, scale: 1.015 }}
+          transition={{ type: "spring", stiffness: 400, damping: 25, delay: idx * 0.05 }}
+          className="bg-card border border-border/50 rounded-[2rem] overflow-hidden group hover:border-accent/40 shadow-soft hover:shadow-strong transition-all duration-300 flex flex-col cursor-pointer"
         >
-          <div className="aspect-[4/3] bg-muted overflow-hidden relative">
-            <img
-              src={item.image_url || item.image || "/logo_eko.png"}
-              alt={item.name}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="absolute top-4 right-4 bg-background/90 backdrop-blur px-3 py-1.5 rounded-full border border-border shadow-sm">
-              <span
-                aria-label="Price hidden"
-                title="Price coming soon"
-                className="font-serif font-bold text-primary blur-[6px] select-none pointer-events-none"
-              >
-                {formatPrice(item.base_price)}
-              </span>
+          <Link to={`/products/item/${item.id}`} className="flex flex-col h-full hover:no-underline">
+            <div className="aspect-[4/3] bg-muted overflow-hidden relative">
+              <img
+                src={item.image_url || item.image || "/logo_eko.png"}
+                alt={item.name}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108"
+              />
             </div>
-          </div>
 
-          <div className="p-6 flex-grow flex flex-col">
-            <p className="text-[10px] font-mono tracking-widest text-accent uppercase font-bold mb-2">
-              {item.category || "Product"}
-            </p>
-            <h3 className="font-serif text-xl text-primary font-bold mb-3">{item.name}</h3>
-            <p className="text-sm text-muted-foreground italic flex-grow mb-4">
-              {item.description || item.desc || "Crafted from circular materials with traceable impact."}
-            </p>
-            <div className="mt-auto flex justify-between items-center text-xs font-mono font-bold uppercase tracking-widest pt-4 border-t border-border">
-              <span className="text-accent opacity-70">CO2: {formatImpactValue(item.co2_factor, "kg")}</span>
-              <span className="text-primary opacity-60">Waste: {formatImpactValue(item.waste_factor, "kg")}</span>
+            <div className="p-6 flex-grow flex flex-col">
+              <p className="text-[10px] font-mono tracking-widest text-accent uppercase font-bold mb-2">
+                {item.category || "Product"}
+              </p>
+              <h3 className="font-serif text-xl text-primary font-bold mb-3">{item.name}</h3>
+              <p className="text-sm text-muted-foreground italic flex-grow mb-4">
+                {item.description || item.desc || "Crafted from circular materials with traceable impact."}
+              </p>
+              <div className="mt-auto flex justify-between items-center text-xs font-mono font-bold uppercase tracking-widest pt-4 border-t border-border">
+                <span className="text-accent opacity-70">CO2: {formatImpactValue(item.co2_factor, "kg")}</span>
+                <span className="text-primary opacity-60">Waste: {formatImpactValue(item.waste_factor, "kg")}</span>
+              </div>
             </div>
-          </div>
+          </Link>
         </motion.article>
       ))}
     </div>

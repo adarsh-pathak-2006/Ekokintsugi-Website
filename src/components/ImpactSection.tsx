@@ -33,37 +33,43 @@ const certs = [
     title: "EU Digital Product Passport",
     mark: "DPP",
     icon: Globe2,
-    accent: "EU"
+    accent: "EU",
+    desc: "Enabling complete transparency with digital product passports for lifecycle and material tracing."
   },
   {
     title: "MSME-Udyam Certified",
     mark: "MSME",
     icon: Landmark,
-    accent: "UDYAM"
+    accent: "UDYAM",
+    desc: "Officially registered circular micro-enterprise recognized by the Ministry of MSME, India."
   },
   {
     title: "Startup India Recognized",
     mark: "SI",
     icon: Rocket,
-    accent: "INDIA"
+    accent: "INDIA",
+    desc: "Recognized by DPIIT as a high-innovation pioneer in ecological material transformations."
   },
   {
     title: "ISO Quality Standards",
     mark: "ISO",
     icon: CircleCheckBig,
-    accent: "9001"
+    accent: "9001",
+    desc: "Upholding certified quality management systems for export-grade luxury crafts."
   },
   {
     title: "Fair Trade Practices",
     mark: "FT",
     icon: Scale,
-    accent: "FAIR"
+    accent: "FAIR",
+    desc: "Ensuring ethical compensation, safe workplaces, and empowerment for our artisan networks."
   },
   {
     title: "Carbon Neutral Operations",
     mark: "CN",
     icon: Sprout,
-    accent: "ZERO"
+    accent: "ZERO",
+    desc: "Offsetting all supply chain emissions to maintain fully net-zero production and operations."
   }
 ];
 
@@ -158,7 +164,7 @@ export default function ImpactSection() {
                     {cert.title}
                   </span>
                   <span className="block mt-2 text-xs text-primary-foreground/60 italic">
-                    Compliance-ready identity integrated into the circular supply story.
+                    {cert.desc}
                   </span>
                 </div>
               </div>

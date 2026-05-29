@@ -1,8 +1,32 @@
 import { Link } from "react-router-dom";
-
-const previewTreeCount = 4;
+import { useAuth } from "../lib/AuthContext";
+import { useEffect, useState } from "react";
 
 export default function TreePreviewSection() {
+  const { session, user } = useAuth();
+  const [treeCount, setTreeCount] = useState(4);
+
+  useEffect(() => {
+    if (!user) {
+      setTreeCount(4);
+      return;
+    }
+    const controller = new AbortController();
+    fetch("/api/impact", {
+      signal: controller.signal,
+      headers: session?.access_token ? { Authorization: `Bearer ${session.access_token}` } : undefined
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && typeof data.treeCount === "number") {
+          setTreeCount(data.treeCount);
+        }
+      })
+      .catch(() => {});
+
+    return () => controller.abort();
+  }, [user, session?.access_token]);
+
   return (
     <section className="py-28 surface-gradient border-t border-border/50">
       <div className="max-w-7xl mx-auto px-6">
@@ -21,7 +45,7 @@ export default function TreePreviewSection() {
             <div className="bg-card border border-border p-5 rounded-3xl shadow-strong aspect-video relative overflow-hidden">
               <img src="/images/sections/reforestation-map.jpg" alt="Reforestation map" className="absolute inset-0 w-full h-full object-cover" />
               <div className="absolute inset-x-5 bottom-5 bg-background/90 backdrop-blur border border-border rounded-2xl px-5 py-4 font-mono text-[10px] tracking-widest text-primary uppercase">
-                Previewing: Agra Demo Zone
+                {user ? "Currently viewing: Agra Plantation Site Reserve" : "Previewing: Agra Demo Zone"}
               </div>
             </div>
 
@@ -29,7 +53,7 @@ export default function TreePreviewSection() {
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
                 <div>
                   <h3 className="text-2xl font-serif font-bold text-primary">Live Sapling Stats</h3>
-                  <p className="text-sm font-mono text-accent dark:text-primary font-bold">Allocated Trees: {previewTreeCount}</p>
+                  <p className="text-sm font-mono text-accent dark:text-primary font-bold">Allocated Trees: {treeCount}</p>
                 </div>
                 <div className="bg-primary/5 px-4 py-2 rounded-lg text-primary text-[10px] font-black uppercase tracking-widest">
                   Active Growth
@@ -40,14 +64,14 @@ export default function TreePreviewSection() {
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value) => (
                   <div
                     key={value}
-                    className={`flex-1 rounded-t-lg transition-all ${value <= previewTreeCount ? "bg-accent" : "bg-muted/30"}`}
+                    className={`flex-1 rounded-t-lg transition-all ${value <= Math.min(treeCount, 10) ? "bg-accent" : "bg-muted/30"}`}
                     style={{ height: `${value * 10}%` }}
                   />
                 ))}
               </div>
 
               <p className="text-center mt-6 text-xs font-mono text-muted-foreground uppercase font-bold tracking-widest">
-                Growth Factor: Healthy
+                Growth Factor: {treeCount > 0 ? "Healthy" : "Awaiting first tree allocation"}
               </p>
             </div>
           </div>

@@ -1,0 +1,204 @@
+
+--- OUTBOX SEND [29/5/2026, 10:20:43 pm] ---
+FROM: orders@ekokintsugi.com
+TO: admin@ekokintsugi.com
+
+======================================================================
+NEW CIRCULAR ORDER DISPATCH REQUEST
+======================================================================
+DATE/TIME: 29/5/2026, 10:20:43 pm
+ORDER REF : ord-6oedddqgk, ord-4rm5q1zrl, ord-lywpooa1y
+
+CLIENT INFORMATION:
+-------------------
+Name   : Artisan Eco
+Email  : artisan.eco@gmail.com
+Address: varanasi
+Notes  : leave at doorstep
+
+ORDER SELECTION:
+----------------
+• Hexagon Commuter Backpack (Qty: 2) - Category: Bags
+• Urban Backpack (Qty: 2) - Category: Bags
+• Minimalist Cardholder (Qty: 1) - Category: Accessories
+
+ENVIRONMENTAL DIVIDEND:
+-----------------------
+• CO2 Diverted  : 24.3 kg
+• Waste Reclaimed: 4.5 kg
+• Saplings Allocated in Agra: 13 sapling(s)
+• Applied Carbon Discount: 0.000 CC
+
+----------------------------------------------------------------------
+This order request has been generated dynamically by the EkoKintsugi app.
+======================================================================
+
+
+--- OUTBOX SEND [29/5/2026, 10:29:16 pm] ---
+FROM: orders@ekokintsugi.com
+TO: admin@ekokintsugi.com
+
+======================================================================
+NEW CIRCULAR ORDER DISPATCH REQUEST
+======================================================================
+DATE/TIME: 29/5/2026, 10:29:16 pm
+ORDER REF : ord-51wfvaj20
+
+CLIENT INFORMATION:
+-------------------
+Name   : Artisan Tester
+Email  : artisan@test.eco
+Address: 12 Green Boulevard, Hamburg, Germany
+Notes  : None
+
+ORDER SELECTION:
+----------------
+• Mosaic Wall Art (Qty: 2) - Category: Home Decor
+
+ENVIRONMENTAL DIVIDEND:
+-----------------------
+• CO2 Diverted  : 10.6 kg
+• Waste Reclaimed: 4.2 kg
+• Saplings Allocated in Agra: 6 sapling(s)
+• Applied Carbon Discount: 0.000 CC
+
+----------------------------------------------------------------------
+This order request has been generated dynamically by the EkoKintsugi app.
+======================================================================
+
+
+--- OUTBOX SEND [29/5/2026, 10:29:17 pm] ---
+FROM: orders@ekokintsugi.com
+TO: admin@ekokintsugi.com
+
+======================================================================
+NEW CIRCULAR ORDER DISPATCH REQUEST
+======================================================================
+DATE/TIME: 29/5/2026, 10:29:17 pm
+ORDER REF : ord-yowf1iooh
+
+CLIENT INFORMATION:
+-------------------
+Name   : Artisan Tester
+Email  : artisan@test.eco
+Address: 12 Green Boulevard, Hamburg, Germany
+Notes  : None
+
+ORDER SELECTION:
+----------------
+• Mosaic Wall Art (Qty: 1) - Category: Home Decor
+
+ENVIRONMENTAL DIVIDEND:
+-----------------------
+• CO2 Diverted  : 5.3 kg
+• Waste Reclaimed: 2.1 kg
+• Saplings Allocated in Agra: 3 sapling(s)
+• Applied Carbon Discount: 1.500 CC
+
+----------------------------------------------------------------------
+This order request has been generated dynamically by the EkoKintsugi app.
+======================================================================
+
+
+--- OUTBOX SEND [29/5/2026, 11:14:04 pm] ---
+FROM: orders@ekokintsugi.com
+TO: admin@ekokintsugi.com
+
+======================================================================
+NEW CIRCULAR ORDER DISPATCH REQUEST
+======================================================================
+DATE/TIME: 29/5/2026, 11:14:04 pm
+ORDER REF : ord-pr8mrqqyn
+
+CLIENT INFORMATION:
+-------------------
+Name   : Artisan Eco
+Email  : artisan.eco@gmail.com
+Address: varanasi
+Notes  : leave at doorstep
+
+ORDER SELECTION:
+----------------
+• Urban Backpack (Qty: 3) - Category: Bags
+
+ENVIRONMENTAL DIVIDEND:
+-----------------------
+• CO2 Diverted  : 20.4 kg
+• Waste Reclaimed: 3.6 kg
+• Saplings Allocated in Agra: 11 sapling(s)
+• Applied Carbon Discount: 0.000 CC
+
+----------------------------------------------------------------------
+This order request has been generated dynamically by the EkoKintsugi app.
+======================================================================
+
+
+--- EMAIL SENT [29/5/2026, 11:15:38 pm] ---
+FROM: indianpsyco2000@gmail.com
+TO: adarshpathak2006@gmail.com
+VIA: Gmail SMTP
+
+======================================================================
+NEW CIRCULAR ORDER DISPATCH REQUEST
+======================================================================
+DATE/TIME: 29/5/2026, 11:15:38 pm
+ORDER REF : ord-plz106fyb
+TRACKING  : EK-172173
+
+CLIENT INFORMATION:
+-------------------
+Name   : Artisan Eco
+Email  : artisan.eco@gmail.com
+Address: varanasi
+Notes  : batman
+
+ORDER SELECTION:
+----------------
+• Urban Backpack (Qty: 2) - Category: Bags
+
+ENVIRONMENTAL DIVIDEND:
+-----------------------
+• CO2 Diverted  : 13.6 kg
+• Waste Reclaimed: 2.4 kg
+• Saplings Allocated in Agra: 7 sapling(s)
+• Applied Carbon Discount: 44.700 CC
+
+----------------------------------------------------------------------
+This order request has been generated dynamically by the EkoKintsugi app.
+======================================================================
+
+
+--- EMAIL SENT [30/5/2026, 1:02:24 am] ---
+FROM: indianpsyco2000@gmail.com
+TO: adarshpathak2006@gmail.com
+VIA: Gmail SMTP
+
+======================================================================
+NEW CIRCULAR ORDER DISPATCH REQUEST
+======================================================================
+DATE/TIME: 30/5/2026, 1:02:24 am
+ORDER REF : ord-gsy2u8ivr
+TRACKING  : EK-748147
+
+CLIENT INFORMATION:
+-------------------
+Name   : Artisan Eco
+Email  : artisan.eco@gmail.com
+Address: 123 Circular Way, Green City, 560001
+Notes  : None
+
+ORDER SELECTION:
+----------------
+• Patchwork Bifold Wallet (Qty: 2) - Category: Wallets & Cardholders
+
+ENVIRONMENTAL DIVIDEND:
+-----------------------
+• CO2 Diverted  : 2.2 kg
+• Waste Reclaimed: 0.3 kg
+• Saplings Allocated in Agra: 2 sapling(s)
+• Applied Carbon Discount: 0.000 CC
+
+----------------------------------------------------------------------
+This order request has been generated dynamically by the EkoKintsugi app.
+======================================================================
+

@@ -1,4 +1,5 @@
 import { ArrowLeft, ChevronRight } from "lucide-react";
+import { motion } from "motion/react";
 import { Link, useParams } from "react-router-dom";
 import ProductCatalogueGrid from "../components/ProductCatalogueGrid";
 import { useProductsCatalog } from "../hooks/useProductsCatalog";
@@ -68,17 +69,22 @@ export default function ProductCategoryPage() {
                 {PRODUCT_CATEGORIES.map((item) => {
                   const isActive = item.slug === category.slug;
                   return (
-                    <Link
+                    <motion.div
                       key={item.slug}
-                      to={`/products/category/${item.slug}`}
-                      className={`rounded-full px-5 py-2.5 text-[10px] font-mono tracking-[0.28em] uppercase font-bold transition-colors ${
-                        isActive
-                          ? "bg-primary text-primary-foreground"
-                          : "border border-border text-muted-foreground hover:border-accent hover:text-accent"
-                      }`}
+                      whileHover={{ y: -3, scale: 1.04 }}
+                      transition={{ type: "spring", stiffness: 450, damping: 20 }}
                     >
-                      {item.shortTitle}
-                    </Link>
+                      <Link
+                        to={`/products/category/${item.slug}`}
+                        className={`rounded-full px-5 py-2.5 text-[10px] font-mono tracking-[0.28em] uppercase font-bold transition-all duration-300 block ${
+                          isActive
+                            ? "bg-primary text-primary-foreground shadow-sm"
+                            : "border border-border text-muted-foreground hover:border-accent hover:text-accent bg-card"
+                        }`}
+                      >
+                        {item.shortTitle}
+                      </Link>
+                    </motion.div>
                   );
                 })}
               </div>

@@ -4,11 +4,41 @@ import React, { useState } from "react";
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
+    setError("");
+    setIsSubmitting(true);
+
+    const formData = new FormData(e.currentTarget);
+
+    try {
+      const response = await fetch("/api/contact/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.get("name"),
+          email: formData.get("email"),
+          subject: formData.get("subject"),
+          message: formData.get("message"),
+        }),
+      });
+      const payload = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(payload.error || "Unable to send your message right now.");
+      }
+
+      setSubmitted(true);
+      e.currentTarget.reset();
+      setTimeout(() => setSubmitted(false), 5000);
+    } catch (err: any) {
+      setError(err.message || "Unable to send your message right now.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -30,7 +60,7 @@ export default function ContactPage() {
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="p-12 bg-card border-2 border-primary/20 rounded-[2.5rem] shadow-none relative h-fit group hover:border-primary transition-colors duration-500"
+            whileHover={{ y: -6, scale: 1.008 }} transition={{ type: "spring", stiffness: 400, damping: 25 }} className="p-12 bg-card border-2 border-primary/20 rounded-[2.5rem] shadow-none relative h-fit group hover:border-primary hover:shadow-strong transition-all duration-300"
           >
             <div className="absolute top-0 right-12 w-20 h-2 bg-accent rounded-b-full" />
             {!submitted ? (
@@ -38,23 +68,26 @@ export default function ContactPage() {
                 <div className="grid sm:grid-cols-2 gap-8">
                   <div>
                     <label className="block text-[10px] font-black text-primary mb-3 font-mono uppercase tracking-[0.2em]">Your Name</label>
-                    <input required type="text" placeholder="Name" className="w-full px-6 py-5 rounded-xl bg-transparent border-2 border-border focus:border-primary focus:ring-4 focus:ring-primary/5 outline-none transition-all font-medium text-lg placeholder:text-muted-foreground/50" />
+                    <input required name="name" type="text" placeholder="Name" className="w-full px-6 py-5 rounded-xl bg-transparent border-2 border-border focus:border-primary focus:ring-4 focus:ring-primary/5 outline-none transition-all font-medium text-lg placeholder:text-muted-foreground/50" />
                   </div>
                   <div>
                     <label className="block text-[10px] font-black text-primary mb-3 font-mono uppercase tracking-[0.2em]">Email Address</label>
-                    <input required type="email" placeholder="example@email.com" className="w-full px-6 py-5 rounded-xl bg-transparent border-2 border-border focus:border-primary focus:ring-4 focus:ring-primary/5 outline-none transition-all font-medium text-lg placeholder:text-muted-foreground/50" />
+                    <input required name="email" type="email" placeholder="example@email.com" className="w-full px-6 py-5 rounded-xl bg-transparent border-2 border-border focus:border-primary focus:ring-4 focus:ring-primary/5 outline-none transition-all font-medium text-lg placeholder:text-muted-foreground/50" />
                   </div>
                 </div>
                 <div>
                   <label className="block text-[10px] font-black text-primary mb-3 font-mono uppercase tracking-[0.2em]">Subject</label>
-                  <input required type="text" placeholder="Subject of inquiry" className="w-full px-6 py-5 rounded-xl bg-transparent border-2 border-border focus:border-primary focus:ring-4 focus:ring-primary/5 outline-none transition-all font-medium text-lg placeholder:text-muted-foreground/50" />
+                  <input required name="subject" type="text" placeholder="Subject of inquiry" className="w-full px-6 py-5 rounded-xl bg-transparent border-2 border-border focus:border-primary focus:ring-4 focus:ring-primary/5 outline-none transition-all font-medium text-lg placeholder:text-muted-foreground/50" />
                 </div>
                 <div>
                   <label className="block text-[10px] font-black text-primary mb-3 font-mono uppercase tracking-[0.2em]">Message</label>
-                  <textarea required rows={5} placeholder="Project details and message..." className="w-full px-6 py-5 rounded-xl bg-transparent border-2 border-border focus:border-primary focus:ring-4 focus:ring-primary/5 outline-none transition-all resize-none font-medium text-lg placeholder:text-muted-foreground/50" />
+                  <textarea required name="message" rows={5} placeholder="Project details and message..." className="w-full px-6 py-5 rounded-xl bg-transparent border-2 border-border focus:border-primary focus:ring-4 focus:ring-primary/5 outline-none transition-all resize-none font-medium text-lg placeholder:text-muted-foreground/50" />
                 </div>
-                <button type="submit" className="w-full py-6 bg-primary text-primary-foreground font-black text-[12px] tracking-[0.3em] uppercase rounded-2xl flex items-center justify-center gap-4 hover:bg-accent hover:text-accent-foreground transition-all shadow-xl group">
-                  Send Inquiry <Send className="w-6 h-6 group-hover:translate-x-2 group-hover:-translate-y-2 transition-all duration-300" />
+                {error && (
+                  <p className="rounded-2xl border border-red-200 bg-red-50 px-5 py-4 text-sm font-medium text-red-800">{error}</p>
+                )}
+                <button disabled={isSubmitting} type="submit" className="w-full py-6 bg-primary text-primary-foreground font-black text-[12px] tracking-[0.3em] uppercase rounded-2xl flex items-center justify-center gap-4 hover:bg-accent hover:text-accent-foreground transition-all shadow-xl group disabled:cursor-not-allowed disabled:opacity-70">
+                  {isSubmitting ? "Sending..." : "Send Inquiry"} <Send className="w-6 h-6 group-hover:translate-x-2 group-hover:-translate-y-2 transition-all duration-300" />
                 </button>
               </form>
             ) : (
@@ -79,7 +112,7 @@ export default function ContactPage() {
           </motion.div>
 
           <div className="flex flex-col gap-10">
-            <div className="p-12 bg-primary text-primary-foreground rounded-[2.5rem] shadow-strong relative overflow-hidden group">
+            <motion.div whileHover={{ y: -6, scale: 1.008 }} transition={{ type: "spring", stiffness: 400, damping: 25 }} className="p-12 bg-primary text-primary-foreground rounded-[2.5rem] shadow-strong relative overflow-hidden group hover:shadow-[0_24px_50px_-12px_rgba(0,0,0,0.35)] transition-all duration-300">
               <div className="absolute top-0 left-0 w-full h-full bg-accent/20 translate-y-full group-hover:translate-y-0 transition-transform duration-700" />
               <div className="relative z-10">
                 <h3 className="text-3xl font-serif mb-12 font-bold decoration-accent decoration-2">Direct Contact</h3>
@@ -104,11 +137,12 @@ export default function ContactPage() {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="p-12 bg-card border-2 border-primary/20 rounded-[2.5rem] shadow-none group hover:border-primary transition-colors duration-500">
+            <motion.div whileHover={{ y: -6, scale: 1.008 }} transition={{ type: "spring", stiffness: 400, damping: 25 }} className="p-12 bg-card border-2 border-primary/20 rounded-[2.5rem] shadow-none group hover:border-accent/40 hover:shadow-strong relative overflow-hidden transition-all duration-300 cursor-pointer">
               <div className="flex items-start gap-8">
-                <div className="p-5 rounded-2xl bg-accent/20 text-accent">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-accent/5 rounded-full blur-3xl -mr-32 -mt-32 transition-transform duration-700 group-hover:scale-125 group-hover:bg-accent/10 pointer-events-none" />
+                <div className="p-5 rounded-2xl bg-accent/20 text-accent transition-transform duration-500 group-hover:scale-110 group-hover:rotate-12">
                   <MapPin className="w-8 h-8" />
                 </div>
                 <div>
@@ -116,7 +150,7 @@ export default function ContactPage() {
                   <p className="text-2xl font-serif text-primary leading-tight font-bold">Agra, Uttar Pradesh <br />India</p>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>

@@ -17,6 +17,9 @@ import ProcessPage from "./pages/ProcessPage";
 import ImpactPage from "./pages/ImpactPage";
 import ContactPage from "./pages/ContactPage";
 import AuthPage from "./pages/AuthPage";
+import { CartProvider } from "./lib/CartContext";
+import CartDrawer from "./components/CartDrawer";
+import ProductDetailPage from "./pages/ProductDetailPage";
 
 function AppShell() {
   const location = useLocation();
@@ -66,11 +69,13 @@ function AppShell() {
             <Route path="/impact" element={<ImpactPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/auth" element={<AuthPage />} />
+            <Route path="/products/item/:id" element={<ProductDetailPage />} />
           </Routes>
         </main>
 
         <Footer />
         <ImpactDashboard isOpen={isImpactOpen} onClose={closeImpactDashboard} />
+        <CartDrawer />
       </div>
     </>
   );
@@ -79,7 +84,9 @@ function AppShell() {
 export default function App() {
   return (
     <Router>
-      <AppShell />
+      <CartProvider>
+        <AppShell />
+      </CartProvider>
     </Router>
   );
 }

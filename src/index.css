@@ -111,18 +111,33 @@
 }
 
 .section-badge {
-  @apply inline-flex items-center rounded-full px-4 py-2 border shadow-sm backdrop-blur-md;
-  background: color-mix(in srgb, var(--color-card) 54%, transparent);
+  @apply inline-flex items-center rounded-full px-4 py-2 border shadow-sm backdrop-blur-md transition-all duration-300;
+  background: color-mix(in srgb, var(--color-card) 64%, transparent);
   border-color: color-mix(in srgb, var(--color-accent) 28%, var(--color-border));
   box-shadow: 0 12px 30px -18px hsl(150 40% 25% / 0.35);
 }
 
 .section-badge-label {
-  @apply font-mono uppercase font-black;
-  font-size: 10px;
-  letter-spacing: 0.32em;
-  color: color-mix(in srgb, var(--color-primary) 72%, var(--color-accent) 28%);
-  text-shadow: 0 1px 0 hsl(0 0% 100% / 0.24);
+  @apply font-mono uppercase font-bold;
+  font-size: 11px;
+  letter-spacing: 0.35em;
+  color: color-mix(in srgb, var(--color-primary) 75%, var(--color-accent) 25%);
+  text-shadow: 0 1px 0 hsl(0 0% 100% / 0.3);
+}
+
+/* Outstanding high-contrast visibility for badges in dark sections (e.g. Products, Impact) in light mode */
+.bg-primary .section-badge {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.24) !important;
+  box-shadow: 0 12px 30px -18px rgba(0, 0, 0, 0.4) !important;
+}
+
+.bg-primary .section-badge-label {
+  color: #fbbf24 !important; /* Premium Amber Gold for incredible luxury feel and readability */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
+  font-size: 12px !important; /* Increased font-size for better readability */
+  font-weight: 700 !important; /* Outstanding boldness */
+  letter-spacing: 0.35em !important;
 }
 
 .dark .section-badge {
@@ -134,4 +149,20 @@
 .dark .section-badge-label {
   color: color-mix(in srgb, white 82%, var(--color-accent) 18%);
   text-shadow: none;
+}
+
+/* In dark mode, bg-primary becomes a light background, so we use a beautiful, high-contrast translucent light glass pill and deep forest green text */
+.dark .bg-primary .section-badge {
+  background: rgba(255, 255, 255, 0.45) !important;
+  border-color: color-mix(in srgb, var(--color-accent) 25%, rgba(255, 255, 255, 0.6)) !important;
+  box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.1) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+.dark .bg-primary .section-badge-label {
+  color: var(--color-primary-foreground) !important; /* Extremely high-contrast deep forest green (hsl(150 28% 10%)) */
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+  font-size: 12px !important; /* Matches the enhanced light-mode font size */
+  font-weight: 700 !important; /* Perfect bold weight */
+  letter-spacing: 0.35em !important;
 }

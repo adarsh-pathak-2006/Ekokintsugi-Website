@@ -73,15 +73,15 @@ export default function ProductsPage() {
                 key={category.slug}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.06 }}
-                className="group bg-card border border-border/60 rounded-[2.5rem] overflow-hidden shadow-soft hover:border-accent/40 transition-all"
+                whileHover={{ y: -8, scale: 1.015 }} transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                className="group bg-card border border-border/60 rounded-[2.5rem] overflow-hidden shadow-soft hover:border-accent/40 hover:shadow-strong transition-all duration-300 cursor-pointer"
               >
                 <div className="grid md:grid-cols-[1.05fr_1.2fr] h-full">
                   <div className="relative min-h-72 overflow-hidden">
                     <img
                       src={category.image}
                       alt={category.shortTitle}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108"
                       style={{ objectPosition: category.imagePosition ?? "center" }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-primary/10 to-transparent" />
@@ -105,10 +105,10 @@ export default function ProductsPage() {
                     </div>
                     <Link
                       to={`/products/category/${category.slug}`}
-                      className="mt-auto inline-flex items-center justify-between gap-4 rounded-full border border-accent/40 px-6 py-3 text-[11px] font-mono tracking-[0.3em] uppercase font-bold text-accent hover:bg-accent hover:text-accent-foreground transition-colors"
+                      className="mt-auto inline-flex items-center justify-between gap-4 rounded-full border border-accent/40 px-6 py-3 text-[11px] font-mono tracking-[0.3em] uppercase font-bold text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300"
                     >
                       View Products
-                      <ArrowRight className="w-4 h-4" />
+                      <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5" />
                     </Link>
                   </div>
                 </div>
