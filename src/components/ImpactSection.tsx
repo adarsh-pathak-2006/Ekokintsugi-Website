@@ -1,77 +1,6 @@
-import { TrendingDown, Leaf, Users, Award, BadgeCheck, Building2, Rocket, Scale, ShieldCheck, Globe2, Landmark, Sprout, CircleCheckBig } from "lucide-react";
+import { TrendingDown, Leaf, Users, Award, Rocket, Scale, Sprout, CircleCheckBig, Globe2, Landmark } from "lucide-react";
 import { motion } from "motion/react";
-
-const metrics = [
-  {
-    icon: TrendingDown,
-    value: "5.3kg",
-    label: "CO2 Saved Per Piece",
-    desc: "Achieved via material intelligence"
-  },
-  {
-    icon: Leaf,
-    value: "70%",
-    label: "Circular Content",
-    desc: "Reclaimed waste in every product"
-  },
-  {
-    icon: Users,
-    value: "500+",
-    label: "Artisans Uplifted",
-    desc: "Across rural communities"
-  },
-  {
-    icon: Award,
-    value: "100%",
-    label: "Traceable Chain",
-    desc: "Digital passport certification"
-  }
-];
-
-const certs = [
-  {
-    title: "EU Digital Product Passport",
-    mark: "DPP",
-    icon: Globe2,
-    accent: "EU",
-    desc: "Enabling complete transparency with digital product passports for lifecycle and material tracing."
-  },
-  {
-    title: "MSME-Udyam Certified",
-    mark: "MSME",
-    icon: Landmark,
-    accent: "UDYAM",
-    desc: "Officially registered circular micro-enterprise recognized by the Ministry of MSME, India."
-  },
-  {
-    title: "Startup India Recognized",
-    mark: "SI",
-    icon: Rocket,
-    accent: "INDIA",
-    desc: "Recognized by DPIIT as a high-innovation pioneer in ecological material transformations."
-  },
-  {
-    title: "ISO Quality Standards",
-    mark: "ISO",
-    icon: CircleCheckBig,
-    accent: "9001",
-    desc: "Upholding certified quality management systems for export-grade luxury crafts."
-  },
-  {
-    title: "Fair Trade Practices",
-    mark: "FT",
-    icon: Scale,
-    accent: "FAIR",
-    desc: "Ensuring ethical compensation, safe workplaces, and empowerment for our artisan networks."
-  },
-  {
-    title: "Carbon Neutral Operations",
-    mark: "CN",
-    icon: Sprout,
-    accent: "ZERO",
-    desc: "Offsetting all supply chain emissions to maintain fully net-zero production and operations."
-  }
-];
+import { useLanguage } from "../lib/LanguageContext";
 
 function CertificationLogo({
   mark,
@@ -98,6 +27,80 @@ function CertificationLogo({
 }
 
 export default function ImpactSection() {
+  const { t } = useLanguage();
+
+  const metrics = [
+    {
+      icon: TrendingDown,
+      value: "5.3kg",
+      label: t("impactsection.metrics.co2"),
+      desc: t("impactsection.metrics.co2_desc")
+    },
+    {
+      icon: Leaf,
+      value: "70%",
+      label: t("impactsection.metrics.circular"),
+      desc: t("impactsection.metrics.circular_desc")
+    },
+    {
+      icon: Users,
+      value: "500+",
+      label: t("impactsection.metrics.artisans"),
+      desc: t("impactsection.metrics.artisans_desc")
+    },
+    {
+      icon: Award,
+      value: "100%",
+      label: t("impactsection.metrics.traceable"),
+      desc: t("impactsection.metrics.traceable_desc")
+    }
+  ];
+
+  const certs = [
+    {
+      title: "EU Digital Product Passport",
+      mark: "DPP",
+      icon: Globe2,
+      accent: "EU",
+      desc: t("impactsection.certs.dpp_desc")
+    },
+    {
+      title: "MSME-Udyam Certified",
+      mark: "MSME",
+      icon: Landmark,
+      accent: "UDYAM",
+      desc: t("impactsection.certs.msme_desc")
+    },
+    {
+      title: "Startup India Recognized",
+      mark: "SI",
+      icon: Rocket,
+      accent: "INDIA",
+      desc: t("impactsection.certs.startup_desc")
+    },
+    {
+      title: "ISO Quality Standards",
+      mark: "ISO",
+      icon: CircleCheckBig,
+      accent: "9001",
+      desc: t("impactsection.certs.iso_desc")
+    },
+    {
+      title: "Fair Trade Practices",
+      mark: "FT",
+      icon: Scale,
+      accent: "FAIR",
+      desc: t("impactsection.certs.fair_desc")
+    },
+    {
+      title: "Carbon Neutral Operations",
+      mark: "CN",
+      icon: Sprout,
+      accent: "ZERO",
+      desc: t("impactsection.certs.carbon_desc")
+    }
+  ];
+
   return (
     <section id="impact" className="py-32 relative overflow-hidden bg-primary">
       <div className="absolute top-0 left-0 w-full h-full opacity-40 bg-[radial-gradient(circle_at_20%_20%,var(--color-accent)_0%,transparent_50%)]" />
@@ -107,14 +110,14 @@ export default function ImpactSection() {
         <div className="text-center mb-24">
           <div className="section-badge mb-8">
             <span className="section-badge-label">
-              Environmental Stewardship
+              {t("impactsection.badge")}
             </span>
           </div>
           <h2 className="text-6xl md:text-8xl font-serif font-bold mb-8 leading-none">
-            Making a <span className="italic text-accent dark:text-primary-foreground">Real</span> Impact
+            {t("impactsection.title")}
           </h2>
           <p className="text-xl text-primary-foreground/80 dark:text-primary-foreground/90 max-w-2xl mx-auto font-medium leading-relaxed italic">
-            Every decorative piece contributes to a circular economy, supporting traditional craft with modern environmental science.
+            {t("impactsection.desc")}
           </p>
         </div>
 
@@ -147,7 +150,7 @@ export default function ImpactSection() {
         <div className="p-16 rounded-[3rem] bg-black/20 backdrop-blur-xl border border-primary-foreground/20 shadow-2xl">
           <div className="flex items-center gap-6 mb-16 px-4">
             <div className="h-px flex-1 bg-primary-foreground/20" />
-            <h3 className="text-3xl font-serif text-center font-bold px-6">Certifications & Standards</h3>
+            <h3 className="text-3xl font-serif text-center font-bold px-6">{t("impactsection.certs.title")}</h3>
             <div className="h-px flex-1 bg-primary-foreground/20" />
           </div>
           <div className="grid md:grid-cols-3 gap-10">

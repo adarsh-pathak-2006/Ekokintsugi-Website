@@ -1,7 +1,10 @@
 import { motion } from "motion/react";
 import { Handshake, Target, Globe, ShieldCheck, QrCode, Download } from "lucide-react";
+import { useLanguage } from "../lib/LanguageContext";
 
 export default function AboutPage() {
+  const { t } = useLanguage();
+
   const qrPattern = [
     "111111101111111",
     "100000101000001",
@@ -29,12 +32,11 @@ export default function AboutPage() {
           className="text-center max-w-3xl mx-auto mb-20"
         >
           <span className="section-badge mb-4">
-            <span className="section-badge-label">Company Profile</span>
+            <span className="section-badge-label">{t("aboutpage.badge")}</span>
           </span>
-          <h1 className="text-5xl md:text-7xl font-serif text-primary font-bold mb-6">Who is EkoKintsugi LLP?</h1>
+          <h1 className="text-5xl md:text-7xl font-serif text-primary font-bold mb-6">{t("aboutpage.title")}</h1>
           <p className="text-xl text-muted-foreground italic">
-            An Indian circular-economy footwear manufacturer that turns industry waste leather into high-quality sneakers. 
-            Our brand RESCHUH represents rebirth, sustainability, and purpose-driven design.
+            {t("aboutpage.subtitle")}
           </p>
         </motion.div>
 
@@ -48,9 +50,9 @@ export default function AboutPage() {
           >
             <div className="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl -mr-32 -mt-32 transition-transform duration-700 group-hover:scale-125 group-hover:bg-accent/30" />
             <Target className="w-12 h-12 text-accent mb-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-12" />
-            <h2 className="text-3xl font-serif font-bold mb-4">Our Mission</h2>
+            <h2 className="text-3xl font-serif font-bold mb-4">{t("aboutpage.mission.title")}</h2>
             <p className="text-lg opacity-80 leading-relaxed">
-              To transform waste into value through premium footwear, technology, and strategic partnerships.
+              {t("aboutpage.mission.desc")}
             </p>
           </motion.div>
 
@@ -63,18 +65,18 @@ export default function AboutPage() {
           >
             <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -mr-32 -mt-32 transition-transform duration-700 group-hover:scale-125 group-hover:bg-primary/10" />
             <Globe className="w-12 h-12 text-primary mb-8 transition-transform duration-700 group-hover:rotate-[30deg] group-hover:scale-110" />
-            <h2 className="text-3xl font-serif font-bold text-primary mb-4">Our Vision</h2>
+            <h2 className="text-3xl font-serif font-bold text-primary mb-4">{t("aboutpage.vision.title")}</h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              A world where no leather waste enters landfills—only new products, new value, and new opportunities.
+              {t("aboutpage.vision.desc")}
             </p>
           </motion.div>
         </div>
 
         <div className="mb-24">
           <div className="flex flex-col items-center mb-16 text-center">
-            <h2 className="text-4xl font-serif text-primary font-bold mb-4">The European Focus</h2>
+            <h2 className="text-4xl font-serif text-primary font-bold mb-4">{t("aboutpage.focus.title")}</h2>
             <p className="text-muted-foreground max-w-2xl">
-              We align perfectly with leading EU regulations, preparing brands for the Digital Product Passport (DPP 2026) and the Green Claims Act through mandatory transparency.
+              {t("aboutpage.focus.desc")}
             </p>
           </div>
 
@@ -84,19 +86,19 @@ export default function AboutPage() {
             className="bg-card border border-border rounded-[2.5rem] p-10 overflow-hidden shadow-strong group hover:border-accent/40 transition-all duration-300"
           >
             <h3 className="text-2xl font-serif font-bold text-primary mb-8 text-center flex items-center justify-center gap-3">
-              <Handshake className="text-accent transition-transform duration-500 group-hover:scale-110 group-hover:rotate-12" /> Partnership Value
+              <Handshake className="text-accent transition-transform duration-500 group-hover:scale-110 group-hover:rotate-12" /> {t("aboutpage.partnership.title")}
             </h3>
             
             <div className="grid md:grid-cols-2 gap-8 items-center bg-muted/10 p-8 rounded-3xl">
               <div>
-                <h4 className="font-bold text-primary mb-2">EkoKintsugi LLP Strengths</h4>
+                <h4 className="font-bold text-primary mb-4">{t("aboutpage.strengths.title")}</h4>
                 <ul className="space-y-3 font-mono text-sm text-muted-foreground">
                   {[
-                    { label: "Circular Production", icon: ShieldCheck, color: "text-accent" },
-                    { label: "AI QC Tech", icon: ShieldCheck, color: "text-accent" },
-                    { label: "Dual-state cost efficiency", icon: ShieldCheck, color: "text-accent" },
-                    { label: "ESG Leadership", icon: ShieldCheck, color: "text-accent" },
-                    { label: "India Manufacturing Strength", icon: ShieldCheck, color: "text-accent" }
+                    { label: t("strength.circular"), icon: ShieldCheck, color: "text-accent" },
+                    { label: t("strength.qc"), icon: ShieldCheck, color: "text-accent" },
+                    { label: t("strength.cost"), icon: ShieldCheck, color: "text-accent" },
+                    { label: t("strength.esg"), icon: ShieldCheck, color: "text-accent" },
+                    { label: t("strength.manufacturing"), icon: ShieldCheck, color: "text-accent" }
                   ].map((item, idx) => (
                     <li key={idx} className="flex items-center gap-2 group/li hover:translate-x-1.5 transition-transform duration-300">
                       <item.icon className={`w-4 h-4 ${item.color} transition-transform duration-300 group-hover/li:scale-110 group-hover/li:rotate-6`} /> {item.label}
@@ -105,12 +107,12 @@ export default function AboutPage() {
                 </ul>
               </div>
               <div className="border-l-2 border-border/50 pl-8">
-                <h4 className="font-bold text-primary mb-2">Ideal Distribution Partner Match</h4>
+                <h4 className="font-bold text-primary mb-4">{t("aboutpage.partners.title")}</h4>
                 <ul className="space-y-3 font-mono text-sm text-muted-foreground">
                   {[
-                    { label: "European Distribution", icon: Globe, color: "text-primary" },
-                    { label: "Market Insights & Retail Network", icon: Globe, color: "text-primary" },
-                    { label: "Customer Trust & European Retail Culture", icon: Globe, color: "text-primary" }
+                    { label: t("partner.dist"), icon: Globe, color: "text-primary" },
+                    { label: t("partner.insights"), icon: Globe, color: "text-primary" },
+                    { label: t("partner.trust"), icon: Globe, color: "text-primary" }
                   ].map((item, idx) => (
                     <li key={idx} className="flex items-center gap-2 group/li hover:translate-x-1.5 transition-transform duration-300">
                       <item.icon className={`w-4 h-4 ${item.color} transition-transform duration-300 group-hover/li:scale-110 group-hover/li:rotate-12`} /> {item.label}
@@ -136,18 +138,18 @@ export default function AboutPage() {
             <div className="flex flex-col md:flex-row gap-10 items-center">
               <div className="flex-1">
                 <p className="section-badge mb-4">
-                  <span className="section-badge-label">Mobile Experience</span>
+                  <span className="section-badge-label">{t("aboutpage.qr.badge")}</span>
                 </p>
-                <h3 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">Scan to Download the App</h3>
+                <h3 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">{t("aboutpage.qr.title")}</h3>
                 <p className="text-muted-foreground mb-6 max-w-xl">
-                  Use this QR as a visual demo of our future mobile onboarding flow for partners and customers.
+                  {t("aboutpage.qr.desc")}
                 </p>
                 <div className="inline-flex items-center gap-3 bg-primary text-primary-foreground px-5 py-3 rounded-xl cursor-pointer hover:bg-accent hover:text-accent-foreground transition-all duration-300 group/btn">
                   <Download className="w-4 h-4 text-accent transition-transform duration-500 group-hover/btn:translate-y-0.5" />
-                  <span className="font-mono text-[10px] tracking-widest uppercase font-bold">Demo Download QR</span>
+                  <span className="font-mono text-[10px] tracking-widest uppercase font-bold">{t("aboutpage.qr.btn")}</span>
                 </div>
                 <p className="mt-4 text-xs font-mono uppercase tracking-wider text-muted-foreground">
-                  Dummy placeholder: scanning will not download the app.
+                  {t("aboutpage.qr.placeholder")}
                 </p>
               </div>
 
@@ -166,7 +168,7 @@ export default function AboutPage() {
                 </div>
                 <div className="mt-4 flex items-center justify-center gap-2 text-primary">
                   <QrCode className="w-4 h-4 text-accent transition-transform duration-500 group-hover:scale-110 group-hover:rotate-12" />
-                  <span className="text-[10px] font-mono uppercase tracking-widest font-bold">App QR Demo</span>
+                  <span className="text-[10px] font-mono uppercase tracking-widest font-bold">{t("aboutpage.qr.demo")}</span>
                 </div>
               </div>
             </div>

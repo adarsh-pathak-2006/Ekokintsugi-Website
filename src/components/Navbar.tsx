@@ -3,33 +3,37 @@ import { useTheme } from "../lib/ThemeContext";
 import { LogOut, Moon, Sun, UserRound, ShoppingBag } from "lucide-react";
 import { useAuth } from "../lib/AuthContext";
 import { useCart } from "../lib/CartContext";
+import { useLanguage } from "../lib/LanguageContext";
 import { motion } from "motion/react";
 
 export default function Navbar({ onImpactClick }: { onImpactClick: () => void }) {
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
-  const { user, displayName, signOut } = useAuth();
+  const { user, signOut } = useAuth();
   const { totalItems, setCartOpen } = useCart();
+  const { language, setLanguage, t } = useLanguage();
 
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-    { name: 'Products', path: '/products' },
-    { name: 'Process', path: '/process' },
-    { name: 'Impact', path: '/impact' },
-    { name: 'Contact', path: '/contact' },
+    { name: t("nav.home"), path: '/' },
+    { name: t("nav.about"), path: '/about' },
+    { name: t("nav.products"), path: '/products' },
+    { name: t("nav.process"), path: '/process' },
+    { name: t("nav.impact"), path: '/impact' },
+    { name: t("nav.contact"), path: '/contact' },
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/50">
-      <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border/40 shadow-sm">
+      <div className="max-w-7xl mx-auto px-6 py-2.5 flex justify-between items-center">
+        {/* Left Side: Brand Logo */}
         <Link to="/" className="flex items-center group">
-          <span className="logo-surface px-3 py-2 transition-transform duration-500 group-hover:scale-105">
-            <img src="/logo_eko.png" alt="EkoKintsugi Logo" className="h-16 w-auto" />
+          <span className="logo-surface px-2.5 py-1.5 transition-transform duration-500 group-hover:scale-[1.02]">
+            <img src="/logo_eko.png" alt="EkoKintsugi Logo" className="h-14 w-auto" />
           </span>
         </Link>
 
-        <nav className="hidden md:flex items-center space-x-10">
+        {/* Center: Minimalist Nav Links */}
+        <nav className="hidden lg:flex items-center space-x-8">
           {navLinks.map((link) => {
             const isActive = link.path === "/products"
               ? location.pathname === "/products" || location.pathname.startsWith("/products/")
@@ -38,7 +42,7 @@ export default function Navbar({ onImpactClick }: { onImpactClick: () => void })
               <Link
                 key={link.name}
                 to={link.path}
-                className="text-[10px] font-mono tracking-[0.25em] uppercase transition-all duration-300 py-1 text-primary/85 hover:text-accent font-bold relative group/link"
+                className="text-[9px] font-mono tracking-[0.25em] uppercase transition-all duration-300 py-1 text-primary/80 hover:text-accent font-bold relative group/link"
               >
                 {link.name}
                 <span className={`absolute bottom-0 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover/link:w-full ${isActive ? 'w-full' : ''}`} />
@@ -47,64 +51,85 @@ export default function Navbar({ onImpactClick }: { onImpactClick: () => void })
           })}
         </nav>
 
-        <div className="flex items-center gap-4">
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-full border border-border/50 text-muted-foreground hover:text-primary hover:border-border transition-colors bg-card cursor-pointer"
-            title="Toggle theme"
-          >
-            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
+        {/* Right Side: Consolidated Control Panel */}
+        <div className="flex items-center gap-3">
+          {/* Integrated Preferences Control Pill (Theme + Language) */}
+          <div className="flex items-center bg-card border border-border/50 rounded-full px-1.5 py-1 shadow-sm gap-1 hover:border-accent/30 transition-all">
+            {/* Language Toggler */}
+            <button
+              onClick={() => setLanguage(language === "en" ? "de" : "en")}
+              className="px-2 py-1 rounded-full text-[9px] font-mono tracking-wider font-bold hover:text-accent transition-colors cursor-pointer"
+              title={language === "en" ? "Switch to German" : "Auf Englisch wechseln"}
+            >
+              <span className={language === "en" ? "text-accent" : "text-muted-foreground"}>EN</span>
+              <span className="text-border/30 text-[8px] mx-1 font-light">|</span>
+              <span className={language === "de" ? "text-accent" : "text-muted-foreground"}>DE</span>
+            </button>
+            
+            <div className="w-px h-3 bg-border/40" />
+            
+            {/* Theme Toggler */}
+            <button
+              onClick={toggleTheme}
+              className="p-1 rounded-full text-muted-foreground hover:text-primary transition-colors cursor-pointer"
+              title="Toggle theme"
+            >
+              {theme === "dark" ? <Sun size={12} /> : <Moon size={12} />}
+            </button>
+          </div>
+
+          {/* Cart Button */}
           {user && (
             <button
               onClick={() => setCartOpen(true)}
-              className="p-2.5 rounded-full border border-border/50 text-muted-foreground hover:text-accent hover:border-accent transition-colors bg-card relative cursor-pointer group"
+              className="p-2 rounded-full border border-border/50 text-muted-foreground hover:text-accent hover:border-accent transition-colors bg-card relative cursor-pointer group shadow-sm"
               title="Open cart"
             >
-              <ShoppingBag size={18} className="transition-transform duration-300 group-hover:scale-110" />
+              <ShoppingBag size={14} className="transition-transform duration-300 group-hover:scale-105" />
               {totalItems > 0 && (
                 <motion.span
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  className="absolute -top-1.5 -right-1.5 bg-accent text-accent-foreground text-[9px] font-mono font-bold w-5 h-5 rounded-full flex items-center justify-center border border-background shadow-sm"
+                  className="absolute -top-1.5 -right-1.5 bg-accent text-accent-foreground text-[8px] font-mono font-bold w-4.5 h-4.5 rounded-full flex items-center justify-center border border-background shadow-sm"
                 >
                   {totalItems}
                 </motion.span>
               )}
             </button>
           )}
+
+          {/* Compact 'My Impact' Action Button */}
           <button 
             onClick={onImpactClick}
-            className="flex items-center gap-2 text-[10px] font-mono tracking-widest uppercase font-black px-6 py-2.5 rounded-full border-2 border-accent text-accent hover:bg-accent hover:text-white transition-all shadow-sm"
+            className="flex items-center gap-1.5 text-[9px] font-mono tracking-widest uppercase font-bold px-4 py-2.5 rounded-full border border-accent/60 text-accent hover:bg-accent hover:text-accent-foreground hover:border-accent transition-all shadow-sm cursor-pointer hover:scale-[1.01]"
           >
-            My Impact
+            {t("nav.my_impact")}
           </button>
+
+          {/* User Account / Authentication Buttons */}
           {user ? (
             <div className="flex items-center gap-2">
               <Link
                 to="/account"
-                className="flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-primary hover:text-accent hover:border-accent hover:scale-[1.02] transition-all duration-300 cursor-pointer"
-                title="View Account"
+                className="p-2 rounded-full border border-border/50 text-muted-foreground hover:text-accent hover:border-accent transition-colors bg-card cursor-pointer shadow-sm"
+                title={t("nav.view_account")}
               >
-                <UserRound className="w-4 h-4 text-accent" />
-                <span className="hidden sm:inline max-w-28 truncate text-[10px] font-mono tracking-widest uppercase font-black">
-                  {displayName}
-                </span>
+                <UserRound size={14} className="text-accent" />
               </Link>
               <button
                 onClick={signOut}
-                className="p-2.5 rounded-full border border-border/50 text-muted-foreground hover:text-primary hover:border-border transition-colors bg-card cursor-pointer"
-                title="Sign out"
+                className="p-2 rounded-full border border-border/50 text-muted-foreground hover:text-primary hover:border-border transition-colors bg-card cursor-pointer shadow-sm"
+                title={t("nav.sign_out")}
               >
-                <LogOut size={18} />
+                <LogOut size={14} />
               </button>
             </div>
           ) : (
             <Link
               to="/auth"
-              className="bg-primary text-primary-foreground px-7 py-2.5 rounded text-[10px] font-mono tracking-widest uppercase font-bold hover:bg-accent hover:text-accent-foreground transition-all shadow-md"
+              className="bg-primary text-primary-foreground px-5 py-2.5 rounded-full text-[9px] font-mono tracking-widest uppercase font-bold hover:bg-accent hover:text-accent-foreground transition-all shadow-md hover:scale-[1.01]"
             >
-              Sign In / Up
+              {t("nav.sign_in")}
             </Link>
           )}
         </div>

@@ -1,47 +1,50 @@
 import { Recycle, Cpu, Scissors, Package } from "lucide-react";
 import { motion } from "motion/react";
-
-const steps = [
-  {
-    icon: Recycle,
-    step: "01",
-    location: "Jharkhand Processing Unit",
-    title: "Collection & Sorting",
-    description: "AI-powered material intelligence identifies and sorts waste materials for maximum quality and efficiency"
-  },
-  {
-    icon: Cpu,
-    step: "02",
-    location: "AI Quality Lab",
-    title: "Quality Control",
-    description: "Advanced AI systems ensure consistent quality while reducing rejection rates by 30-40%"
-  },
-  {
-    icon: Scissors,
-    step: "03",
-    location: "Agra Manufacturing Unit",
-    title: "Artisan Crafting",
-    description: "Skilled artisans transform materials into unique mosaic patterns and product components"
-  },
-  {
-    icon: Package,
-    step: "04",
-    location: "Export Facility",
-    title: "Assembly & Export",
-    description: "Final assembly with Digital Product Passport for full traceability and EU compliance"
-  }
-];
+import { useLanguage } from "../lib/LanguageContext";
 
 export default function ProcessSection() {
+  const { t } = useLanguage();
+
+  const steps = [
+    {
+      icon: Recycle,
+      step: "01",
+      location: t("step1.loc"),
+      title: t("step1.title"),
+      description: t("step1.desc")
+    },
+    {
+      icon: Cpu,
+      step: "02",
+      location: t("step2.loc"),
+      title: t("step2.title"),
+      description: t("step2.desc")
+    },
+    {
+      icon: Scissors,
+      step: "03",
+      location: t("step3.loc"),
+      title: t("step3.title"),
+      description: t("step3.desc")
+    },
+    {
+      icon: Package,
+      step: "04",
+      location: t("step4.loc"),
+      title: t("step4.title"),
+      description: t("step4.desc")
+    }
+  ];
+
   return (
     <section id="process" className="py-32 bg-muted/20 border-y border-border/40">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-24">
           <div className="section-badge mb-6">
-            <span className="section-badge-label">The Circular Lifecycle</span>
+            <span className="section-badge-label">{t("process.badge")}</span>
           </div>
-          <h2 className="text-5xl font-serif text-primary md:text-7xl mb-6">From Waste to Wonder</h2>
-          <p className="text-xl text-muted-foreground max-w-xl mx-auto">A seamless orchestration of AI-enabled technology and generational craftsmanship.</p>
+          <h2 className="text-5xl font-serif text-primary md:text-7xl mb-6">{t("process.title")}</h2>
+          <p className="text-xl text-muted-foreground max-w-xl mx-auto">{t("process.desc")}</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 mb-24">
@@ -86,18 +89,18 @@ export default function ProcessSection() {
             <div className="absolute -inset-4 border-2 border-accent/20 rounded-3xl -z-10" />
           </div>
           <div>
-            <h3 className="text-4xl font-serif text-primary mb-8 font-bold">AI Material Intelligence</h3>
+            <h3 className="text-4xl font-serif text-primary mb-8 font-bold">{t("process.ai_intel")}</h3>
             <p className="text-lg text-muted-foreground mb-10 leading-relaxed italic">
-              "Our proprietary AI systems analyze material integrity at a microscopic level, ensuring waste is not just reused, but reborn."
+              {t("process.ai_quote")}
             </p>
             <div className="grid sm:grid-cols-2 gap-8">
               <div className="p-8 rounded-3xl bg-card border border-accent/30 shadow-sm group hover:bg-accent transition-colors">
                 <p className="text-5xl font-bold text-primary mb-2 group-hover:text-white transition-colors">35%</p>
-                <p className="text-xs font-mono tracking-tight uppercase font-black text-accent group-hover:text-white transition-colors">Faster Sorting</p>
+                <p className="text-xs font-mono tracking-tight uppercase font-black text-accent group-hover:text-white transition-colors">{t("process.faster_sorting")}</p>
               </div>
               <div className="p-8 rounded-3xl bg-card border border-accent/30 shadow-sm group hover:bg-accent transition-colors">
                 <p className="text-5xl font-bold text-primary mb-2 group-hover:text-white transition-colors">40%</p>
-                <p className="text-xs font-mono tracking-tight uppercase font-black text-accent group-hover:text-white transition-colors">Lower Rejection</p>
+                <p className="text-xs font-mono tracking-tight uppercase font-black text-accent group-hover:text-white transition-colors">{t("process.lower_rejection")}</p>
               </div>
             </div>
           </div>

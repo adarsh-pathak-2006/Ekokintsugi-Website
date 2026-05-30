@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../lib/AuthContext";
 import { useEffect, useState } from "react";
+import { useLanguage } from "../lib/LanguageContext";
 
 export default function TreePreviewSection() {
   const { session, user } = useAuth();
   const [treeCount, setTreeCount] = useState(4);
+  const { t } = useLanguage();
 
   useEffect(() => {
     if (!user) {
@@ -32,11 +34,11 @@ export default function TreePreviewSection() {
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-14 text-center">
           <span className="section-badge">
-            <span className="section-badge-label">Tree Plantation Preview</span>
+            <span className="section-badge-label">{t("tree.preview.badge")}</span>
           </span>
-          <h2 className="mt-6 text-5xl md:text-6xl font-serif font-bold text-primary">Reforestation Tracker</h2>
+          <h2 className="mt-6 text-5xl md:text-6xl font-serif font-bold text-primary">{t("dashboard.tree.title")}</h2>
           <p className="mt-5 max-w-2xl mx-auto text-lg text-muted-foreground italic">
-            A brief preview of the tree plantation experience inside the Impact Dashboard, showing zone mapping and live sapling progress.
+            {t("tree.preview.desc")}
           </p>
         </div>
 
@@ -45,18 +47,18 @@ export default function TreePreviewSection() {
             <div className="bg-card border border-border p-5 rounded-3xl shadow-strong aspect-video relative overflow-hidden">
               <img src="/images/sections/reforestation-map.jpg" alt="Reforestation map" className="absolute inset-0 w-full h-full object-cover" />
               <div className="absolute inset-x-5 bottom-5 bg-background/90 backdrop-blur border border-border rounded-2xl px-5 py-4 font-mono text-[10px] tracking-widest text-primary uppercase">
-                {user ? "Currently viewing: Agra Plantation Site Reserve" : "Previewing: Agra Demo Zone"}
+                {user ? t("dashboard.tree.map_live") : t("dashboard.tree.map_demo")}
               </div>
             </div>
 
             <div className="bg-card p-10 rounded-3xl border border-border shadow-soft">
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8">
                 <div>
-                  <h3 className="text-2xl font-serif font-bold text-primary">Live Sapling Stats</h3>
-                  <p className="text-sm font-mono text-accent dark:text-primary font-bold">Allocated Trees: {treeCount}</p>
+                  <h3 className="text-2xl font-serif font-bold text-primary">{t("dashboard.tree.stats_title")}</h3>
+                  <p className="text-sm font-mono text-accent dark:text-primary font-bold">{t("dashboard.tree.allocated")}: {treeCount}</p>
                 </div>
                 <div className="bg-primary/5 px-4 py-2 rounded-lg text-primary text-[10px] font-black uppercase tracking-widest">
-                  Active Growth
+                  {t("dashboard.tree.active_growth")}
                 </div>
               </div>
 
@@ -71,7 +73,7 @@ export default function TreePreviewSection() {
               </div>
 
               <p className="text-center mt-6 text-xs font-mono text-muted-foreground uppercase font-bold tracking-widest">
-                Growth Factor: {treeCount > 0 ? "Healthy" : "Awaiting first tree allocation"}
+                {treeCount > 0 ? t("dashboard.tree.factor_healthy") : t("dashboard.tree.factor_awaiting")}
               </p>
             </div>
           </div>
@@ -84,16 +86,16 @@ export default function TreePreviewSection() {
             <div className="bg-primary text-primary-foreground rounded-3xl p-8 shadow-strong relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-accent/20 blur-3xl" />
               <div className="relative z-10">
-                <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-accent dark:text-primary-foreground font-black mb-4">Dashboard Access</p>
-                <h3 className="text-3xl font-serif font-bold mb-4">Track your assigned plantation zone and impact story.</h3>
+                <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-accent dark:text-primary-foreground font-black mb-4">{t("tree.preview.sub")}</p>
+                <h3 className="text-3xl font-serif font-bold mb-4">{t("tree.preview.dpp")}</h3>
                 <p className="text-primary-foreground/75 leading-relaxed mb-6">
-                  Sign in to unlock your personal reforestation data, tree history, and the full live plantation dashboard.
+                  {t("tree.preview.desc")}
                 </p>
                 <Link
                   to="/?impact=open"
                   className="inline-flex rounded-2xl bg-accent px-6 py-3 text-[10px] font-mono uppercase tracking-widest font-black text-accent-foreground hover:bg-primary-foreground hover:text-primary transition-colors"
                 >
-                  Open Impact Dashboard
+                  {t("tree.preview.btn")}
                 </Link>
               </div>
             </div>

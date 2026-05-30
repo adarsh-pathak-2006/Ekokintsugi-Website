@@ -1,9 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import { PRODUCT_CATEGORIES } from "../lib/productCatalog";
+import { useLanguage } from "../lib/LanguageContext";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   return (
     <footer className="py-20 bg-card border-t border-border">
@@ -16,21 +18,20 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-muted-foreground text-lg max-w-sm leading-relaxed">
-              Transforming waste into beautiful, sustainable products through AI material intelligence and artisan
-              craftsmanship.
+              {t("footer.tagline")}
             </p>
           </div>
 
           <div>
-            <h4 className="font-serif text-primary text-xl font-bold mb-6">Quick Links</h4>
+            <h4 className="font-serif text-primary text-xl font-bold mb-6">{t("footer.quick_links")}</h4>
             <ul className="space-y-4">
               {[
-                { name: "Home", path: "/" },
-                { name: "About", path: "/about" },
-                { name: "Products", path: "/products" },
-                { name: "Process", path: "/process" },
-                { name: "Impact", path: "/impact" },
-                { name: "Contact", path: "/contact" }
+                { name: t("nav.home"), path: "/" },
+                { name: t("nav.about"), path: "/about" },
+                { name: t("nav.products"), path: "/products" },
+                { name: t("nav.process"), path: "/process" },
+                { name: t("nav.impact"), path: "/impact" },
+                { name: t("nav.contact"), path: "/contact" }
               ].map((link) => (
                 <li key={link.name}>
                   <Link
@@ -45,9 +46,9 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="font-serif text-primary text-xl font-bold mb-6">Products</h4>
+            <h4 className="font-serif text-primary text-xl font-bold mb-6">{t("footer.products")}</h4>
             <ul className="space-y-4">
-              {[...PRODUCT_CATEGORIES, { slug: "", shortTitle: "View All Products" }].map((product) => (
+              {[...PRODUCT_CATEGORIES, { slug: "", shortTitle: t("footer.view_all_products") }].map((product) => (
                 <li key={product.slug || product.shortTitle}>
                   <button
                     onClick={() => {
@@ -57,7 +58,7 @@ export default function Footer() {
                         navigate("/products");
                       }
                     }}
-                    className="text-muted-foreground hover:text-accent transition-colors text-left"
+                    className="text-muted-foreground hover:text-accent transition-colors text-left cursor-pointer"
                   >
                     {product.shortTitle}
                   </button>
@@ -69,13 +70,13 @@ export default function Footer() {
 
         <div className="pt-8 border-t border-border/50">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <p className="text-sm text-muted-foreground">Copyright {currentYear} EkoKintsugi LLP. All rights reserved.</p>
+            <p className="text-sm text-muted-foreground">Copyright {currentYear} EkoKintsugi LLP. {t("footer.copyright")}</p>
             <div className="flex gap-8">
               <Link to="/" className="text-sm text-muted-foreground hover:text-accent transition-colors font-medium">
-                Privacy Policy
+                {t("footer.privacy")}
               </Link>
               <Link to="/" className="text-sm text-muted-foreground hover:text-accent transition-colors font-medium">
-                Terms of Service
+                {t("footer.terms")}
               </Link>
             </div>
           </div>

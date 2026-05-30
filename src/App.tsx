@@ -83,12 +83,16 @@ function AppShell() {
   );
 }
 
+import { LanguageProvider } from "./lib/LanguageContext";
+
 export default function App() {
   return (
     <Router>
-      <CartProvider>
-        <AppShell />
-      </CartProvider>
+      <LanguageProvider>
+        <CartProvider>
+          <AppShell />
+        </CartProvider>
+      </LanguageProvider>
     </Router>
   );
 }

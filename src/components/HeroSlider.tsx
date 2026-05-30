@@ -3,45 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { useTheme } from "../lib/ThemeContext";
-
-const slides = [
-  {
-    id: 1,
-    tag: "Circular Heritage",
-    title: "Artisan Decoratives",
-    description: "Everyday luxury handcrafted entirely from reclaimed material offcuts with organic gold details.",
-    image: "/images/hero/hero-1.jpg",
-    actionText: "Explore Collection",
-    tagline: "100% Traceable Circular Design"
-  },
-  {
-    id: 2,
-    tag: "Minimalist Carry",
-    title: "Sustainable Living",
-    description: "Sophisticated bi-fold and zip wallets engineered for lifelong circular utility.",
-    image: "/images/products/wallet-zip.jpg",
-    actionText: "Shop Wallets",
-    tagline: "Eco-Luxury Certified"
-  },
-  {
-    id: 3,
-    tag: "Artisan Footwear",
-    title: "Eco Luxury Ballet Flats",
-    description: "Redefining modern feminine elegance with botanical accents and high circular footprint savings.",
-    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/products/indigo-floral-ballet-flats.jpeg",
-    actionText: "Shop Flats",
-    tagline: "EU-Certified DPP Enabled"
-  },
-  {
-    id: 4,
-    tag: "Performance Materials",
-    title: "Circular Footwear Edition",
-    description: "Signature premium sneakers reimagined through reclaimed leather mosaics and local precision craft.",
-    image: "/images/products/signature-sneaker.jpg",
-    actionText: "Explore Sneakers",
-    tagline: "Carbon-Positive Reforestation Offset"
-  }
-];
+import { useLanguage } from "../lib/LanguageContext";
 
 export default function HeroSlider() {
   const [index, setIndex] = useState(0);
@@ -49,6 +11,46 @@ export default function HeroSlider() {
   const navigate = useNavigate();
   const { theme } = useTheme();
   const isDark = theme === "dark";
+  const { t } = useLanguage();
+
+  const slides = [
+    {
+      id: 1,
+      tag: t("hero.slide1.tag"),
+      title: t("hero.slide1.title"),
+      description: t("hero.slide1.desc"),
+      image: "/images/hero/hero-1.jpg",
+      actionText: t("hero.slide1.btn"),
+      tagline: t("hero.slide1.tagline")
+    },
+    {
+      id: 2,
+      tag: t("hero.slide2.tag"),
+      title: t("hero.slide2.title"),
+      description: t("hero.slide2.desc"),
+      image: "/images/products/wallet-zip.jpg",
+      actionText: t("hero.slide2.btn"),
+      tagline: t("hero.slide2.tagline")
+    },
+    {
+      id: 3,
+      tag: t("hero.slide3.tag"),
+      title: t("hero.slide3.title"),
+      description: t("hero.slide3.desc"),
+      image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/products/indigo-floral-ballet-flats.jpeg",
+      actionText: t("hero.slide3.btn"),
+      tagline: t("hero.slide3.tagline")
+    },
+    {
+      id: 4,
+      tag: t("hero.slide4.tag"),
+      title: t("hero.slide4.title"),
+      description: t("hero.slide4.desc"),
+      image: "/images/products/signature-sneaker.jpg",
+      actionText: t("hero.slide4.btn"),
+      tagline: t("hero.slide4.tagline")
+    }
+  ];
 
   useEffect(() => {
     if (isAutoplayPaused) return;
@@ -57,7 +59,7 @@ export default function HeroSlider() {
       setIndex((prev) => (prev + 1) % slides.length);
     }, 4000);
     return () => clearInterval(timer);
-  }, [isAutoplayPaused]);
+  }, [isAutoplayPaused, slides.length]);
 
   const handleNext = () => {
     setIndex((prev) => (prev + 1) % slides.length);

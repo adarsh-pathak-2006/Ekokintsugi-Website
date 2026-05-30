@@ -1,30 +1,33 @@
 import { Brain, Heart, Earth, Award } from "lucide-react";
 import { motion } from "motion/react";
-
-const features = [
-  {
-    icon: Brain,
-    title: "AI-Powered",
-    description: "Advanced material intelligence for quality and efficiency"
-  },
-  {
-    icon: Heart,
-    title: "Artisan Craft",
-    description: "Supporting local communities and traditional skills"
-  },
-  {
-    icon: Earth,
-    title: "Global Impact",
-    description: "EU-certified with international partnerships"
-  },
-  {
-    icon: Award,
-    title: "Premium Quality",
-    description: "Export-grade products that don't compromise"
-  }
-];
+import { useLanguage } from "../lib/LanguageContext";
 
 export default function AboutSection() {
+  const { t } = useLanguage();
+
+  const features = [
+    {
+      icon: Brain,
+      title: t("about.feat_ai_title"),
+      description: t("about.feat_ai_desc")
+    },
+    {
+      icon: Heart,
+      title: t("about.feat_artisan_title"),
+      description: t("about.feat_artisan_desc")
+    },
+    {
+      icon: Earth,
+      title: t("about.feat_impact_title"),
+      description: t("about.feat_impact_desc")
+    },
+    {
+      icon: Award,
+      title: t("about.feat_quality_title"),
+      description: t("about.feat_quality_desc")
+    }
+  ];
+
   return (
     <section id="about" className="py-32 surface-gradient overflow-hidden relative border-t border-border/50">
       <div className="max-w-7xl mx-auto px-6">
@@ -36,17 +39,17 @@ export default function AboutSection() {
             transition={{ duration: 0.8 }}
           >
             <div className="section-badge mb-6">
-              <span className="section-badge-label">The Heritage</span>
+              <span className="section-badge-label">{t("about.badge")}</span>
             </div>
             <h2 className="text-5xl md:text-7xl font-serif leading-[1.1] mb-10 font-bold text-primary">
-              Redefining Waste <br />as a <span className="italic text-accent">Resource</span>
+              {t("about.title_part1")} <br />{t("about.title_part2")} <span className="italic text-accent">{t("about.title_accent")}</span>
             </h2>
             <div className="space-y-8 text-muted-foreground text-lg mb-12 leading-relaxed max-w-lg">
               <p className="border-l-4 border-accent pl-6 italic">
-                EkoKintsugi transforms leather and material waste into premium products. 
+                {t("about.quote")}
               </p>
               <p>
-                Inspired by the Japanese art of Kintsugi—where broken pottery is mended with gold—we believe in making beautiful things from what others discard.
+                {t("about.description")}
               </p>
             </div>
 

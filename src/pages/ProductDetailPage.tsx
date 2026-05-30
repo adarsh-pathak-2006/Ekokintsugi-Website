@@ -1,10 +1,10 @@
-import React from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "motion/react";
 import { ArrowLeft, ChevronRight, ShieldCheck, TreePine, Leaf, Sparkles, ShoppingBag, UserRound } from "lucide-react";
 import { useProductsCatalog } from "../hooks/useProductsCatalog";
 import { useCart } from "../lib/CartContext";
 import { useAuth } from "../lib/AuthContext";
+import { useLanguage } from "../lib/LanguageContext";
 import ProductCatalogueGrid from "../components/ProductCatalogueGrid";
 
 export default function ProductDetailPage() {
@@ -12,6 +12,7 @@ export default function ProductDetailPage() {
   const { products, isLoading, error } = useProductsCatalog();
   const { addToCart } = useCart();
   const { user } = useAuth();
+  const { t } = useLanguage();
 
   const product = products.find((p) => String(p.id) === String(id));
 
@@ -19,12 +20,12 @@ export default function ProductDetailPage() {
   const getSourcingDetails = (category = "") => {
     const cat = category.toLowerCase();
     if (cat.includes("footwear") || cat.includes("flat") || cat.includes("sneaker")) {
-      return "Constructed using premium leather offcuts from Indian artisan clusters, combined with natural crepe rubber outsoles. 100% traceably handcrafted.";
+      return t("detailpage.sourcing.footwear");
     }
     if (cat.includes("backpack") || cat.includes("bag")) {
-      return "Made entirely from mosaic-stitched leather panels sourced from workshop excess. Built with circular heavy-duty hardware designed for easy disassembly.";
+      return t("detailpage.sourcing.bags");
     }
-    return "Crafted from precise leather offcuts salvaged from master artisan workshops in Uttar Pradesh. Minimizes even the smallest waste footmarks.";
+    return t("detailpage.sourcing.accessories");
   };
 
   if (isLoading) {
@@ -41,18 +42,18 @@ export default function ProductDetailPage() {
         <div className="max-w-4xl mx-auto px-6">
           <div className="bg-card border border-border/60 rounded-[2.5rem] p-10 md:p-14 shadow-soft text-center">
             <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-accent font-bold mb-4">
-              Item Unavailable
+              {t("detailpage.unavailable_eyebrow")}
             </p>
-            <h1 className="text-4xl md:text-5xl font-serif text-primary font-bold mb-5">Product Not Found</h1>
+            <h1 className="text-4xl md:text-5xl font-serif text-primary font-bold mb-5">{t("detailpage.unavailable_title")}</h1>
             <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
-              This product may be temporarily out of stock or relocated. You can browse our main categories.
+              {t("detailpage.unavailable_desc")}
             </p>
             <Link
               to="/products"
               className="inline-flex items-center gap-3 rounded-full bg-primary text-primary-foreground px-7 py-3 text-[11px] font-mono tracking-[0.3em] uppercase font-bold hover:bg-accent hover:text-accent-foreground transition-colors cursor-pointer"
             >
               <ArrowLeft className="w-4 h-4" />
-              Back To Products
+              {t("categorypage.back_btn")}
             </Link>
           </div>
         </div>
@@ -74,10 +75,10 @@ export default function ProductDetailPage() {
         {/* Breadcrumb */}
         <div className="mb-10 flex flex-wrap items-center gap-3 text-[10px] font-mono tracking-[0.35em] uppercase">
           <Link to="/products" className="text-muted-foreground hover:text-accent transition-colors">
-            Products
+            {t("nav.products")}
           </Link>
           <ChevronRight className="w-4 h-4 text-muted-foreground" />
-          <span className="text-muted-foreground">{product.category || "Item"}</span>
+          <span className="text-muted-foreground">{product.category || t("detailpage.circular_collection")}</span>
           <ChevronRight className="w-4 h-4 text-muted-foreground" />
           <span className="text-accent font-bold truncate max-w-48">{product.name}</span>
         </div>
@@ -110,7 +111,7 @@ export default function ProductDetailPage() {
           >
             <div>
               <span className="text-[10px] font-mono tracking-[0.35em] uppercase text-accent font-black block mb-3">
-                {product.category || "Circular Collection"}
+                {product.category || t("detailpage.circular_collection")}
               </span>
               <h1 className="text-4xl md:text-5xl font-serif text-primary font-bold mb-4">
                 {product.name}
@@ -125,7 +126,7 @@ export default function ProductDetailPage() {
               <ShieldCheck className="w-6 h-6 text-accent shrink-0 mt-1" />
               <div>
                 <h4 className="text-xs font-mono tracking-widest text-primary font-bold uppercase mb-2">
-                  Circular Materials & Sourcing
+                  {t("detailpage.sourcing_title")}
                 </h4>
                 <p className="text-sm text-muted-foreground leading-relaxed">
                   {getSourcingDetails(product.category)}
@@ -138,14 +139,14 @@ export default function ProductDetailPage() {
               <div className="bg-muted/30 border border-border/50 p-5 rounded-2xl flex items-center gap-4">
                 <Leaf className="w-8 h-8 text-accent" />
                 <div>
-                  <p className="text-[9px] font-mono tracking-widest text-muted-foreground uppercase">CO2 Diverted</p>
+                  <p className="text-[9px] font-mono tracking-widest text-muted-foreground uppercase">{t("dashboard.stat.co2")}</p>
                   <p className="text-xl font-serif font-bold text-primary">{co2Val.toFixed(1)} kg</p>
                 </div>
               </div>
               <div className="bg-muted/30 border border-border/50 p-5 rounded-2xl flex items-center gap-4">
                 <TreePine className="w-8 h-8 text-primary" />
                 <div>
-                  <p className="text-[9px] font-mono tracking-widest text-muted-foreground uppercase">Waste Reclaimed</p>
+                  <p className="text-[9px] font-mono tracking-widest text-muted-foreground uppercase">{t("impactpage.metrics.waste").split(" ")[0]}</p>
                   <p className="text-xl font-serif font-bold text-primary">{wasteVal.toFixed(1)} kg</p>
                 </div>
               </div>
@@ -162,7 +163,7 @@ export default function ProductDetailPage() {
                   className="w-full flex items-center justify-center gap-3 rounded-full bg-accent text-accent-foreground px-8 py-4 font-mono text-[10px] tracking-widest uppercase font-black hover:bg-primary hover:text-primary-foreground transition-all shadow-md cursor-pointer group"
                 >
                   <ShoppingBag className="w-4 h-4 transition-transform group-hover:scale-110" />
-                  Add to Circular Selection
+                  {t("detailpage.add_to_cart")}
                 </motion.button>
               ) : (
                 <Link
@@ -170,12 +171,12 @@ export default function ProductDetailPage() {
                   className="w-full flex items-center justify-center gap-3 rounded-full bg-primary text-primary-foreground px-8 py-4 font-mono text-[10px] tracking-widest uppercase font-black hover:bg-accent hover:text-accent-foreground transition-all shadow-md cursor-pointer group"
                 >
                   <UserRound className="w-4 h-4 transition-transform group-hover:scale-110" />
-                  Sign In To Access Cart
+                  {t("detailpage.sign_in_cart")}
                 </Link>
               )}
               <div className="flex items-center justify-center gap-2 text-[10px] text-muted-foreground font-mono">
                 <Sparkles className="w-3.5 h-3.5 text-accent animate-pulse" />
-                <span>Supports immediate ecological restoration in rural craft zones.</span>
+                <span>{t("detailpage.supports_restoration")}</span>
               </div>
             </div>
           </motion.div>
@@ -187,16 +188,16 @@ export default function ProductDetailPage() {
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
               <div>
                 <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-accent font-bold mb-3">
-                  Circular Recommendations
+                  {t("detailpage.recommendations")}
                 </p>
-                <h2 className="text-3xl font-serif font-bold text-primary">Related Designs</h2>
+                <h2 className="text-3xl font-serif font-bold text-primary">{t("detailpage.related_designs")}</h2>
               </div>
               <Link
                 to="/products"
                 className="inline-flex items-center gap-3 text-[10px] font-mono tracking-[0.3em] uppercase text-muted-foreground hover:text-accent transition-colors font-bold"
               >
                 <ArrowLeft className="w-4 h-4" />
-                Explore All Products
+                {t("detailpage.explore_all")}
               </Link>
             </div>
 
