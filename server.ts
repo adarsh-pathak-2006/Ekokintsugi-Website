@@ -37,6 +37,11 @@ const gmailAppPassword = process.env.GMAIL_APP_PASSWORD || "";
 const sellerEmailAddress = process.env.SELLER_EMAIL || "admin@ekokintsugi.com";
 const isGmailConfigured = Boolean(gmailUser && gmailAppPassword && !gmailUser.includes("your-sender"));
 
+// SendGrid configurations (HTTP API, bypasses SMTP blocking on Render)
+const sendgridApiKey = process.env.SENDGRID_API_KEY || "";
+const sendgridSenderEmail = process.env.SENDGRID_SENDER_EMAIL || gmailUser || "orders@ekokintsugi.com";
+const isSendGridConfigured = Boolean(sendgridApiKey);
+
 const mailTransporter = isGmailConfigured
   ? nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -55,8 +60,93 @@ const mailTransporter = isGmailConfigured
         const actualOptions = typeof options === "object" ? options : {};
         dns.lookup(hostname, { ...actualOptions, family: 4 }, actualCallback);
       }
-    })
+    } as any)
   : null;
+
+const isEmailServiceAvailable = isSendGridConfigured || isGmailConfigured;
+
+interface EmailOptions {
+  from: { name: string; email: string };
+  to: string;
+  replyTo?: string;
+  subject: string;
+  text: string;
+  html: string;
+}
+
+async function sendEmail(options: EmailOptions): Promise<{ success: boolean; provider: string }> {
+  // 1. Try SendGrid HTTP API first (Bypasses Render SMTP blocking entirely)
+  if (isSendGridConfigured) {
+    try {
+      console.log(`✉️ Sending email to ${options.to} via SendGrid HTTP API...`);
+      const payload = {
+        personalizations: [
+          {
+            to: [{ email: options.to }],
+          },
+        ],
+        from: {
+          email: options.from.email,
+          name: options.from.name,
+        },
+        reply_to: options.replyTo ? { email: options.replyTo } : undefined,
+        subject: options.subject,
+        content: [
+          {
+            type: "text/plain",
+            value: options.text,
+          },
+          {
+            type: "text/html",
+            value: options.html,
+          },
+        ],
+      };
+
+      const response = await fetch("https://api.sendgrid.com/v3/mail/send", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sendgridApiKey}`,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`SendGrid API responded with status ${response.status}: ${errorText}`);
+      }
+
+      console.log(`✅ Email sent successfully via SendGrid HTTP API to ${options.to}`);
+      return { success: true, provider: "SendGrid HTTP API" };
+    } catch (err: any) {
+      console.error(`❌ SendGrid email dispatch failed: ${err.message}`);
+      if (mailTransporter) {
+        console.warn(`🔄 Falling back to Gmail SMTP driver...`);
+      } else {
+        throw err;
+      }
+    }
+  }
+
+  // 2. Try Gmail SMTP Transporter (Fallback or localhost dev)
+  if (mailTransporter) {
+    console.log(`✉️ Sending email to ${options.to} via Gmail SMTP...`);
+    await mailTransporter.sendMail({
+      from: `"${options.from.name}" <${options.from.email}>`,
+      to: options.to,
+      replyTo: options.replyTo,
+      subject: options.subject,
+      text: options.text,
+      html: options.html,
+    });
+    console.log(`✅ Email sent successfully via Gmail SMTP to ${options.to}`);
+    return { success: true, provider: "Gmail SMTP" };
+  }
+
+  throw new Error("No configured email provider or transporter is available.");
+}
+
 
 // Persistent Local Database Fallback (for Guest and Local-mode visits)
 const DB_FILE_PATH = path.join(process.cwd(), "server_db.json");
@@ -615,26 +705,29 @@ This order request has been generated dynamically by the EkoKintsugi app.
     const isHostedOnRender = Boolean(process.env.RENDER || process.env.NODE_ENV === "production");
 
     // Send real email and await result, making it a strict requirement if configured or hosted
-    if (mailTransporter) {
+    if (isEmailServiceAvailable) {
       try {
-        await mailTransporter.sendMail({
-          from: `"EkoKintsugi Orders" <${gmailUser}>`,
+        const mailResult = await sendEmail({
+          from: {
+            name: "EkoKintsugi Orders",
+            email: isSendGridConfigured ? sendgridSenderEmail : gmailUser
+          },
           to: recipientAddr,
           subject: `🌿 New Circular Order [${trackingNumber}] — ${shippingDetails.name}`,
           text: plainTextBody,
           html: htmlBody,
         });
-        console.log(`✅ Order email sent via Gmail to ${recipientAddr}`);
+        console.log(`✅ Order email sent via ${mailResult.provider} to ${recipientAddr}`);
       } catch (mailErr: any) {
-        console.error(`⚠️ Gmail send failed: ${mailErr.message}`);
+        console.error(`⚠️ Email dispatch failed: ${mailErr.message}`);
         return res.status(500).json({
           error: `Order recorded locally, but email dispatch failed: ${mailErr.message}. Please verify your server credentials.`
         });
       }
     } else if (isHostedOnRender) {
-      console.warn("⚠️ Checkout attempted but Gmail SMTP is not configured on Render.");
+      console.warn("⚠️ Checkout attempted but no email service is configured on Render.");
       return res.status(503).json({
-        error: "Gmail SMTP environment variables (GMAIL_USER and GMAIL_APP_PASSWORD) are not configured on Render. Please add them in Render settings to enable email notifications."
+        error: "Email delivery variables (SENDGRID_API_KEY or Gmail SMTP credentials) are not configured on Render. Please configure them in Render settings to enable email notifications."
       });
     } else {
       // Local fallback: print styled box to terminal
@@ -652,7 +745,7 @@ ${plainTextBody.split("\n").map(line => `│ ${line.padEnd(66)} │`).join("\n")
 
     // Always log to file for audit trail
     const outboxLogPath = path.join(process.cwd(), "email_outbox_logs.txt");
-    const formattedLog = `\n--- ${mailTransporter ? "EMAIL SENT" : "OUTBOX LOG"} [${timestamp}] ---\nFROM: ${senderAddr}\nTO: ${recipientAddr}\nVIA: ${mailTransporter ? "Gmail SMTP" : "Local Simulation"}\n${plainTextBody}\n`;
+    const formattedLog = `\n--- ${isEmailServiceAvailable ? "EMAIL SENT" : "OUTBOX LOG"} [${timestamp}] ---\nFROM: ${senderAddr}\nTO: ${recipientAddr}\nVIA: ${isSendGridConfigured ? "SendGrid HTTP API" : mailTransporter ? "Gmail SMTP" : "Local Simulation"}\n${plainTextBody}\n`;
     fs.appendFileSync(outboxLogPath, formattedLog, "utf8");
 
     res.json({
@@ -676,7 +769,7 @@ app.post("/api/contact/send", async (req, res) => {
       return res.status(400).json({ error: "Please complete all contact form fields." });
     }
 
-    if (!mailTransporter) {
+    if (!isEmailServiceAvailable) {
       return res.status(503).json({ error: "Email service is not configured." });
     }
 
@@ -731,8 +824,11 @@ ${safeMessage}
 </div>
 `;
 
-    await mailTransporter.sendMail({
-      from: `"EkoKintsugi Contact" <${gmailUser}>`,
+    await sendEmail({
+      from: {
+        name: "EkoKintsugi Contact",
+        email: isSendGridConfigured ? sendgridSenderEmail : gmailUser
+      },
       to: sellerEmailAddress,
       replyTo: safeEmail,
       subject: `New Contact Inquiry - ${safeSubject}`,
