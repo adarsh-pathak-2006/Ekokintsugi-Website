@@ -110,6 +110,69 @@
   @apply inline-flex items-center justify-center;
 }
 
+.navbar-premium {
+  background: rgba(27, 67, 50, 0.95) !important;
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15) !important;
+}
+
+.dark .navbar-premium {
+  background: rgba(10, 18, 14, 0.96) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.35) !important;
+}
+
+.logo-image-premium {
+  transition: all 0.3s ease;
+  filter: drop-shadow(0px 2px 6px rgba(0, 0, 0, 0.12));
+}
+
+.navbar-premium .nav-link-premium {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.navbar-premium .nav-link-premium:hover {
+  color: #dfb15b !important;
+}
+
+.navbar-premium .pref-pill-premium {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.navbar-premium .pref-pill-premium button {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.navbar-premium .pref-pill-premium button:hover {
+  color: #dfb15b !important;
+}
+
+.navbar-premium .pref-pill-premium svg {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.navbar-premium .pref-pill-premium svg:hover {
+  color: #dfb15b !important;
+}
+
+.navbar-premium .pref-pill-premium .text-accent {
+  color: #dfb15b !important;
+}
+
+.navbar-premium .btn-premium {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.navbar-premium .btn-premium:hover {
+  color: #dfb15b !important;
+  border-color: rgba(255, 255, 255, 0.24) !important;
+}
+
 .section-badge {
   @apply inline-flex items-center rounded-full px-4 py-2 border shadow-sm backdrop-blur-md transition-all duration-300;
   background: color-mix(in srgb, var(--color-card) 64%, transparent);

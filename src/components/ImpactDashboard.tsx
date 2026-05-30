@@ -342,7 +342,7 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
       <div className="w-full md:w-80 bg-primary p-8 flex flex-col text-primary-foreground border-r border-primary-foreground/10">
         <div className="flex items-center justify-between mb-10">
           <div className="flex items-center gap-4">
-            <span className="logo-surface px-2.5 py-2">
+            <span className="logo-surface">
               <img src="/logo_eko.png" alt="Logo" className="h-8 w-auto" />
             </span>
             <div>

@@ -13,8 +13,8 @@ export default function Footer() {
         <div className="grid md:grid-cols-4 gap-12 mb-16">
           <div className="md:col-span-2">
             <div className="mb-6">
-              <span className="logo-surface px-3 py-2">
-                <img src="/logo_eko.png" alt="EkoKintsugi Logo" className="h-12 w-auto" />
+              <span className="logo-surface">
+                <img src="/logo_eko.png" alt="EkoKintsugi Logo" className="h-14 w-auto" />
               </span>
             </div>
             <p className="text-muted-foreground text-lg max-w-sm leading-relaxed">
