@@ -31,10 +31,18 @@ const supabaseKey = process.env.VITE_SUPABASE_ANON_KEY || "";
 const isSupabaseConfigured = Boolean(supabaseUrl && supabaseKey);
 const supabase = isSupabaseConfigured ? createClient(supabaseUrl, supabaseKey) : null;
 
-// Gmail SMTP Transporter (real email sending)
+// --- DUAL-ENGINE EMAIL NOTIFICATION SYSTEM ---
+// Shared target: the email address that receives the notifications
+const sellerEmailAddress = process.env.SELLER_EMAIL || "admin@ekokintsugi.com";
+
+// Engine A: Resend API Configuration (Primary for free hosting tiers)
+const resendApiKey = process.env.RESEND_API_KEY || "";
+const isResendConfigured = Boolean(resendApiKey && !resendApiKey.includes("your-resend-key"));
+const emailSenderAddress = "EkoKintsugi <onboarding@resend.dev>";
+
+// Engine B: Gmail SMTP Transporter (Fallback/Alternative for paid tiers/local testing)
 const gmailUser = process.env.GMAIL_USER || "";
 const gmailAppPassword = process.env.GMAIL_APP_PASSWORD || "";
-const sellerEmailAddress = process.env.SELLER_EMAIL || "admin@ekokintsugi.com";
 const isGmailConfigured = Boolean(gmailUser && gmailAppPassword && !gmailUser.includes("your-sender"));
 
 const mailTransporter = isGmailConfigured
@@ -46,17 +54,78 @@ const mailTransporter = isGmailConfigured
         user: gmailUser,
         pass: gmailAppPassword,
       },
-      connectionTimeout: 10000, // 10 seconds connection timeout
-      greetingTimeout: 10000,   // 10 seconds greeting timeout
-      socketTimeout: 10000,     // 10 seconds socket inactivity timeout
-      // Force connection over IPv4 to bypass Render container IPv6 routing limits
+      connectionTimeout: 10000,
+      greetingTimeout: 10000,
+      socketTimeout: 10000,
       lookup: (hostname, options, callback) => {
         const actualCallback = typeof options === "function" ? options : callback;
         const actualOptions = typeof options === "object" ? options : {};
         dns.lookup(hostname, { ...actualOptions, family: 4 }, actualCallback);
       }
-    })
+    } as any)
   : null;
+
+// Helper to coordinate dispatch with fallbacks
+async function sendNotificationEmail(
+  subject: string, 
+  plainTextBody: string, 
+  htmlBody: string, 
+  replyTo?: string
+): Promise<{ success: boolean; method: "Resend API" | "Gmail SMTP" | "Local Simulation"; error?: string }> {
+  
+  // 1. Try Resend Primary
+  if (isResendConfigured) {
+    try {
+      const resendResponse = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${resendApiKey}`
+        },
+        body: JSON.stringify({
+          from: emailSenderAddress,
+          to: sellerEmailAddress,
+          replyTo: replyTo,
+          subject: subject,
+          text: plainTextBody,
+          html: htmlBody
+        })
+      });
+
+      if (resendResponse.ok) {
+        return { success: true, method: "Resend API" };
+      }
+      
+      const errorData: any = await resendResponse.json();
+      console.warn(`⚠️ Resend dispatch failed (status ${resendResponse.status}): ${errorData.message || "Unknown error"}. Trying Gmail SMTP fallback...`);
+    } catch (err: any) {
+      console.warn(`⚠️ Resend dispatch failed: ${err.message}. Trying Gmail SMTP fallback...`);
+    }
+  }
+
+  // 2. Try Gmail SMTP Fallback
+  if (mailTransporter) {
+    try {
+      await mailTransporter.sendMail({
+        from: `"EkoKintsugi" <${gmailUser}>`,
+        to: sellerEmailAddress,
+        replyTo: replyTo,
+        subject: subject,
+        text: plainTextBody,
+        html: htmlBody
+      });
+      return { success: true, method: "Gmail SMTP" };
+    } catch (err: any) {
+      console.error(`❌ Gmail SMTP fallback failed: ${err.message}`);
+      return { success: false, method: "Gmail SMTP", error: err.message };
+    }
+  }
+
+  // 3. Both unconfigured or failed, return simulation state
+  return { success: false, method: "Local Simulation", error: "No email dispatch service is configured or all configured services failed." };
+}
+
+
 
 // Persistent Local Database Fallback (for Guest and Local-mode visits)
 const DB_FILE_PATH = path.join(process.cwd(), "server_db.json");
@@ -522,7 +591,7 @@ app.post("/api/orders/checkout", async (req, res) => {
     }
 
     // ─── Email Dispatch ─────────────────────────────────────────────
-    const senderAddr = gmailUser || "orders@ekokintsugi.com";
+    const senderAddr = emailSenderAddress;
     const recipientAddr = sellerEmailAddress;
     const timestamp = new Date().toLocaleString();
     const trackingNumber = `EK-${Math.floor(100000 + Math.random() * 900000)}`;
@@ -612,33 +681,44 @@ This order request has been generated dynamically by the EkoKintsugi app.
 </div>
 `;
 
-    const isHostedOnRender = Boolean(process.env.RENDER || process.env.NODE_ENV === "production");
+    const isHostedInProduction = Boolean(process.env.RENDER || process.env.RAILWAY_STATIC_URL || process.env.NODE_ENV === "production");
 
-    // Send real email and await result, making it a strict requirement if configured or hosted
-    if (mailTransporter) {
-      try {
-        await mailTransporter.sendMail({
-          from: `"EkoKintsugi Orders" <${gmailUser}>`,
-          to: recipientAddr,
-          subject: `🌿 New Circular Order [${trackingNumber}] — ${shippingDetails.name}`,
-          text: plainTextBody,
-          html: htmlBody,
-        });
-        console.log(`✅ Order email sent via Gmail to ${recipientAddr}`);
-      } catch (mailErr: any) {
-        console.error(`⚠️ Gmail send failed: ${mailErr.message}`);
-        return res.status(500).json({
-          error: `Order recorded locally, but email dispatch failed: ${mailErr.message}. Please verify your server credentials.`
-        });
+    let emailSent = false;
+    let dispatchMethod: "Resend API" | "Gmail SMTP" | "Local Simulation" = "Local Simulation";
+    let dispatchError: string | undefined;
+
+    if (isResendConfigured || mailTransporter) {
+      const result = await sendNotificationEmail(
+        `🌿 New Circular Order [${trackingNumber}] — ${shippingDetails.name}`,
+        plainTextBody,
+        htmlBody
+      );
+      emailSent = result.success;
+      dispatchMethod = result.method;
+      dispatchError = result.error;
+
+      if (emailSent) {
+        console.log(`✅ Order email successfully sent via ${dispatchMethod} to ${recipientAddr}`);
+      } else {
+        console.error(`❌ Order recorded locally, but email dispatch failed via all configured channels.`);
       }
-    } else if (isHostedOnRender) {
-      console.warn("⚠️ Checkout attempted but Gmail SMTP is not configured on Render.");
-      return res.status(503).json({
-        error: "Gmail SMTP environment variables (GMAIL_USER and GMAIL_APP_PASSWORD) are not configured on Render. Please add them in Render settings to enable email notifications."
-      });
-    } else {
-      // Local fallback: print styled box to terminal
-      const terminalEmailBox = `
+    }
+
+    if (!emailSent) {
+      if (isHostedInProduction) {
+        console.warn(`⚠️ Checkout completed but email dispatch failed: ${dispatchError || "No email provider configured."}`);
+        if (isResendConfigured || mailTransporter) {
+          return res.status(500).json({
+            error: `Order recorded locally, but email dispatch failed: ${dispatchError || "All configured services failed to send"}. Please verify your credentials.`
+          });
+        } else {
+          return res.status(503).json({
+            error: "No email service (Resend or Gmail SMTP) is configured in production settings."
+          });
+        }
+      } else {
+        // Local fallback: print styled box to terminal
+        const terminalEmailBox = `
 ┌─────────────────────────── EMAIL OUTBOX ───────────────────────────┐
 │ FROM: ${senderAddr.padEnd(52)} │
 │ TO: ${recipientAddr.padEnd(54)} │
@@ -647,12 +727,13 @@ This order request has been generated dynamically by the EkoKintsugi app.
 ${plainTextBody.split("\n").map(line => `│ ${line.padEnd(66)} │`).join("\n")}
 └────────────────────────────────────────────────────────────────────┘
 `;
-      console.log(terminalEmailBox);
+        console.log(terminalEmailBox);
+      }
     }
 
     // Always log to file for audit trail
     const outboxLogPath = path.join(process.cwd(), "email_outbox_logs.txt");
-    const formattedLog = `\n--- ${mailTransporter ? "EMAIL SENT" : "OUTBOX LOG"} [${timestamp}] ---\nFROM: ${senderAddr}\nTO: ${recipientAddr}\nVIA: ${mailTransporter ? "Gmail SMTP" : "Local Simulation"}\n${plainTextBody}\n`;
+    const formattedLog = `\n--- ${emailSent ? "EMAIL SENT" : "OUTBOX LOG"} [${timestamp}] ---\nFROM: ${senderAddr}\nTO: ${recipientAddr}\nVIA: ${dispatchMethod}\n${plainTextBody}\n`;
     fs.appendFileSync(outboxLogPath, formattedLog, "utf8");
 
     res.json({
@@ -676,7 +757,7 @@ app.post("/api/contact/send", async (req, res) => {
       return res.status(400).json({ error: "Please complete all contact form fields." });
     }
 
-    if (!mailTransporter) {
+    if (!isResendConfigured && !mailTransporter) {
       return res.status(503).json({ error: "Email service is not configured." });
     }
 
@@ -731,14 +812,16 @@ ${safeMessage}
 </div>
 `;
 
-    await mailTransporter.sendMail({
-      from: `"EkoKintsugi Contact" <${gmailUser}>`,
-      to: sellerEmailAddress,
-      replyTo: safeEmail,
-      subject: `New Contact Inquiry - ${safeSubject}`,
-      text: plainTextBody,
-      html: htmlBody,
-    });
+    const result = await sendNotificationEmail(
+      `New Contact Inquiry - ${safeSubject}`,
+      plainTextBody,
+      htmlBody,
+      safeEmail
+    );
+
+    if (!result.success) {
+      throw new Error(result.error || "All configured email services failed to send");
+    }
 
     res.json({ success: true });
   } catch (error: any) {
@@ -976,10 +1059,15 @@ async function startServer() {
 
   app.listen(PORT, "0.0.0.0", async () => {
     console.log(`EkoKintsugi Backend running on http://0.0.0.0:${PORT}`);
-    console.log(mailTransporter
-      ? `✅ Gmail SMTP active — orders will email ${sellerEmailAddress} from ${gmailUser}`
-      : `📧 Gmail not configured — order emails logged to terminal & email_outbox_logs.txt`
-    );
+    if (isResendConfigured) {
+      console.log(`✅ Primary Resend API active — orders will email ${sellerEmailAddress} via Resend Sandbox`);
+    }
+    if (mailTransporter) {
+      console.log(`✅ Fallback Gmail SMTP active — orders will email ${sellerEmailAddress} from ${gmailUser}`);
+    }
+    if (!isResendConfigured && !mailTransporter) {
+      console.log(`📧 No email dispatch services configured — order emails logged to terminal & email_outbox_logs.txt`);
+    }
     if (!supabase) {
       console.log("Notice: Supabase environment variables are missing. API features that require Supabase will stay in fallback mode.");
       return;
