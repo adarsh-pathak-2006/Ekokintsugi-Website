@@ -342,3 +342,38 @@ ENVIRONMENTAL DIVIDEND:
 This order request has been generated dynamically by the EkoKintsugi app.
 ======================================================================
 
+
+--- EMAIL SENT [30/5/2026, 10:06:46 am] ---
+FROM: indianpsyco2000@gmail.com
+TO: adarshpathak2006@gmail.com
+VIA: SendGrid HTTP API
+
+======================================================================
+NEW CIRCULAR ORDER DISPATCH REQUEST
+======================================================================
+DATE/TIME: 30/5/2026, 10:06:46 am
+ORDER REF : ord-lc4nz3qpw
+TRACKING  : EK-956079
+
+CLIENT INFORMATION:
+-------------------
+Name   : gaurav
+Email  : gaurav@google.com
+Address: varansi
+Notes  : asdasdsad
+
+ORDER SELECTION:
+----------------
+• Mosaic City Backpack (Qty: 3) - Category: Leather Backpacks
+
+ENVIRONMENTAL DIVIDEND:
+-----------------------
+• CO2 Diverted  : 14.7 kg
+• Waste Reclaimed: 3.0 kg
+• Saplings Allocated in Agra: 8 sapling(s)
+• Applied Carbon Discount: 0.000 CC
+
+----------------------------------------------------------------------
+This order request has been generated dynamically by the EkoKintsugi app.
+======================================================================
+
