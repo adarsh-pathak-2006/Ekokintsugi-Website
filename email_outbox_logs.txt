@@ -377,3 +377,143 @@ ENVIRONMENTAL DIVIDEND:
 This order request has been generated dynamically by the EkoKintsugi app.
 ======================================================================
 
+
+--- EMAIL SENT [2/6/2026, 6:09:16 pm] ---
+FROM: EkoKintsugi <onboarding@resend.dev>
+TO: adarshpathak2006@gmail.com
+VIA: Gmail SMTP
+
+======================================================================
+NEW CIRCULAR ORDER DISPATCH REQUEST
+======================================================================
+DATE/TIME: 2/6/2026, 6:09:16 pm
+ORDER REF : ord-fp47cm83x
+TRACKING  : EK-319941
+
+CLIENT INFORMATION:
+-------------------
+Name   : ram
+Email  : ram@google.com
+Address: jkbkjjkbbkj
+Notes  : jknkjnjkjjjjjjjjjjjjjjj
+
+ORDER SELECTION:
+----------------
+• Classic Patchwork Belt (Size: 34) (Qty: 1) - Category: Belts
+
+ENVIRONMENTAL DIVIDEND:
+-----------------------
+• CO2 Diverted  : 1.2 kg
+• Waste Reclaimed: 0.1 kg
+• Saplings Allocated in Agra: 1 sapling(s)
+• Applied Carbon Discount: 0.000 CC
+
+----------------------------------------------------------------------
+This order request has been generated dynamically by the EkoKintsugi app.
+======================================================================
+
+
+--- EMAIL SENT [2/6/2026, 6:10:31 pm] ---
+FROM: EkoKintsugi <onboarding@resend.dev>
+TO: adarshpathak2006@gmail.com
+VIA: Gmail SMTP
+
+======================================================================
+NEW CIRCULAR ORDER DISPATCH REQUEST
+======================================================================
+DATE/TIME: 2/6/2026, 6:10:31 pm
+ORDER REF : ord-vnn8chuuu
+TRACKING  : EK-546521
+
+CLIENT INFORMATION:
+-------------------
+Name   : ram
+Email  : ram@google.com
+Address: ssssssssssssssss
+Notes  : saaaaaaaaaaaaaaaaaaaaaaassssssssssss
+
+ORDER SELECTION:
+----------------
+• Classic Patchwork Belt (Size: 32) (Qty: 1) - Category: Belts
+
+ENVIRONMENTAL DIVIDEND:
+-----------------------
+• CO2 Diverted  : 1.2 kg
+• Waste Reclaimed: 0.1 kg
+• Saplings Allocated in Agra: 1 sapling(s)
+• Applied Carbon Discount: 0.000 CC
+
+----------------------------------------------------------------------
+This order request has been generated dynamically by the EkoKintsugi app.
+======================================================================
+
+
+--- EMAIL SENT [2/6/2026, 6:17:30 pm] ---
+FROM: EkoKintsugi <onboarding@resend.dev>
+TO: adarshpathak2006@gmail.com
+VIA: Gmail SMTP
+
+======================================================================
+NEW CIRCULAR ORDER DISPATCH REQUEST
+======================================================================
+DATE/TIME: 2/6/2026, 6:17:30 pm
+ORDER REF : ord-0euhpwwbm
+TRACKING  : EK-147500
+
+CLIENT INFORMATION:
+-------------------
+Name   : ram
+Email  : ram@google.com
+Address: dddddddddd
+Notes  : dddddddddddddd
+
+ORDER SELECTION:
+----------------
+• Classic Patchwork Belt (Size: 32) (Qty: 2) - Category: Belts
+
+ENVIRONMENTAL DIVIDEND:
+-----------------------
+• CO2 Diverted  : 2.4 kg
+• Waste Reclaimed: 0.3 kg
+• Saplings Allocated in Agra: 2 sapling(s)
+• Applied Carbon Discount: 0.000 CC
+
+----------------------------------------------------------------------
+This order request has been generated dynamically by the EkoKintsugi app.
+======================================================================
+
+
+--- EMAIL SENT [2/6/2026, 6:26:47 pm] ---
+FROM: EkoKintsugi <onboarding@resend.dev>
+TO: indianpsyco2000@gmail.com
+VIA: Resend API
+
+======================================================================
+NEW CIRCULAR ORDER DISPATCH REQUEST
+======================================================================
+DATE/TIME: 2/6/2026, 6:26:47 pm
+ORDER REF : ord-0n8a4amwc
+TRACKING  : EK-633877
+
+CLIENT INFORMATION:
+-------------------
+Name   : ram
+Email  : ram@google.com
+Address: dddddddsaaaaaaaaaaa
+Notes  : dsdsdsdsds
+
+ORDER SELECTION:
+----------------
+• Terra Rider Jacket (Size: M) (Qty: 1) - Category: Jackets
+
+ENVIRONMENTAL DIVIDEND:
+-----------------------
+• CO2 Diverted  : 10.5 kg
+• Waste Reclaimed: 2.5 kg
+• Saplings Allocated in Agra: 6 sapling(s)
+• Applied Carbon Discount: 0.000 CC
+
+----------------------------------------------------------------------
+This order request has been generated dynamically by the EkoKintsugi app.
+======================================================================
+

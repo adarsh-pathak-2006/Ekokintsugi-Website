@@ -312,12 +312,16 @@ export default function AccountPage() {
                             {order.product.category || "Circular Craft"}
                           </span>
                           <h3 className="text-base sm:text-xl font-serif font-bold text-primary leading-tight">{order.product.name}</h3>
-                          <div className="flex items-center gap-2 sm:gap-3 text-xs text-muted-foreground">
+                          <div className="flex items-center gap-2 sm:gap-3 text-xs text-muted-foreground flex-wrap">
                             <span className="flex items-center gap-1">
                               <Calendar className="w-3.5 h-3.5" /> {new Date(order.created_at).toLocaleDateString()}
                             </span>
                             <span>•</span>
                             <span>Qty: {order.quantity}</span>
+                            <span>•</span>
+                            <span className="bg-accent/15 border border-accent/20 text-accent font-mono text-[9px] px-2 py-0.5 rounded-full font-bold uppercase shrink-0">
+                              Size: {order.size || "One Size"}
+                            </span>
                           </div>
                         </div>
                       </div>

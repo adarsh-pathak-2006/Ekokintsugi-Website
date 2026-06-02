@@ -336,7 +336,7 @@ export default function CartDrawer() {
                       <div className="space-y-4">
                         {cartItems.map((item, idx) => (
                           <motion.div
-                            key={item.product.id || `${item.product.name}-${idx}`}
+                            key={`${item.product.id}-${item.selectedSize}`}
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -10 }}
@@ -355,16 +355,21 @@ export default function CartDrawer() {
                                   {item.product.category || "Collection"}
                                 </p>
                                 <h4 className="font-serif text-sm font-bold text-primary line-clamp-1">{item.product.name}</h4>
-                                <p className="text-[10px] text-muted-foreground font-mono mt-1">
-                                  CO2 Saved: {((item.product.co2_factor ? parseFloat(String(item.product.co2_factor)) : 0) * item.quantity).toFixed(1)}kg
-                                </p>
+                                <div className="flex flex-wrap gap-2 items-center mt-1">
+                                  <span className="text-[9px] bg-accent/10 border border-accent/20 text-accent font-mono px-1.5 py-0.5 rounded-full uppercase font-bold">
+                                    Size: {item.selectedSize}
+                                  </span>
+                                  <span className="text-[9px] text-muted-foreground font-mono">
+                                    CO2 Saved: {((item.product.co2_factor ? parseFloat(String(item.product.co2_factor)) : 0) * item.quantity).toFixed(1)}kg
+                                  </span>
+                                </div>
                               </div>
 
                               <div className="flex justify-between items-center mt-2">
                                 {/* Quantity Controls */}
                                 <div className="flex items-center gap-1 border border-border bg-card rounded-lg p-0.5">
                                   <button
-                                    onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
+                                    onClick={() => updateQuantity(item.product.id, item.selectedSize, item.quantity - 1)}
                                     className="p-1 hover:bg-muted rounded text-muted-foreground hover:text-primary transition-colors cursor-pointer"
                                   >
                                     <Minus className="w-3 h-3" />
@@ -373,7 +378,7 @@ export default function CartDrawer() {
                                     {item.quantity}
                                   </span>
                                   <button
-                                    onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+                                    onClick={() => updateQuantity(item.product.id, item.selectedSize, item.quantity + 1)}
                                     className="p-1 hover:bg-muted rounded text-muted-foreground hover:text-primary transition-colors cursor-pointer"
                                   >
                                     <Plus className="w-3 h-3" />
@@ -381,7 +386,7 @@ export default function CartDrawer() {
                                 </div>
 
                                 <button
-                                  onClick={() => removeFromCart(item.product.id)}
+                                  onClick={() => removeFromCart(item.product.id, item.selectedSize)}
                                   className="p-1 text-muted-foreground hover:text-red-500 transition-colors cursor-pointer"
                                   title="Remove item"
                                 >

@@ -28,4 +28,5 @@ export interface Product {
   full_details?: string;
   base_price?: number;
   price?: string;
+  sizes?: string[];
 }

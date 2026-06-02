@@ -5,15 +5,16 @@ import { useAuth } from "./AuthContext";
 export interface CartItem {
   product: CatalogProduct;
   quantity: number;
+  selectedSize: string;
 }
 
 interface CartContextType {
   cartItems: CartItem[];
   isCartOpen: boolean;
   setCartOpen: (open: boolean) => void;
-  addToCart: (product: CatalogProduct, quantity?: number) => void;
-  removeFromCart: (productId: string) => void;
-  updateQuantity: (productId: string, quantity: number) => void;
+  addToCart: (product: CatalogProduct, quantity?: number, selectedSize?: string) => void;
+  removeFromCart: (productId: string, size: string) => void;
+  updateQuantity: (productId: string, size: string, quantity: number) => void;
   clearCart: () => void;
   totalCo2Saved: number;
   totalWasteReclaimed: number;
@@ -56,34 +57,40 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [cartItems, user]);
 
-  const addToCart = (product: CatalogProduct, quantity = 1) => {
+  const addToCart = (product: CatalogProduct, quantity = 1, selectedSize = "One Size") => {
     if (!user) return;
     setCartItems((prev) => {
-      const existing = prev.find((item) => item.product.id === product.id);
+      const existing = prev.find(
+        (item) => item.product.id === product.id && item.selectedSize === selectedSize
+      );
       if (existing) {
         return prev.map((item) =>
-          item.product.id === product.id
+          item.product.id === product.id && item.selectedSize === selectedSize
             ? { ...item, quantity: item.quantity + quantity }
             : item
         );
       }
-      return [...prev, { product, quantity }];
+      return [...prev, { product, quantity, selectedSize }];
     });
     setCartOpen(true); // Auto-open cart drawer on add
   };
 
-  const removeFromCart = (productId: string) => {
-    setCartItems((prev) => prev.filter((item) => item.product.id !== productId));
+  const removeFromCart = (productId: string, size: string) => {
+    setCartItems((prev) =>
+      prev.filter((item) => !(item.product.id === productId && item.selectedSize === size))
+    );
   };
 
-  const updateQuantity = (productId: string, quantity: number) => {
+  const updateQuantity = (productId: string, size: string, quantity: number) => {
     if (quantity <= 0) {
-      removeFromCart(productId);
+      removeFromCart(productId, size);
       return;
     }
     setCartItems((prev) =>
       prev.map((item) =>
-        item.product.id === productId ? { ...item, quantity } : item
+        item.product.id === productId && item.selectedSize === size
+          ? { ...item, quantity }
+          : item
       )
     );
   };

@@ -137,6 +137,7 @@ interface LocalDbSchema {
     product_id: string;
     quantity: number;
     total_price: number;
+    size?: string;
     created_at: string;
   }>;
   esg_records: Array<{
@@ -353,7 +354,7 @@ app.post("/api/orders/create", async (req, res) => {
   }
 
   const authenticatedUserId = await getAuthenticatedUserId(req);
-  const { productId, quantity } = req.body ?? {};
+  const { productId, quantity, size } = req.body ?? {};
 
   if (!authenticatedUserId) {
     return res.status(401).json({ error: "Please sign in to create an order." });
@@ -377,6 +378,7 @@ app.post("/api/orders/create", async (req, res) => {
     const totalPrice = Number(product.base_price) * normalizedQuantity;
     const co2Saved = Number(product.co2_factor) * normalizedQuantity;
     const wasteDiverted = Number(product.waste_factor) * normalizedQuantity;
+    const selectedSize = size || "One Size";
 
     // 2. Create Order
     const { data: order, error: oError } = await supabase
@@ -385,7 +387,8 @@ app.post("/api/orders/create", async (req, res) => {
         user_id: authenticatedUserId,
         product_id: productId,
         quantity: normalizedQuantity,
-        total_price: totalPrice
+        total_price: totalPrice,
+        size: selectedSize
       })
       .select()
       .single();
@@ -459,6 +462,7 @@ app.post("/api/orders/checkout", async (req, res) => {
     for (const item of items) {
       const prod = item.product;
       const qty = item.quantity;
+      const selectedSize = item.selectedSize || "One Size";
       const co2Val = Number(prod.co2_factor || 0) * qty;
       const wasteVal = Number(prod.waste_factor || 0) * qty;
 
@@ -475,6 +479,7 @@ app.post("/api/orders/checkout", async (req, res) => {
         product_id: String(prod.id),
         quantity: qty,
         total_price: Number(prod.base_price || 0) * qty,
+        size: selectedSize,
         created_at: new Date().toISOString()
       };
       localDb.orders.push(newOrder);
@@ -514,7 +519,8 @@ app.post("/api/orders/checkout", async (req, res) => {
             user_id: authenticatedUserId,
             product_id: prod.id,
             quantity: qty,
-            total_price: Number(prod.base_price || 0) * qty
+            total_price: Number(prod.base_price || 0) * qty,
+            size: selectedSize
           }).select().single();
 
           if (dbOrder) {
@@ -597,11 +603,11 @@ app.post("/api/orders/checkout", async (req, res) => {
     const trackingNumber = `EK-${Math.floor(100000 + Math.random() * 900000)}`;
 
     const itemsSummaryList = items
-      .map(item => `• ${item.product.name} (Qty: ${item.quantity}) - Category: ${item.product.category || "General"}`)
+      .map(item => `• ${item.product.name} (Size: ${item.selectedSize || "One Size"}) (Qty: ${item.quantity}) - Category: ${item.product.category || "General"}`)
       .join("\n");
 
     const itemsHtmlList = items
-      .map(item => `<tr><td style="padding:8px 12px;border-bottom:1px solid #e5e5e5;font-family:monospace">${item.product.name}</td><td style="padding:8px 12px;border-bottom:1px solid #e5e5e5;text-align:center">${item.quantity}</td><td style="padding:8px 12px;border-bottom:1px solid #e5e5e5">${item.product.category || "General"}</td></tr>`)
+      .map(item => `<tr><td style="padding:8px 12px;border-bottom:1px solid #e5e5e5;font-family:monospace">${item.product.name} <span style="font-size:11px;color:#888">(Size: ${item.selectedSize || "One Size"})</span></td><td style="padding:8px 12px;border-bottom:1px solid #e5e5e5;text-align:center">${item.quantity}</td><td style="padding:8px 12px;border-bottom:1px solid #e5e5e5">${item.product.category || "General"}</td></tr>`)
       .join("");
 
     const plainTextBody = `
@@ -900,6 +906,7 @@ app.get("/api/orders", async (req, res) => {
         quantity: order.quantity,
         total_price: order.total_price,
         created_at: order.created_at,
+        size: order.size,
         product: product || { name: "Circular Product", base_price: order.total_price / order.quantity }
       };
     });
@@ -912,6 +919,7 @@ app.get("/api/orders", async (req, res) => {
       quantity: order.quantity,
       total_price: order.total_price,
       created_at: order.created_at,
+      size: order.size,
       product: order.products || { name: "Circular Product", base_price: order.total_price / order.quantity }
     }));
 
@@ -1065,6 +1073,30 @@ const sampleProducts = [
   { name: "Orchid Pointed Flat", category: "Women's Footwear", description: "Sharp pointed-toe silhouette in soft sienna and tan patchwork.", base_price: 90, co2_factor: 3.2, waste_factor: 0.64, image_url: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/WOMEN_S%20FOOTWEAR/6.png" },
   { name: "Dune Ballet Flats", category: "Women's Footwear", description: "Classic round-toe slip-ons in warm sienna and nude tones.", base_price: 86, co2_factor: 3.1, waste_factor: 0.60, image_url: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/WOMEN_S%20FOOTWEAR/7.png" }
 ];
+
+function getSizesForCategory(category: string): string[] {
+  const cat = category.toLowerCase();
+  if (cat.includes("men's footwear") || cat.includes("mens footwear")) {
+    return ["40", "41", "42", "43", "44", "45", "46", "47"];
+  }
+  if (cat.includes("women's footwear") || cat.includes("womens footwear")) {
+    return ["35", "36", "37", "38", "39", "40"];
+  }
+  if (cat.includes("jackets")) {
+    return ["S", "M", "L", "XL"];
+  }
+  if (cat.includes("laptop bags")) {
+    return ["13-inch", "14-inch", "15-inch", "16-inch"];
+  }
+  if (cat.includes("belts")) {
+    return ["32", "34", "36", "38", "40"];
+  }
+  return ["One Size"];
+}
+
+sampleProducts.forEach((p: any) => {
+  p.sizes = getSizesForCategory(p.category);
+});
 
 app.get("/api/catalog", async (req, res) => {
   if (!supabase) {

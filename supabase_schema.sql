@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS public.products (
   image_url TEXT,
   description TEXT,
   category TEXT,
+  sizes TEXT[],
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -39,6 +40,7 @@ CREATE TABLE IF NOT EXISTS public.orders (
   product_id UUID REFERENCES public.products NOT NULL,
   quantity INTEGER DEFAULT 1,
   total_price DECIMAL NOT NULL,
+  size TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 

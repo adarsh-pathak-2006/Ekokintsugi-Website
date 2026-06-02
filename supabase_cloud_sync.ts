@@ -172,6 +172,26 @@ async function run() {
     console.log("   The generated SQL will still map to correct remote cloud URLs.\n");
   }
 
+function getSizesForCategory(category: string): string[] {
+  const cat = category.toLowerCase();
+  if (cat.includes("men's footwear") || cat.includes("mens footwear")) {
+    return ["40", "41", "42", "43", "44", "45", "46", "47"];
+  }
+  if (cat.includes("women's footwear") || cat.includes("womens footwear")) {
+    return ["35", "36", "37", "38", "39", "40"];
+  }
+  if (cat.includes("jackets")) {
+    return ["S", "M", "L", "XL"];
+  }
+  if (cat.includes("laptop bags")) {
+    return ["13-inch", "14-inch", "15-inch", "16-inch"];
+  }
+  if (cat.includes("belts")) {
+    return ["32", "34", "36", "38", "40"];
+  }
+  return ["One Size"];
+}
+
   // 2. Generate updated SQL migration file
   console.log("📝 Generating supabase_products_seed.sql with absolute remote URLs...");
 
@@ -188,7 +208,7 @@ async function run() {
   sqlStatements.push("DELETE FROM public.products;\n");
 
   sqlStatements.push("-- 4. Seed all 63 new cloud-hosted category-wise products");
-  sqlStatements.push("INSERT INTO public.products (name, co2_factor, waste_factor, base_price, image_url, description, category)");
+  sqlStatements.push("INSERT INTO public.products (name, co2_factor, waste_factor, base_price, image_url, description, category, sizes)");
   sqlStatements.push("VALUES");
 
   const valueRows = productsList.map(p => {
@@ -198,7 +218,11 @@ async function run() {
     const escapedName = p.name.replace(/'/g, "''");
     const escapedDesc = p.description.replace(/'/g, "''");
     const escapedCat = p.category.replace(/'/g, "''");
-    return `  ('${escapedName}', ${p.co2_factor}, ${p.waste_factor}, ${p.base_price}, '${absoluteRemoteUrl}', '${escapedDesc}', '${escapedCat}')`;
+    
+    const sizes = getSizesForCategory(p.category);
+    const sqlArray = `ARRAY[${sizes.map(s => `'${s}'`).join(',')}]::text[]`;
+    
+    return `  ('${escapedName}', ${p.co2_factor}, ${p.waste_factor}, ${p.base_price}, '${absoluteRemoteUrl}', '${escapedDesc}', '${escapedCat}', ${sqlArray})`;
   });
 
   sqlStatements.push(valueRows.join(",\n") + ";\n");
