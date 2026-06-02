@@ -1,111 +1,78 @@
 BEGIN;
 
--- 1. Replace the base URL below with your own Supabase project URL after uploading
---    the renamed files to the public bucket `product-images`.
--- 2. This script removes older entries for these product names, then inserts the
---    new catalog with category-specific descriptions and storage URLs.
+-- 1. Clear transactional tables to satisfy FK constraint limits
+DELETE FROM public.esg_records;
+DELETE FROM public.carbon_ledger;
+DELETE FROM public.orders;
 
-DELETE FROM public.products
-WHERE category = 'Men''s Footwear'
-  AND name NOT IN (
-    'Dune Mosaic Runner Sneaker',
-    'Forest Runner Sneaker',
-    'Graphite Runner Sneaker',
-    'Olive Patchwork Sneaker',
-    'Stone Hex Court Sneaker'
-  );
+-- 2. Delete all existing products
+DELETE FROM public.products;
 
-DELETE FROM public.products
-WHERE name IN (
-  'Mosaic Sling Bag',
-  'Mosaic Structured Tote',
-  'Mosaic City Backpack',
-  'Mosaic Messenger Bag',
-  'Mosaic Weekender Briefcase',
-  'Round Logo Keychain',
-  'Hexagon Patchwork Keychain',
-  'Signature Luggage Tag',
-  'Mini Sneaker Keychain',
-  'Teardrop Tree Keychain',
-  'Dune Mosaic Runner Sneaker',
-  'Forest Runner Sneaker',
-  'Graphite Runner Sneaker',
-  'Olive Patchwork Sneaker',
-  'Stone Hex Court Sneaker',
-  'Compact Zip Backpack',
-  'Mosaic Shopper Tote',
-  'Mosaic Crossbody Camera Bag',
-  'Mosaic Travel Duffel',
-  'Mosaic Belt Bag',
-  'Mosaic Laptop Briefcase',
-  'Patchwork Bifold Wallet',
-  'Patchwork Cardholder',
-  'Mosaic Bifold Wallet',
-  'Patchwork Passport Holder',
-  'Indigo Floral Ballet Flats',
-  'Espresso Floral Ballet Flats',
-  'Sand Floral Ballet Flats',
-  'Meadow Floral Ballet Flats',
-  'Sunrise Floral Ballet Flats'
-);
-
-WITH config AS (
-  SELECT 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/products/'::text AS base_url
-),
-catalog AS (
-  SELECT *
-  FROM (
-    VALUES
-      ('Mosaic Sling Bag', 3.8, 0.7, 92, 'mosaic-sling-bag.jpeg', 'Compact crossbody sling with reclaimed hexagon panels and a hands-free everyday profile.', 'Leather Bags'),
-      ('Mosaic Structured Tote', 4.6, 0.9, 128, 'mosaic-structured-tote.jpeg', 'Clean-lined shoulder tote with a structured base, double handles, and premium circular leather construction.', 'Leather Bags'),
-      ('Mosaic City Backpack', 4.9, 1.0, 136, 'mosaic-city-backpack.jpeg', 'Medium-format backpack built for daily commuting with a mosaic upper and durable black trim.', 'Leather Backpacks'),
-      ('Mosaic Messenger Bag', 4.3, 0.8, 118, 'mosaic-messenger-bag.jpeg', 'Boxy messenger silhouette with flap closure for tablets, notebooks, and on-the-go essentials.', 'Leather Bags'),
-      ('Mosaic Weekender Briefcase', 5.2, 1.1, 154, 'mosaic-weekender-briefcase.jpeg', 'Travel-ready briefcase with top handles and detachable strap for work trips and light overnights.', 'Leather Bags'),
-      ('Round Logo Keychain', 0.2, 0.04, 18, 'round-logo-keychain.jpeg', 'Round branded key fob in earthy leather tones, sized for everyday carry and gifting.', 'Accessories'),
-      ('Hexagon Patchwork Keychain', 0.2, 0.04, 22, 'hexagon-patchwork-keychain.jpeg', 'Patchwork hexagon keychain cut from leather offcuts to celebrate zero-waste detailing.', 'Accessories'),
-      ('Signature Luggage Tag', 0.2, 0.04, 20, 'signature-luggage-tag.jpeg', 'Slim travel tag with branded motif and reinforced loop for luggage, totes, or work bags.', 'Accessories'),
-      ('Mini Sneaker Keychain', 0.3, 0.05, 26, 'mini-sneaker-keychain.jpeg', 'Collectible sneaker-shaped keychain that mirrors the brand''s circular footwear design language.', 'Accessories'),
-      ('Teardrop Tree Keychain', 0.2, 0.04, 19, 'teardrop-tree-keychain.jpeg', 'Teardrop keychain embossed with a tree mark, designed from compact reclaimed leather pieces.', 'Accessories'),
-      ('Dune Mosaic Runner Sneaker', 4.4, 0.9, 122, 'dune-mosaic-runner-sneaker.jpeg', 'Neutral-toned runner sneaker featuring stitched hexagon patchwork and a versatile smart-casual finish.', 'Men''s Footwear'),
-      ('Forest Runner Sneaker', 4.2, 0.9, 112, 'forest-runner-sneaker.jpeg', 'Athletic-inspired sneaker in moss and cocoa tones with lightweight comfort and mosaic side panels.', 'Men''s Footwear'),
-      ('Graphite Runner Sneaker', 4.3, 0.9, 116, 'graphite-runner-sneaker.jpeg', 'Charcoal performance sneaker with a streamlined profile for versatile smart-casual wear.', 'Men''s Footwear'),
-      ('Olive Patchwork Sneaker', 4.3, 0.9, 118, 'olive-patchwork-sneaker.jpeg', 'Soft olive sneaker with suede-rich patchwork panels, tonal branding, and lightweight daily comfort.', 'Men''s Footwear'),
-      ('Stone Hex Court Sneaker', 4.5, 0.95, 124, 'stone-hex-court-sneaker.jpeg', 'Low-top court sneaker with layered stone-toned hexagon panels, contrast sole, and an elevated everyday profile.', 'Men''s Footwear'),
-      ('Compact Zip Backpack', 4.4, 0.9, 124, 'compact-zip-backpack.jpeg', 'Slim backpack with front zip pocket, upright silhouette, and easy day-trip capacity.', 'Leather Backpacks'),
-      ('Mosaic Shopper Tote', 4.5, 0.9, 122, 'mosaic-shopper-tote.jpeg', 'Tall shopper tote with elongated handles for workday carry, retail presentation, and weekend movement.', 'Leather Bags'),
-      ('Mosaic Crossbody Camera Bag', 3.7, 0.7, 94, 'mosaic-crossbody-camera-bag.jpeg', 'Compact zip crossbody with wide strap and boxy proportions for essentials-first daily use.', 'Leather Bags'),
-      ('Mosaic Travel Duffel', 5.8, 1.2, 168, 'mosaic-travel-duffel.jpeg', 'Soft travel duffel with structured ends and generous storage for short stays and carry-on duty.', 'Leather Bags'),
-      ('Mosaic Belt Bag', 2.9, 0.5, 74, 'mosaic-belt-bag.jpeg', 'Curved belt bag with front-facing style and lightweight convenience for urban movement.', 'Leather Bags'),
-      ('Mosaic Laptop Briefcase', 5.0, 1.0, 148, 'mosaic-laptop-briefcase.jpeg', 'Professional briefcase with top handles, shoulder strap, and space for a laptop and documents.', 'Leather Bags'),
-      ('Patchwork Bifold Wallet', 1.1, 0.14, 42, 'patchwork-bifold-wallet.jpeg', 'Classic bifold wallet finished in warm patchwork leather blocks for a handcrafted premium look.', 'Wallets & Cardholders'),
-      ('Patchwork Cardholder', 0.6, 0.08, 28, 'patchwork-cardholder.jpeg', 'Slim multi-slot cardholder with a compact footprint and color-blocked reclaimed leather face.', 'Wallets & Cardholders'),
-      ('Mosaic Bifold Wallet', 1.2, 0.15, 44, 'mosaic-bifold-wallet.jpeg', 'Everyday bifold wallet featuring a geometric mosaic pattern and practical bill-and-card organization.', 'Wallets & Cardholders'),
-      ('Patchwork Passport Holder', 0.9, 0.12, 38, 'patchwork-passport-holder.jpeg', 'Travel document holder with a vertical format designed for passports, tickets, and slim itineraries.', 'Wallets & Cardholders'),
-      ('Indigo Floral Ballet Flats', 3.1, 0.6, 86, 'indigo-floral-ballet-flats.jpeg', 'Ballet flats with indigo-toned floral patchwork, almond toe shape, and lightweight everyday comfort.', 'Women''s Footwear'),
-      ('Espresso Floral Ballet Flats', 3.1, 0.6, 86, 'espresso-floral-ballet-flats.jpeg', 'Warm espresso floral flats designed to blend artisanal surface detail with easy slip-on wear.', 'Women''s Footwear'),
-      ('Sand Floral Ballet Flats', 3.0, 0.6, 84, 'sand-floral-ballet-flats.jpeg', 'Soft sand-colored ballet flats with floral patchwork panels suited to lighter seasonal wardrobes.', 'Women''s Footwear'),
-      ('Meadow Floral Ballet Flats', 3.2, 0.6, 88, 'meadow-floral-ballet-flats.jpeg', 'Multicolor floral flats with a greener palette and flexible day-to-evening styling.', 'Women''s Footwear'),
-      ('Sunrise Floral Ballet Flats', 3.2, 0.6, 88, 'sunrise-floral-ballet-flats.jpeg', 'Bright floral flats with golden and amber patchwork accents for expressive casual dressing.', 'Women''s Footwear')
-  ) AS product_data(name, co2_factor, waste_factor, base_price, image_file, description, category)
-)
-INSERT INTO public.products (
-  name,
-  co2_factor,
-  waste_factor,
-  base_price,
-  image_url,
-  description,
-  category
-)
-SELECT
-  catalog.name,
-  catalog.co2_factor,
-  catalog.waste_factor,
-  catalog.base_price,
-  config.base_url || catalog.image_file AS image_url,
-  catalog.description,
-  catalog.category
-FROM catalog
-CROSS JOIN config;
+-- 4. Seed all 63 new cloud-hosted category-wise products
+INSERT INTO public.products (name, co2_factor, waste_factor, base_price, image_url, description, category)
+VALUES
+  ('Classic Patchwork Belt', 1.2, 0.15, 48, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/BELTS/1.png', 'Premium circular leather belt crafted from dark oak mosaic strips.', 'Belts'),
+  ('Agra Weave Belt', 1.4, 0.18, 54, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/BELTS/2.png', 'Interwoven light tan and chestnut reclaimed leather fibers.', 'Belts'),
+  ('Sienna Edge Belt', 1.3, 0.16, 52, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/BELTS/3.png', 'Fine hand-finished stitching with double-ring zero-waste buckle.', 'Belts'),
+  ('Forest Mosaic Belt', 1.5, 0.19, 56, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/BELTS/4.png', 'Unique moss green and deep tan patchwork detailing.', 'Belts'),
+  ('Slate Utility Belt', 1.1, 0.14, 46, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/BELTS/5.png', 'Minimalist black and charcoal reclaimed leather strap.', 'Belts'),
+  ('Carbon Zero Belt', 1.2, 0.15, 50, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/BELTS/6.png', 'Elegant midnight black double-ply offcut leather.', 'Belts'),
+  ('Desert Hue Belt', 1.6, 0.2, 58, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/BELTS/7.png', 'Warm sand-toned nubuck and grain leather composite.', 'Belts'),
+  ('Evening Mosaic Clutch', 2.8, 0.45, 84, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/CLUTCHES/1.png', 'Radiant geometric clutch with high-contrast triangular panels.', 'Clutches'),
+  ('Terra Fold Clutch', 3, 0.48, 88, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/CLUTCHES/2.png', 'Elegant envelope fold style in soft ochre and tan leather.', 'Clutches'),
+  ('Graphite Zip Wrap', 2.7, 0.42, 82, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/CLUTCHES/3.png', 'Modern charcoal zip-top clutch with dynamic hand-stitched detailing.', 'Clutches'),
+  ('Emerald Wristlet', 2.9, 0.46, 86, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/CLUTCHES/4.png', 'Forest green mosaic wristlet with detachable organic cotton strap.', 'Clutches'),
+  ('Pebbled Sienna Clutch', 3.1, 0.5, 90, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/CLUTCHES/5.png', 'Textured chestnut brown clutch with soft brass hardware.', 'Clutches'),
+  ('Zero Waste Shell Wrap', 3.2, 0.52, 92, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/CLUTCHES/6.png', 'Sleek asymmetric flap clutch in contrasting cream and tan.', 'Clutches'),
+  ('Orchid Bloom Clutch', 3.3, 0.54, 94, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/CLUTCHES/7.png', 'Delicate dusty pink and sand floral patchwork clutch.', 'Clutches'),
+  ('Signature Mosaic Tote', 4.8, 1.1, 142, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/HANDBAG%20COLLECTIONS/1.png', 'Spacious daily tote featuring a beautiful front panel of dynamic leather tiles.', 'Handbag Collections'),
+  ('Agra Bucket Bag', 4.6, 1, 138, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/HANDBAG%20COLLECTIONS/2.png', 'Structured cylindrical shoulder bag with an open-top circular frame.', 'Handbag Collections'),
+  ('Sienna Satchel', 5, 1.2, 148, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/HANDBAG%20COLLECTIONS/3.png', 'Classic double-handle satchel built with contrasting tan paneling.', 'Handbag Collections'),
+  ('Urban Crossbody', 4, 0.85, 118, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/HANDBAG%20COLLECTIONS/4.png', 'Compact hands-free shoulder bag with custom geometric patchwork front pocket.', 'Handbag Collections'),
+  ('Forest Hobo Bag', 5.2, 1.3, 154, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/HANDBAG%20COLLECTIONS/5.png', 'Relaxed slouchy silhouette in premium deep olive and brass details.', 'Handbag Collections'),
+  ('Midnight Trapeze', 5.5, 1.4, 162, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/HANDBAG%20COLLECTIONS/6.png', 'Structured wing-style handbag in stark black carbon grain.', 'Handbag Collections'),
+  ('Dune Shoulder Bag', 4.5, 0.95, 134, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/HANDBAG%20COLLECTIONS/7.png', 'Soft sand and cream multi-textured circular carryall.', 'Handbag Collections'),
+  ('Heritage Patchwork Bomber', 9.8, 2.2, 290, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/JACKETS/1.png', 'Heavyweight premium bomber jacket with full-grain leather mosaic body.', 'Jackets'),
+  ('Terra Rider Jacket', 10.5, 2.5, 320, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/JACKETS/2.png', 'Asymmetric zip moto jacket in warm chestnut and tan leather blocks.', 'Jackets'),
+  ('Graphite Trench Vest', 8.5, 1.8, 260, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/JACKETS/3.png', 'Tailored long-line trench vest crafted from charcoal leather panels.', 'Jackets'),
+  ('Forest Utility Jacket', 10.2, 2.4, 310, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/JACKETS/4.png', 'Multi-pocket field jacket in structured moss green and bronze hardware.', 'Jackets'),
+  ('Sienna Crop Jacket', 9.2, 2, 280, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/JACKETS/5.png', 'Boxy crop-cut jacket in rich mahogany with circular lining.', 'Jackets'),
+  ('Stark Carbon Blazer', 11, 2.6, 340, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/JACKETS/6.png', 'Architectural single-breasted blazer in textured matte black.', 'Jackets'),
+  ('Desert Nomad Parka', 10.8, 2.5, 330, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/JACKETS/7.png', 'Hooded luxury parka featuring mixed texture cream and stone panels.', 'Jackets'),
+  ('Braid Loop Keychain', 0.2, 0.04, 18, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/KEYCHAINS/1.png', 'Beautiful braided leather lanyard with circular brass key loop.', 'Keychains'),
+  ('Hex Tassel Fob', 0.25, 0.05, 22, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/KEYCHAINS/2.png', 'Geometric hexagon tile with hanging soft leather tassels.', 'Keychains'),
+  ('Mini Sneaker Charm', 0.3, 0.06, 26, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/KEYCHAINS/3.png', 'Adorable miniature sneaker replica made entirely from microscopic offcuts.', 'Keychains'),
+  ('Agra Emblem Tag', 0.22, 0.04, 20, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/KEYCHAINS/4.png', 'Embossed tree-motif circular tag in warm chestnut brown.', 'Keychains'),
+  ('Forest Leaf Charm', 0.21, 0.04, 19, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/KEYCHAINS/5.png', 'Hand-cut stylized leaf shape in vibrant olive green leather.', 'Keychains'),
+  ('Stark Loop Fob', 0.18, 0.03, 16, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/KEYCHAINS/6.png', 'Sleek matte black leather strap with gunmetal black ring.', 'Keychains'),
+  ('Dune Trio Charm', 0.28, 0.05, 24, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/KEYCHAINS/7.png', 'Stacked three-tone leather pebbles on a reinforced steel cord.', 'Keychains'),
+  ('Commuter Laptop Sleeve', 2.2, 0.35, 68, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/LAPTOP%20BAGS/1.png', 'Slim envelope sleeve with magnetic closure for 14-inch laptops.', 'Laptop Bags'),
+  ('Executive Briefcase', 5, 1, 148, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/LAPTOP%20BAGS/2.png', 'Double-compartment laptop bag with luggage strap and organic lining.', 'Laptop Bags'),
+  ('Terra Portfolio', 2.8, 0.5, 88, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/LAPTOP%20BAGS/3.png', 'Elegant carry-handle zip folio with integrated tablet slot.', 'Laptop Bags'),
+  ('Graphite Slim Brief', 4.4, 0.9, 128, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/LAPTOP%20BAGS/4.png', 'Streamlined single-compartment brief in dark charcoal leather.', 'Laptop Bags'),
+  ('Forest Tech Organizer', 1.6, 0.25, 54, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/LAPTOP%20BAGS/5.png', 'Compact folding case for chargers, cables, and hard drives.', 'Laptop Bags'),
+  ('Carbon Zip Briefcase', 5.2, 1.1, 154, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/LAPTOP%20BAGS/6.png', 'Rugged professional case in water-resistant matte black.', 'Laptop Bags'),
+  ('Desert Grain Folio', 2.6, 0.45, 82, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/LAPTOP%20BAGS/7.png', 'Warm sand-toned document portfolio with leather-covered snaps.', 'Laptop Bags'),
+  ('Apex Patchwork Runner', 4.4, 0.9, 122, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/MEN_S%20FOOTWEAR/1.png', 'Dynamic athletic sneaker with contrasting mosaic side panels.', 'Men''s Footwear'),
+  ('Agra Comfort Trainer', 4.3, 0.88, 118, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/MEN_S%20FOOTWEAR/2.png', 'Everyday walking sneaker with extra cushioned organic sole.', 'Men''s Footwear'),
+  ('Sienna Court Low', 4.5, 0.92, 124, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/MEN_S%20FOOTWEAR/3.png', 'Flat-sole court sneaker in clean sienna paneling.', 'Men''s Footwear'),
+  ('Graphite Knit Sneaker', 4.6, 0.95, 128, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/MEN_S%20FOOTWEAR/4.png', 'Blended organic knit and charcoal leather hybrid sneaker.', 'Men''s Footwear'),
+  ('Forest Trail Sneaker', 4.8, 1, 132, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/MEN_S%20FOOTWEAR/5.png', 'All-terrain comfort runner in earthy green and dark sienna.', 'Men''s Footwear'),
+  ('Stark Carbon Sneaker', 4.5, 0.92, 126, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/MEN_S%20FOOTWEAR/6.png', 'Ultra-light smart-casual sneaker in matte black.', 'Men''s Footwear'),
+  ('Dune Sand Trainer', 4.3, 0.88, 120, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/MEN_S%20FOOTWEAR/7.png', 'Warm ivory and beige suede composite low-top.', 'Men''s Footwear'),
+  ('Classic Patchwork Bifold', 1.1, 0.14, 42, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/WALLETS/1.png', 'Four-slot bifold wallet in sienna sienna mosaic.', 'Wallets'),
+  ('Sienna Slim Cardholder', 0.6, 0.08, 28, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/WALLETS/2.png', 'Pocket-ready card sleeve in rich sienna red leather.', 'Wallets'),
+  ('Terra Zip Wallet', 1.3, 0.16, 48, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/WALLETS/3.png', 'Wrap-around zippered wallet with central coin pocket.', 'Wallets'),
+  ('Forest Card Wrap', 0.8, 0.1, 32, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/WALLETS/4.png', 'Minimalist single-wrap leather envelope with brass stud snap.', 'Wallets'),
+  ('Midnight Passport Case', 1.2, 0.15, 46, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/WALLETS/5.png', 'Dual-fold travel cover in textured black grain.', 'Wallets'),
+  ('Agra Billfold', 1.2, 0.14, 44, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/WALLETS/6.png', 'Traditional extra-capacity billfold with sienna sienna lining.', 'Wallets'),
+  ('Desert Coin Purse', 0.5, 0.06, 24, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/WALLETS/7.png', 'Squeeze-open small leather coin pouch in sand tones.', 'Wallets'),
+  ('Rosebud Patchwork Flats', 3.1, 0.6, 86, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/WOMEN_S%20FOOTWEAR/1.png', 'Soft rose floral flat with rounded toe and flexible slip-on fit.', 'Women''s Footwear'),
+  ('Agra Floral Ballerina', 3.2, 0.62, 88, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/WOMEN_S%20FOOTWEAR/2.png', 'Classic ballet flats finished with sienna and forest floral panels.', 'Women''s Footwear'),
+  ('Sienna Loafer', 3.4, 0.68, 94, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/WOMEN_S%20FOOTWEAR/3.png', 'Structured driving loafer in rich tan and mahogany leather offcuts.', 'Women''s Footwear'),
+  ('Ebony Bloom Flats', 3, 0.58, 84, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/WOMEN_S%20FOOTWEAR/4.png', 'Sleek black leather flat with contrasting white floral embroidery.', 'Women''s Footwear'),
+  ('Meadow Slingback', 3.3, 0.66, 92, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/WOMEN_S%20FOOTWEAR/5.png', 'Buckled heel-strap flats in dusty green and cream leather.', 'Women''s Footwear'),
+  ('Orchid Pointed Flat', 3.2, 0.64, 90, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/WOMEN_S%20FOOTWEAR/6.png', 'Sharp pointed-toe silhouette in soft sienna and tan patchwork.', 'Women''s Footwear'),
+  ('Dune Ballet Flats', 3.1, 0.6, 86, 'https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/WOMEN_S%20FOOTWEAR/7.png', 'Classic round-toe slip-ons in warm sienna and nude tones.', 'Women''s Footwear');
 
 COMMIT;

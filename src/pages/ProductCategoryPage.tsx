@@ -15,37 +15,53 @@ export default function ProductCategoryPage() {
   const getLocalizedCategory = (category: any) => {
     if (!category) return null;
     switch (category.slug) {
-      case "leather-backpacks":
+      case "belts":
         return {
           ...category,
-          title: t("category.backpacks.title"),
-          shortTitle: t("category.backpacks.short"),
-          eyebrow: t("category.backpacks.eyebrow"),
-          description: t("category.backpacks.desc")
+          title: t("category.belts.title"),
+          shortTitle: t("category.belts.short"),
+          eyebrow: t("category.belts.eyebrow"),
+          description: t("category.belts.desc")
         };
-      case "leather-bags":
+      case "clutches":
         return {
           ...category,
-          title: t("category.bags.title"),
-          shortTitle: t("category.bags.short"),
-          eyebrow: t("category.bags.eyebrow"),
-          description: t("category.bags.desc")
+          title: t("category.clutches.title"),
+          shortTitle: t("category.clutches.short"),
+          eyebrow: t("category.clutches.eyebrow"),
+          description: t("category.clutches.desc")
         };
-      case "wallets":
+      case "handbag-collections":
         return {
           ...category,
-          title: t("category.wallets.title"),
-          shortTitle: t("category.wallets.short"),
-          eyebrow: t("category.wallets.eyebrow"),
-          description: t("category.wallets.desc")
+          title: t("category.handbags.title"),
+          shortTitle: t("category.handbags.short"),
+          eyebrow: t("category.handbags.eyebrow"),
+          description: t("category.handbags.desc")
         };
-      case "accessories":
+      case "jackets":
         return {
           ...category,
-          title: t("category.accessories.title"),
-          shortTitle: t("category.accessories.short"),
-          eyebrow: t("category.accessories.eyebrow"),
-          description: t("category.accessories.desc")
+          title: t("category.jackets.title"),
+          shortTitle: t("category.jackets.short"),
+          eyebrow: t("category.jackets.eyebrow"),
+          description: t("category.jackets.desc")
+        };
+      case "keychains":
+        return {
+          ...category,
+          title: t("category.keychains.title"),
+          shortTitle: t("category.keychains.short"),
+          eyebrow: t("category.keychains.eyebrow"),
+          description: t("category.keychains.desc")
+        };
+      case "laptop-bags":
+        return {
+          ...category,
+          title: t("category.laptopbags.title"),
+          shortTitle: t("category.laptopbags.short"),
+          eyebrow: t("category.laptopbags.eyebrow"),
+          description: t("category.laptopbags.desc")
         };
       case "mens-footwear":
         return {
@@ -54,6 +70,14 @@ export default function ProductCategoryPage() {
           shortTitle: t("category.mens.short"),
           eyebrow: t("category.mens.eyebrow"),
           description: t("category.mens.desc")
+        };
+      case "wallets":
+        return {
+          ...category,
+          title: t("category.wallets.title"),
+          shortTitle: t("category.wallets.short"),
+          eyebrow: t("category.wallets.eyebrow"),
+          description: t("category.wallets.desc")
         };
       case "womens-footwear":
         return {

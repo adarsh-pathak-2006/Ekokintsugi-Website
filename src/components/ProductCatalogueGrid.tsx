@@ -64,7 +64,7 @@ export default function ProductCatalogueGrid({
           className="bg-card border border-border/50 rounded-[2rem] overflow-hidden group hover:border-accent/40 shadow-soft hover:shadow-strong transition-all duration-300 flex flex-col cursor-pointer"
         >
           <Link to={`/products/item/${item.id}`} className="flex flex-col h-full hover:no-underline">
-            <div className="aspect-[4/3] bg-muted overflow-hidden relative">
+            <div className="aspect-square bg-muted overflow-hidden relative">
               <img
                 src={item.image_url || item.image || "/logo_eko.png"}
                 alt={item.name}

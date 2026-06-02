@@ -101,7 +101,7 @@ export default function Navbar({ onImpactClick }: { onImpactClick: () => void })
           {/* Compact 'My Impact' Action Button */}
           <button 
             onClick={onImpactClick}
-            className="flex items-center gap-1.5 text-[9px] font-mono tracking-widest uppercase font-bold px-4 py-2.5 rounded-full border border-accent/60 text-accent hover:bg-accent hover:text-accent-foreground hover:border-accent transition-all shadow-sm cursor-pointer hover:scale-[1.01]"
+            className="flex items-center gap-1.5 text-[9px] font-mono tracking-widest uppercase font-bold px-4 py-2.5 rounded-full cursor-pointer hover:scale-[1.01] transition-all impact-btn-premium"
           >
             {t("nav.my_impact")}
           </button>
@@ -114,7 +114,7 @@ export default function Navbar({ onImpactClick }: { onImpactClick: () => void })
                 className="p-2 rounded-full cursor-pointer btn-premium"
                 title={t("nav.view_account")}
               >
-                <UserRound size={14} className="text-accent" />
+                <UserRound size={14} />
               </Link>
               <button
                 onClick={signOut}
@@ -127,7 +127,7 @@ export default function Navbar({ onImpactClick }: { onImpactClick: () => void })
           ) : (
             <Link
               to="/auth"
-              className="bg-primary text-primary-foreground px-5 py-2.5 rounded-full text-[9px] font-mono tracking-widest uppercase font-bold hover:bg-accent hover:text-accent-foreground transition-all shadow-md hover:scale-[1.01]"
+              className="px-5 py-2.5 rounded-full text-[9px] font-mono tracking-widest uppercase font-bold hover:scale-[1.01] transition-all signin-btn-premium"
             >
               {t("nav.sign_in")}
             </Link>

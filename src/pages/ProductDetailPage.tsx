@@ -92,7 +92,7 @@ export default function ProductDetailPage() {
             transition={{ type: "spring", stiffness: 350, damping: 25 }}
             className="bg-card border border-border/50 rounded-[2.55rem] overflow-hidden shadow-soft group hover:border-accent/30 transition-colors"
           >
-            <div className="aspect-[4/3] bg-muted overflow-hidden relative">
+            <div className="aspect-square bg-muted overflow-hidden relative">
               <motion.img
                 src={product.image_url || product.image || "/logo_eko.png"}
                 alt={product.name}

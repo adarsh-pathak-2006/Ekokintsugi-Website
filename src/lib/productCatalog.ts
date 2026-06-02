@@ -23,93 +23,94 @@ export interface ProductCategory {
 
 export const PRODUCT_CATEGORIES: ProductCategory[] = [
   {
-    slug: "leather-backpacks",
-    title: "Leather Backpack Products",
-    shortTitle: "Leather Backpacks",
-    eyebrow: "Structured Carry",
-    description:
-      "Commuter-ready and travel-oriented backpacks built from reclaimed leather mosaics with structured silhouettes and premium utility.",
-    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/products/mosaic-city-backpack.jpeg",
-    imagePosition: "center 32%",
-    categoryLabels: ["leather backpacks", "leather backpack", "backpacks", "backpack"],
-    queryTerms: [
-      "backpack",
-      "backpacks",
-      "commuter backpack",
-      "utility backpack",
-      "travel backpack",
-      "zip backpack"
-    ]
+    slug: "belts",
+    title: "Leather Belt Products",
+    shortTitle: "Belts",
+    eyebrow: "Zero-Waste Cinch",
+    description: "Earthy leather belts made from circular patchwork strips.",
+    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/BELTS/1.png",
+    categoryLabels: ["belts", "belt"],
+    queryTerms: ["belt", "belts"]
   },
   {
-    slug: "leather-bags",
-    title: "Leather Bag Products",
-    shortTitle: "Leather Bags",
-    eyebrow: "Carry Collection",
-    description:
-      "Totes, slings, messenger bags, duffels, bucket bags, and briefcase-inspired silhouettes crafted from circular leather materials.",
-    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/products/mosaic-structured-tote.jpeg",
-    imagePosition: "center 36%",
-    categoryLabels: ["leather bags", "leather bag", "bags", "bag"],
-    queryTerms: [
-      "bag",
-      "bags",
-      "tote",
-      "shopper",
-      "crossbody",
-      "messenger",
-      "briefcase",
-      "duffel",
-      "belt bag",
-      "sling",
-      "bucket bag",
-      "camera bag"
-    ]
+    slug: "clutches",
+    title: "Clutch Products",
+    shortTitle: "Clutches",
+    eyebrow: "Refined Wraps",
+    description: "Refined evening clutches and daytime card wraps.",
+    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/CLUTCHES/1.png",
+    categoryLabels: ["clutches", "clutch"],
+    queryTerms: ["clutch", "clutches"]
   },
   {
-    slug: "wallets",
-    title: "Wallet & Cardholder Products",
-    shortTitle: "Wallets",
-    eyebrow: "Compact Essentials",
-    description:
-      "Bifold wallets, cardholders, and passport-ready organizers designed for refined everyday carry with circular materials.",
-    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/products/mosaic-bifold-wallet.jpeg",
-    categoryLabels: ["wallets & cardholders", "wallets and cardholders", "wallets", "wallet", "cardholders", "cardholder"],
-    queryTerms: ["wallet", "wallets", "cardholder", "cardholders", "passport", "passport holder", "bifold"]
+    slug: "handbag-collections",
+    title: "Handbag Collections",
+    shortTitle: "Handbag Collections",
+    eyebrow: "Artisanal Totes",
+    description: "Premium handcrafted luxury bags built from mosaic leather uppers.",
+    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/HANDBAG%20COLLECTIONS/1.png",
+    categoryLabels: ["handbag collections", "handbag", "handbags", "bags", "bag"],
+    queryTerms: ["tote", "shoulder bag", "hobo", "handbag", "satchel", "bag", "bags"]
   },
   {
-    slug: "accessories",
-    title: "Accessory Products",
-    shortTitle: "Accessories",
-    eyebrow: "Small Goods",
-    description:
-      "Keychains, luggage tags, and collectible mini accessories made from precise offcuts so even the smallest material has value.",
-    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/products/teardrop-tree-keychain.jpeg",
-    categoryLabels: ["accessories", "accessory"],
-    queryTerms: ["keychain", "keychains", "luggage tag", "mini sneaker"]
+    slug: "jackets",
+    title: "Leather Jacket Products",
+    shortTitle: "Jackets",
+    eyebrow: "Circular Tailoring",
+    description: "Collectible circular patchwork jackets celebrating absolute zero-waste tailoring.",
+    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/JACKETS/1.png",
+    categoryLabels: ["jackets", "jacket"],
+    queryTerms: ["jacket", "jackets", "bomber", "rider", "blazer", "crop jacket", "parka", "vest"]
+  },
+  {
+    slug: "keychains",
+    title: "Keychains & Small Goods",
+    shortTitle: "Keychains",
+    eyebrow: "Small Tokens",
+    description: "Charming mini accessories built from precise material offcuts.",
+    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/KEYCHAINS/1.png",
+    categoryLabels: ["keychains", "keychain", "accessories", "accessory"],
+    queryTerms: ["keychain", "keychains", "luggage tag", "charm", "fob"]
+  },
+  {
+    slug: "laptop-bags",
+    title: "Laptop Bags & Sleeves",
+    shortTitle: "Laptop Bags",
+    eyebrow: "Digital Carry",
+    description: "Structured commute-ready briefcases and sleeves.",
+    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/LAPTOP%20BAGS/1.png",
+    categoryLabels: ["laptop bags", "laptop bag", "laptop sleeve"],
+    queryTerms: ["laptop", "briefcase", "portfolio", "folio", "sleeve"]
   },
   {
     slug: "mens-footwear",
     title: "Men's Footwear Products",
     shortTitle: "Men's Footwear",
     eyebrow: "Performance Line",
-    description:
-      "Athletic-inspired sneakers with circular leather panels, comfort-driven construction, and everyday versatility.",
-    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/products/forest-runner-sneaker.jpeg",
+    description: "Athletic-inspired sneakers with circular leather panels, comfort-driven construction, and everyday versatility.",
+    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/MEN_S%20FOOTWEAR/1.png",
     categoryLabels: ["men's footwear", "mens footwear", "men footwear"],
-    queryTerms: ["men", "men's", "mens", "sneaker", "sneakers", "runner"]
+    queryTerms: ["men", "men's", "mens", "sneaker", "sneakers", "runner", "trainer"]
+  },
+  {
+    slug: "wallets",
+    title: "Wallet & Cardholder Products",
+    shortTitle: "Wallets",
+    eyebrow: "Compact Essentials",
+    description: "Bifold wallets, cardholders, and passport-ready organizers designed for refined everyday carry with circular materials.",
+    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/WALLETS/1.png",
+    categoryLabels: ["wallets & cardholders", "wallets and cardholders", "wallets", "wallet", "cardholders", "cardholder"],
+    queryTerms: ["wallet", "wallets", "cardholder", "cardholders", "passport", "passport holder", "bifold", "billfold"]
   },
   {
     slug: "womens-footwear",
     title: "Women's Footwear Products",
     shortTitle: "Women's Footwear",
     eyebrow: "Floral Flats",
-    description:
-      "Ballet flats finished with floral patchwork uppers, softer palettes, and lightweight comfort for everyday dressing.",
-    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/products/sunrise-floral-ballet-flats.jpeg",
-    imagePosition: "center 24%",
+    description: "Ballet flats finished with floral patchwork uppers, softer palettes, and lightweight comfort for everyday dressing.",
+    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/WOMEN_S%20FOOTWEAR/1.png",
     categoryLabels: ["women's footwear", "womens footwear", "women footwear"],
-    queryTerms: ["women", "women's", "womens", "flats", "ballet flats", "ballerina", "floral flats"]
+    queryTerms: ["women", "women's", "womens", "flats", "ballet flats", "ballerina", "floral flats", "loafer"]
   }
 ];
 
@@ -152,27 +153,9 @@ export function productBelongsToCategory(product: CatalogProduct, category: Prod
   const haystack = normalizeText([product.category, product.name, product.description].filter(Boolean).join(" "));
 
   if (normalizedCategory) {
-    // Older DB rows may still use the generic "Bags" label. Split those rows
-    // into the new categories by product content instead of treating all of them
-    // as leather bags.
-    if (normalizedCategory === "bags" || normalizedCategory === "bag") {
-      const isBackpackLike = ["backpack", "commuter backpack", "utility backpack", "travel backpack", "zip backpack"].some((term) =>
-        haystack.includes(normalizeText(term))
-      );
-
-      if (category.slug === "leather-backpacks") {
-        return isBackpackLike;
-      }
-
-      if (category.slug === "leather-bags") {
-        return !isBackpackLike;
-      }
-    }
-
     return category.categoryLabels.some((label) => normalizedCategory === normalizeText(label));
   }
 
-  // Only fall back to text inference when the product has no category at all.
   return category.queryTerms.some((term) => haystack.includes(normalizeText(term)));
 }
 
