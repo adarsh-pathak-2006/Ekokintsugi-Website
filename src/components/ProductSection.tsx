@@ -34,14 +34,19 @@ export default function ProductSection() {
               onClick={() => navigate(`/products/category/${category.slug}`)}
               className="group bg-card border border-primary-foreground/5 rounded-[2.5rem] overflow-hidden shadow-strong transition-all cursor-pointer flex flex-col md:flex-row h-full text-left"
             >
-              <div className="md:w-2/5 h-64 md:h-auto overflow-hidden relative shrink-0">
+              <div className="md:w-2/5 h-64 md:h-auto overflow-hidden relative shrink-0 flex items-center justify-center bg-muted/10">
+                {/* Premium scaled & blurred backdrop to prevent stripping off the product */}
+                <img
+                  src={category.image}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover blur-md opacity-20 scale-110 pointer-events-none"
+                />
                 <img
                   src={category.image}
                   alt={category.shortTitle}
-                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                  style={{ objectPosition: category.imagePosition ?? "center" }}
+                  className="relative z-10 max-w-full max-h-full object-contain p-6 transition-transform duration-1000 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-primary/20 group-hover:bg-transparent transition-colors duration-500" />
+                <div className="absolute inset-0 bg-primary/5 group-hover:bg-transparent transition-colors duration-500 z-20 pointer-events-none" />
               </div>
 
               <div className="p-8 md:p-10 flex flex-col flex-grow justify-center">
