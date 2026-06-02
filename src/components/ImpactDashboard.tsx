@@ -6,6 +6,7 @@ import {
   History,
   Leaf,
   LogOut,
+  Menu,
   QrCode,
   Share2,
   TreePine,
@@ -152,6 +153,7 @@ const TimelineItem: FC<{
 export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<"overview" | "tree" | "certificate" | "wallet">("overview");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [stats, setStats] = useState<ImpactStats>(emptyImpactStats);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -171,6 +173,7 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
   useEffect(() => {
     if (!isOpen) return;
     setActiveTab("overview");
+    setIsMenuOpen(false);
   }, [isOpen]);
 
   useEffect(() => {
@@ -338,26 +341,37 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
   if (!isOpen) return null;
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[60] surface-gradient flex flex-col md:flex-row overflow-hidden">
-      <div className="w-full md:w-80 bg-primary p-8 flex flex-col text-primary-foreground border-r border-primary-foreground/10">
-        <div className="flex items-center justify-between mb-10">
-          <div className="flex items-center gap-4">
-            <span className="logo-surface">
-              <img src="/logo_eko.png" alt="Logo" className="h-8 w-auto" />
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[60] surface-gradient flex flex-col md:flex-row overflow-hidden text-left">
+      <div className="w-full md:w-80 bg-primary flex flex-col text-primary-foreground border-b md:border-b-0 md:border-r border-primary-foreground/10 shrink-0 relative">
+        <div className="flex items-center justify-between p-5 md:p-8 md:mb-6 z-50">
+          <div className="flex items-center gap-3">
+            <span className="logo-surface shrink-0">
+              <img src="/logo_eko.png" alt="Logo" className="h-7 md:h-8 w-auto" />
             </span>
-            <div>
-              <h2 className="text-xl font-serif font-bold">{t("dashboard.hub")}</h2>
-              <p className="text-[10px] font-mono tracking-widest uppercase text-primary-foreground/85">
+            <div className="leading-tight">
+              <h2 className="text-base md:text-xl font-serif font-bold">{t("dashboard.hub")}</h2>
+              <p className="text-[9px] font-mono tracking-widest uppercase text-primary-foreground/75">
                 {isDemo ? t("dashboard.demo_mode") : t("dashboard.personal_mode")}
               </p>
             </div>
           </div>
-          <button onClick={onClose} className="p-2 rounded-full hover:bg-primary-foreground/10 text-primary-foreground cursor-pointer" title={t("dashboard.back_to_site")}>
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-2">
+            {/* Mobile Dropdown Menu Toggle (Visible below md: breakpoint) */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="flex md:hidden p-2 rounded-full hover:bg-primary-foreground/10 text-primary-foreground cursor-pointer transition-colors"
+              aria-label="Toggle Menu"
+            >
+              <Menu className="w-4 h-4" />
+            </button>
+            <button onClick={onClose} className="p-2 rounded-full hover:bg-primary-foreground/10 text-primary-foreground cursor-pointer transition-colors" title={t("dashboard.back_to_site")}>
+              <X className="w-4 h-4 md:w-5 md:h-5" />
+            </button>
+          </div>
         </div>
 
-        <nav className="flex-1 space-y-2">
+        {/* Desktop Vertical Menu (Hidden on mobile) */}
+        <nav className="hidden md:flex flex-col px-8 flex-1 space-y-2">
           {[
             { id: "overview", icon: TrendingDown, label: t("dashboard.tab.overview") },
             { id: "tree", icon: TreePine, label: t("dashboard.tab.tree") },
@@ -385,7 +399,7 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
           ))}
         </nav>
 
-        <div className="pt-6 border-t border-primary-foreground/10 space-y-4">
+        <div className="hidden md:flex p-8 border-t border-primary-foreground/10 flex-col space-y-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center font-bold text-accent">
               {certificateName.charAt(0).toUpperCase()}
@@ -408,10 +422,87 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
             <LogOut className="w-3.5 h-3.5" /> {isDemo ? t("dashboard.exit_preview") : t("dashboard.sign_out")}
           </button>
         </div>
+
+        {/* Premium Mobile Glassmorphic Dropdown Menu */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -15, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -15, scale: 0.95 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              className="absolute top-[105%] left-4 right-4 p-6 rounded-[2rem] border border-primary-foreground/10 bg-primary/95 backdrop-blur-xl shadow-strong flex flex-col gap-6 md:hidden z-40 text-left text-primary-foreground"
+            >
+              {/* Navigation Links */}
+              <div className="flex flex-col gap-4 border-b border-primary-foreground/15 pb-4">
+                {[
+                  { id: "overview", icon: TrendingDown, label: t("dashboard.tab.overview") },
+                  { id: "tree", icon: TreePine, label: t("dashboard.tab.tree") },
+                  { id: "certificate", icon: Award, label: t("dashboard.tab.cert") },
+                  { id: "wallet", icon: Wallet, label: t("dashboard.tab.wallet") },
+                  { id: "account", icon: UserRound, label: t("dashboard.tab.account") }
+                ].map((item) => (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      if (item.id === "account") {
+                        onClose();
+                        navigate("/account");
+                      } else {
+                        setActiveTab(item.id as "overview" | "tree" | "certificate" | "wallet");
+                      }
+                    }}
+                    className={`flex items-center gap-3 py-1.5 font-mono text-xs uppercase tracking-widest font-bold text-left cursor-pointer transition-colors ${
+                      activeTab === item.id ? "text-accent" : "text-primary-foreground/80 hover:text-accent"
+                    }`}
+                  >
+                    <item.icon className="w-4.5 h-4.5 shrink-0" />
+                    <span>{item.label}</span>
+                  </button>
+                ))}
+              </div>
+
+              {/* Citizen Card & Actions */}
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-accent/20 flex items-center justify-center font-bold text-accent">
+                    {certificateName.charAt(0).toUpperCase()}
+                  </div>
+                  <div>
+                    <p className="text-xs font-serif font-bold leading-tight">{certificateName}</p>
+                    <p className="text-[9px] font-mono opacity-60">Citizen #{walletSuffix}</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3 pt-2">
+                  <button
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      onClose();
+                    }}
+                    className="flex items-center justify-center gap-2 rounded-xl bg-accent text-accent-foreground px-4 py-3 font-mono text-[9px] tracking-widest uppercase font-bold hover:bg-accent/80 transition-all cursor-pointer"
+                  >
+                    <ArrowUpRight className="w-3.5 h-3.5 shrink-0" /> {t("dashboard.back_to_site")}
+                  </button>
+                  <button
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      handleSignOut();
+                    }}
+                    className="flex items-center justify-center gap-2 rounded-xl border border-primary-foreground/20 px-4 py-3 font-mono text-[9px] tracking-widest uppercase font-bold hover:bg-red-500 hover:border-red-500 hover:text-white transition-all cursor-pointer"
+                  >
+                    <LogOut className="w-3.5 h-3.5 shrink-0" /> {isDemo ? t("dashboard.exit_preview") : t("dashboard.sign_out")}
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Main Panel Content */}
-      <div className="flex-1 overflow-y-auto p-8 md:p-16">
+      <div className="flex-1 overflow-y-auto p-5 sm:p-8 md:p-16">
         {loading ? (
           <div className="flex flex-col items-center justify-center h-full text-center space-y-4">
             <span className="w-12 h-12 rounded-full border-4 border-accent border-t-transparent animate-spin" />
@@ -498,6 +589,33 @@ export default function ImpactDashboard({ isOpen, onClose }: { isOpen: boolean; 
                       </div>
                     </motion.div>
                   </section>
+                </div>
+
+                {/* Mobile-only profile details and sign out actions */}
+                <div className="flex flex-col gap-4 p-6 rounded-3xl bg-card border border-border/50 md:hidden text-left mt-8">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center font-bold text-accent">
+                      {certificateName.charAt(0).toUpperCase()}
+                    </div>
+                    <div>
+                      <p className="text-xs font-serif font-bold leading-tight">{certificateName}</p>
+                      <p className="text-[9px] font-mono opacity-60">Citizen #{walletSuffix}</p>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3 pt-2">
+                    <button
+                      onClick={onClose}
+                      className="flex items-center justify-center gap-2 rounded-xl bg-accent text-accent-foreground px-4 py-3 font-mono text-[9px] tracking-widest uppercase font-bold hover:bg-accent/80 transition-all cursor-pointer"
+                    >
+                      <ArrowUpRight className="w-3.5 h-3.5 shrink-0" /> {t("dashboard.back_to_site")}
+                    </button>
+                    <button
+                      onClick={handleSignOut}
+                      className="flex items-center justify-center gap-2 rounded-xl border border-primary/20 px-4 py-3 font-mono text-[9px] tracking-widest uppercase font-bold hover:bg-red-500 hover:border-red-500 hover:text-white transition-all cursor-pointer"
+                    >
+                      <LogOut className="w-3.5 h-3.5 shrink-0" /> {isDemo ? t("dashboard.exit_preview") : t("dashboard.sign_out")}
+                    </button>
+                  </div>
                 </div>
               </motion.div>
             )}

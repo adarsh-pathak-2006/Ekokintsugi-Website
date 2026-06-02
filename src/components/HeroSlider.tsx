@@ -101,13 +101,13 @@ export default function HeroSlider() {
             <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/45 to-transparent transition-all duration-500" />
             <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-black/60 to-transparent transition-all duration-500" />
             
-            <div className="relative z-10 h-full flex flex-col justify-center px-8 md:px-24 max-w-3xl">
+            <div className="relative z-10 h-full flex flex-col justify-center px-6 sm:px-12 md:px-24 max-w-3xl">
               {/* Category tag */}
               <motion.div
                 initial={{ y: 15, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.2, duration: 0.5 }}
-                className="flex items-center gap-3 mb-6"
+                className="flex items-center gap-3 mb-4 md:mb-6"
               >
                 <div className="w-10 h-0.5 bg-accent" />
                 <span className="text-[10px] font-mono tracking-[0.4em] uppercase text-accent font-black">
@@ -120,7 +120,7 @@ export default function HeroSlider() {
                 initial={{ y: 25, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.3, duration: 0.6 }}
-                className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-white mb-6 leading-[1] md:leading-[0.95] tracking-tight transition-colors duration-500"
+                className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-serif font-bold text-white mb-4 md:mb-6 leading-[1.1] md:leading-[0.95] tracking-tight transition-colors duration-500"
               >
                 {slides[index].title.split(' ')[0]}<br />
                 <span className="text-accent italic font-normal">{slides[index].title.split(' ').slice(1).join(' ')}</span>
@@ -131,7 +131,7 @@ export default function HeroSlider() {
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.5 }}
-                className="text-base md:text-lg font-sans mb-10 max-w-lg leading-relaxed font-medium text-zinc-200 transition-colors duration-500"
+                className="text-sm sm:text-base md:text-lg font-sans mb-6 md:mb-10 max-w-lg leading-relaxed font-medium text-zinc-200 transition-colors duration-500 line-clamp-3 sm:line-clamp-none"
               >
                 {slides[index].description}
               </motion.p>
@@ -141,15 +141,15 @@ export default function HeroSlider() {
                 initial={{ y: 15, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.5, duration: 0.5 }}
-                className="flex items-center gap-6"
+                className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6"
               >
                 <button 
                   onClick={() => navigate('/products')}
-                  className="bg-accent text-accent-foreground px-10 py-4 rounded-full text-[10px] font-mono tracking-widest uppercase font-black hover:bg-white hover:text-black transition-all duration-300 hover:scale-105 shadow-xl cursor-pointer"
+                  className="bg-accent text-accent-foreground px-8 py-3.5 sm:px-10 sm:py-4 rounded-full text-[10px] font-mono tracking-widest uppercase font-black hover:bg-white hover:text-black transition-all duration-300 hover:scale-105 shadow-xl cursor-pointer w-fit"
                 >
                   {slides[index].actionText}
                 </button>
-                <div className="w-12 h-px bg-white/20 transition-colors duration-500" />
+                <div className="hidden sm:block w-12 h-px bg-white/20 transition-colors duration-500" />
                 <span className="text-[9px] font-mono tracking-widest uppercase font-bold flex items-center gap-2 text-zinc-400 transition-colors duration-500">
                   <Sparkles className="w-3.5 h-3.5 text-accent animate-pulse" /> {slides[index].tagline}
                 </span>
@@ -159,31 +159,31 @@ export default function HeroSlider() {
         </AnimatePresence>
 
         {/* Premium Sliding Navigation Arrows */}
-        <div className="absolute inset-y-0 left-4 right-4 flex items-center justify-between pointer-events-none z-20">
+        <div className="absolute inset-y-0 left-2 right-2 sm:left-4 sm:right-4 flex items-center justify-between pointer-events-none z-20">
           <button
             onClick={(e) => {
               e.stopPropagation();
               handlePrev();
             }}
-            className="pointer-events-auto p-3.5 rounded-full backdrop-blur-md border bg-black/25 border-white/10 text-white hover:bg-accent hover:text-accent-foreground hover:border-accent/40 hover:scale-110 transition-all duration-300 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 cursor-pointer shadow-lg"
+            className="pointer-events-auto p-2.5 sm:p-3.5 rounded-full backdrop-blur-md border bg-black/25 border-white/10 text-white hover:bg-accent hover:text-accent-foreground hover:border-accent/40 hover:scale-110 transition-all duration-300 opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 cursor-pointer shadow-lg"
             aria-label="Previous slide"
           >
-            <ChevronLeft className="w-5 h-5" />
+            <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
           <button
             onClick={(e) => {
               e.stopPropagation();
               handleNext();
             }}
-            className="pointer-events-auto p-3.5 rounded-full backdrop-blur-md border bg-black/25 border-white/10 text-white hover:bg-accent hover:text-accent-foreground hover:border-accent/40 hover:scale-110 transition-all duration-300 opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 cursor-pointer shadow-lg"
+            className="pointer-events-auto p-2.5 sm:p-3.5 rounded-full backdrop-blur-md border bg-black/25 border-white/10 text-white hover:bg-accent hover:text-accent-foreground hover:border-accent/40 hover:scale-110 transition-all duration-300 opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 cursor-pointer shadow-lg"
             aria-label="Next slide"
           >
-            <ChevronRight className="w-5 h-5" />
+            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
         </div>
 
         {/* Dynamic Horizontal Progress Bar Indicators */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-6 z-20">
+        <div className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3 sm:gap-6 z-20">
           {slides.map((_, i) => (
             <button
               key={i}
@@ -193,7 +193,7 @@ export default function HeroSlider() {
               }}
               className="group relative flex flex-col items-center cursor-pointer"
             >
-              <div className="w-16 h-1 rounded-full overflow-hidden mb-2 relative transition-colors duration-500 bg-white/20">
+              <div className="w-8 sm:w-16 h-1 rounded-full overflow-hidden mb-1.5 sm:mb-2 relative transition-colors duration-500 bg-white/20">
                 {i === index && (
                   <motion.div
                     key={`${index}-${isAutoplayPaused}`}
@@ -207,7 +207,7 @@ export default function HeroSlider() {
                   />
                 )}
               </div>
-              <span className={`text-[10px] font-mono tracking-wider font-bold transition-all duration-300 ${
+              <span className={`text-[9px] sm:text-[10px] font-mono tracking-wider font-bold transition-all duration-300 ${
                 i === index ? "text-accent" : "text-white/40 group-hover:text-white"
               }`}>
                 0{i + 1}

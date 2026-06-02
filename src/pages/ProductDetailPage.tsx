@@ -70,10 +70,10 @@ export default function ProductDetailPage() {
   const wasteVal = product.waste_factor ? parseFloat(String(product.waste_factor)) : 0;
 
   return (
-    <div className="py-20 min-h-screen bg-muted/10">
+    <div className="py-10 sm:py-20 min-h-screen bg-muted/10">
       <div className="max-w-7xl mx-auto px-6">
         {/* Breadcrumb */}
-        <div className="mb-10 flex flex-wrap items-center gap-3 text-[10px] font-mono tracking-[0.35em] uppercase">
+        <div className="mb-10 flex flex-wrap items-center gap-3 text-[10px] font-mono tracking-[0.35em] uppercase text-left">
           <Link to="/products" className="text-muted-foreground hover:text-accent transition-colors">
             {t("nav.products")}
           </Link>
@@ -84,13 +84,13 @@ export default function ProductDetailPage() {
         </div>
 
         {/* Product Split Grid */}
-        <section className="grid lg:grid-cols-[1fr_1.1fr] gap-12 lg:gap-16 items-start mb-24">
+        <section className="grid lg:grid-cols-[1fr_1.1fr] gap-8 lg:gap-16 items-start mb-16 md:mb-24">
           {/* Left Column: Image with Spring Zooms */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ type: "spring", stiffness: 350, damping: 25 }}
-            className="bg-card border border-border/50 rounded-[2.55rem] overflow-hidden shadow-soft group hover:border-accent/30 transition-colors"
+            className="bg-card border border-border/50 rounded-3xl sm:rounded-[2.55rem] overflow-hidden shadow-soft group hover:border-accent/30 transition-colors"
           >
             <div className="aspect-square bg-muted overflow-hidden relative">
               <motion.img
@@ -107,22 +107,22 @@ export default function ProductDetailPage() {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ type: "spring", stiffness: 350, damping: 25, delay: 0.1 }}
-            className="flex flex-col space-y-8"
+            className="flex flex-col space-y-6 sm:space-y-8 text-left"
           >
             <div>
               <span className="text-[10px] font-mono tracking-[0.35em] uppercase text-accent font-black block mb-3">
                 {product.category || t("detailpage.circular_collection")}
               </span>
-              <h1 className="text-4xl md:text-5xl font-serif text-primary font-bold mb-4">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif text-primary font-bold mb-4 leading-tight">
                 {product.name}
               </h1>
-              <p className="text-lg text-muted-foreground italic leading-relaxed">
+              <p className="text-base sm:text-lg text-muted-foreground italic leading-relaxed">
                 {product.description || product.desc || "A masterpiece of circular utility and traceable craftsmanship."}
               </p>
             </div>
 
             {/* Circular Sourcing Breakdown */}
-            <div className="bg-card border border-border/50 rounded-3xl p-6 shadow-sm flex gap-4">
+            <div className="bg-card border border-border/50 rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-sm flex gap-4">
               <ShieldCheck className="w-6 h-6 text-accent shrink-0 mt-1" />
               <div>
                 <h4 className="text-xs font-mono tracking-widest text-primary font-bold uppercase mb-2">
@@ -136,18 +136,18 @@ export default function ProductDetailPage() {
 
             {/* Circular Impact Panels */}
             <div className="grid sm:grid-cols-2 gap-4">
-              <div className="bg-muted/30 border border-border/50 p-5 rounded-2xl flex items-center gap-4">
-                <Leaf className="w-8 h-8 text-accent" />
+              <div className="bg-muted/30 border border-border/50 p-4 sm:p-5 rounded-2xl flex items-center gap-4">
+                <Leaf className="w-7 h-7 sm:w-8 sm:h-8 text-accent shrink-0" />
                 <div>
                   <p className="text-[9px] font-mono tracking-widest text-muted-foreground uppercase">{t("dashboard.stat.co2")}</p>
-                  <p className="text-xl font-serif font-bold text-primary">{co2Val.toFixed(1)} kg</p>
+                  <p className="text-lg sm:text-xl font-serif font-bold text-primary">{co2Val.toFixed(1)} kg</p>
                 </div>
               </div>
-              <div className="bg-muted/30 border border-border/50 p-5 rounded-2xl flex items-center gap-4">
-                <TreePine className="w-8 h-8 text-primary" />
+              <div className="bg-muted/30 border border-border/50 p-4 sm:p-5 rounded-2xl flex items-center gap-4">
+                <TreePine className="w-7 h-7 sm:w-8 sm:h-8 text-primary shrink-0" />
                 <div>
                   <p className="text-[9px] font-mono tracking-widest text-muted-foreground uppercase">{t("impactpage.metrics.waste").split(" ")[0]}</p>
-                  <p className="text-xl font-serif font-bold text-primary">{wasteVal.toFixed(1)} kg</p>
+                  <p className="text-lg sm:text-xl font-serif font-bold text-primary">{wasteVal.toFixed(1)} kg</p>
                 </div>
               </div>
             </div>

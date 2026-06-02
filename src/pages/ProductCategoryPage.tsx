@@ -131,25 +131,25 @@ export default function ProductCategoryPage() {
           <span className="text-accent font-bold">{category.shortTitle}</span>
         </div>
 
-        <section className="bg-card border border-border/50 rounded-[2.75rem] overflow-hidden shadow-soft mb-16">
+        <section className="bg-card border border-border/50 rounded-[2rem] sm:rounded-[2.75rem] overflow-hidden shadow-soft mb-16">
           <div className="grid lg:grid-cols-[1.15fr_1fr] items-stretch">
-            <div className="relative min-h-[22rem] lg:min-h-[28rem]">
+            <div className="relative min-h-[16rem] sm:min-h-[22rem] lg:min-h-[28rem]">
               <img
                 src={category.image}
                 alt={category.shortTitle}
                 className="w-full h-full object-cover"
                 style={{ objectPosition: category.imagePosition ?? "center" }}
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/35 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-primary/80 via-primary/35 to-transparent" />
             </div>
 
-            <div className="p-8 md:p-12 lg:p-14 flex flex-col justify-center">
-              <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-accent font-bold mb-4">
+            <div className="p-6 sm:p-10 md:p-12 lg:p-14 flex flex-col justify-center">
+              <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-accent font-bold mb-3 sm:mb-4">
                 {category.eyebrow}
               </p>
-              <h1 className="text-4xl md:text-6xl font-serif text-primary font-bold mb-6">{category.title}</h1>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-8">{category.description}</p>
-              <div className="flex flex-wrap gap-3">
+              <h1 className="text-3xl sm:text-4xl md:text-6xl font-serif text-primary font-bold mb-4 sm:mb-6">{category.title}</h1>
+              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-6 sm:mb-8">{category.description}</p>
+              <div className="flex flex-wrap gap-2.5 sm:gap-3">
                 {PRODUCT_CATEGORIES.map((itemRaw) => {
                   const item = getLocalizedCategory(itemRaw);
                   if (!item) return null;
@@ -162,7 +162,7 @@ export default function ProductCategoryPage() {
                     >
                       <Link
                         to={`/products/category/${item.slug}`}
-                        className={`rounded-full px-5 py-2.5 text-[10px] font-mono tracking-[0.28em] uppercase font-bold transition-all duration-300 block ${
+                        className={`rounded-full px-4 py-2 sm:px-5 sm:py-2.5 text-[9px] sm:text-[10px] font-mono tracking-[0.28em] uppercase font-bold transition-all duration-300 block ${
                           isActive
                             ? "bg-primary text-primary-foreground shadow-sm"
                             : "border border-border text-muted-foreground hover:border-accent hover:text-accent bg-card"

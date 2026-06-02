@@ -225,43 +225,43 @@ export default function AccountPage() {
   }
 
   return (
-    <div className="py-32 surface-gradient min-h-screen">
+    <div className="py-16 md:py-32 surface-gradient min-h-screen">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="max-w-7xl mx-auto px-6 space-y-20"
+        className="max-w-7xl mx-auto px-6 space-y-12 md:space-y-20"
       >
         
         {/* Page Header */}
-        <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 pb-8 border-b border-border/40">
-          <div className="space-y-4">
+        <header className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-6 lg:gap-8 pb-8 border-b border-border/40">
+          <div className="space-y-3 sm:space-y-4">
             <span className="section-badge">
               <span className="section-badge-label">Premium Member Portal</span>
             </span>
-            <h1 className="text-5xl md:text-7xl font-serif font-black text-primary tracking-tight">
+            <h1 className="text-3xl sm:text-5xl md:text-7xl font-serif font-black text-primary tracking-tight">
               My Circular Heritage
             </h1>
-            <p className="text-lg text-muted-foreground italic max-w-xl">
+            <p className="text-sm sm:text-base md:text-lg text-muted-foreground italic max-w-xl">
               Manage your ecological credentials, download certified ESG certificates, and review your circular purchase invoices.
             </p>
           </div>
           
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-3 bg-card border border-border px-6 py-3 rounded-full text-primary">
-              <UserRound className="w-5 h-5 text-accent" />
+          <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
+            <div className="flex items-center gap-3 bg-card border border-border px-4 py-2.5 sm:px-6 sm:py-3 rounded-full text-primary flex-grow sm:flex-grow-0">
+              <UserRound className="w-5 h-5 text-accent shrink-0" />
               <div className="text-left">
-                <p className="text-xs font-serif font-black leading-none">{displayName}</p>
+                <p className="text-xs sm:text-sm font-serif font-black leading-none">{displayName}</p>
                 <p className="text-[9px] font-mono opacity-60 mt-1">Citizen #{walletSuffix}</p>
               </div>
             </div>
             
             <button
               onClick={handleSignOutClick}
-              className="p-3.5 rounded-full border border-border/50 text-muted-foreground hover:text-red-500 hover:border-red-500/20 hover:bg-red-500/10 transition-all bg-card cursor-pointer shadow-sm"
+              className="p-3 sm:p-3.5 rounded-full border border-border/50 text-muted-foreground hover:text-red-500 hover:border-red-500/20 hover:bg-red-500/10 transition-all bg-card cursor-pointer shadow-sm shrink-0"
               title="Sign Out"
             >
-              <LogOut size={18} />
+              <LogOut size={16} />
             </button>
           </div>
         </header>
@@ -279,15 +279,15 @@ export default function AccountPage() {
         )}
 
         {!error && (
-          <div className="grid lg:grid-cols-3 gap-12">
+          <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
             
             {/* Left Hand: Orders Invoice History */}
-            <div className="lg:col-span-2 space-y-8">
-              <h2 className="text-3xl font-serif font-bold text-primary flex items-center gap-3">
-                <ShoppingBag className="text-accent w-7 h-7" /> Purchase Ledger
+            <div className="lg:col-span-2 space-y-6 sm:space-y-8">
+              <h2 className="text-2xl sm:text-3xl font-serif font-bold text-primary flex items-center gap-3">
+                <ShoppingBag className="text-accent w-6 h-6 sm:w-7 sm:h-7" /> Purchase Ledger
               </h2>
               
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 <AnimatePresence>
                   {orders.map((order, idx) => (
                     <motion.div
@@ -296,24 +296,24 @@ export default function AccountPage() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: idx * 0.05 }}
                       whileHover={{ y: -4 }}
-                      className="bg-card border border-border/80 p-8 rounded-[2rem] hover:border-accent/40 hover:shadow-soft transition-all duration-300 flex flex-col md:flex-row justify-between items-start md:items-center gap-6"
+                      className="bg-card border border-border/80 p-5 sm:p-8 rounded-[1.5rem] sm:rounded-[2rem] hover:border-accent/40 hover:shadow-soft transition-all duration-300 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-6"
                     >
-                      <div className="flex items-center gap-5">
-                        <div className="w-16 h-16 rounded-2xl bg-primary/5 border border-border/50 flex items-center justify-center font-bold text-accent text-xl relative overflow-hidden">
+                      <div className="flex items-center gap-4 sm:gap-5">
+                        <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-primary/5 border border-border/50 flex items-center justify-center font-bold text-accent text-lg sm:text-xl relative overflow-hidden shrink-0">
                           {order.product.image_url ? (
                             <img src={order.product.image_url} alt={order.product.name} className="absolute inset-0 w-full h-full object-cover" />
                           ) : (
-                            <ShoppingBag className="w-6 h-6" />
+                            <ShoppingBag className="w-5 h-5 sm:w-6 sm:h-6" />
                           )}
                         </div>
                         
-                        <div className="text-left space-y-1">
+                        <div className="text-left space-y-0.5 sm:space-y-1">
                           <span className="text-[9px] font-mono tracking-widest uppercase font-bold text-accent">
                             {order.product.category || "Circular Craft"}
                           </span>
-                          <h3 className="text-xl font-serif font-bold text-primary">{order.product.name}</h3>
-                          <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                            <span className="flex items-center gap-1.5">
+                          <h3 className="text-base sm:text-xl font-serif font-bold text-primary leading-tight">{order.product.name}</h3>
+                          <div className="flex items-center gap-2 sm:gap-3 text-xs text-muted-foreground">
+                            <span className="flex items-center gap-1">
                               <Calendar className="w-3.5 h-3.5" /> {new Date(order.created_at).toLocaleDateString()}
                             </span>
                             <span>•</span>
@@ -322,20 +322,20 @@ export default function AccountPage() {
                         </div>
                       </div>
                       
-                      <div className="flex md:flex-col items-baseline md:items-end justify-between w-full md:w-auto border-t md:border-t-0 border-border/50 pt-4 md:pt-0">
-                        <p className="text-2xl font-serif font-black text-primary">${order.total_price.toFixed(2)}</p>
+                      <div className="flex sm:flex-col items-baseline sm:items-end justify-between w-full sm:w-auto border-t sm:border-t-0 border-border/50 pt-3 sm:pt-0">
+                        <p className="text-xl sm:text-2xl font-serif font-black text-primary">${order.total_price.toFixed(2)}</p>
                         <p className="text-[9px] font-mono tracking-wider text-muted-foreground mt-0.5 font-bold uppercase">{order.id.toUpperCase()}</p>
                       </div>
                     </motion.div>
                   ))}
                   
                   {orders.length === 0 && (
-                    <div className="bg-card border border-border/60 p-16 rounded-[2.5rem] text-center space-y-6">
-                      <ShoppingBag className="w-12 h-12 text-muted-foreground/40 mx-auto" />
-                      <p className="text-muted-foreground italic">No purchases recorded on this circular credential yet.</p>
+                    <div className="bg-card border border-border/60 p-10 sm:p-16 rounded-[2rem] sm:rounded-[2.5rem] text-center space-y-4 sm:space-y-6">
+                      <ShoppingBag className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground/40 mx-auto" />
+                      <p className="text-sm sm:text-base text-muted-foreground italic">No purchases recorded on this circular credential yet.</p>
                       <button
                         onClick={() => navigate("/products")}
-                        className="bg-accent text-accent-foreground px-8 py-3 rounded-full text-[10px] font-mono tracking-widest uppercase font-black hover:bg-primary hover:text-primary-foreground transition-all duration-300 cursor-pointer"
+                        className="bg-accent text-accent-foreground px-6 py-2.5 sm:px-8 sm:py-3 rounded-full text-[10px] font-mono tracking-widest uppercase font-black hover:bg-primary hover:text-primary-foreground transition-all duration-300 cursor-pointer"
                       >
                         Explore Products
                       </button>
@@ -346,32 +346,32 @@ export default function AccountPage() {
             </div>
 
             {/* Right Hand: Carbon Wallet & Certificates */}
-            <div className="space-y-12">
+            <div className="space-y-8 sm:space-y-12">
               
               {/* Carbon Wallet Panel */}
-              <div className="space-y-6">
-                <h2 className="text-3xl font-serif font-bold text-primary flex items-center gap-3">
-                  <Wallet className="text-accent w-7 h-7" /> Carbon Wallet
+              <div className="space-y-4 sm:space-y-6">
+                <h2 className="text-2xl sm:text-3xl font-serif font-bold text-primary flex items-center gap-3">
+                  <Wallet className="text-accent w-6 h-6 sm:w-7 sm:h-7" /> Carbon Wallet
                 </h2>
                 
                 <motion.div 
                   whileHover={{ y: -6 }}
-                  className="bg-primary text-primary-foreground p-10 rounded-[2.5rem] shadow-strong relative overflow-hidden group hover:shadow-[0_24px_50px_-12px_rgba(0,0,0,0.3)] transition-all duration-300"
+                  className="bg-primary text-primary-foreground p-6 sm:p-10 rounded-[2rem] sm:rounded-[2.5rem] shadow-strong relative overflow-hidden group hover:shadow-[0_24px_50px_-12px_rgba(0,0,0,0.3)] transition-all duration-300"
                 >
                   <div className="absolute top-0 right-0 w-48 h-48 bg-accent/20 rounded-full blur-3xl -mr-24 -mt-24 transition-transform duration-700 group-hover:scale-125" />
                   
-                  <div className="relative z-10 flex justify-between items-start mb-12">
+                  <div className="relative z-10 flex justify-between items-start mb-8 sm:mb-12">
                     <div>
                       <p className="font-mono text-[9px] tracking-widest uppercase text-primary-foreground/80 mb-2">Available Balance</p>
                       <div className="flex items-baseline gap-1.5">
-                        <span className="text-5xl font-serif font-black tracking-tight">{stats.credits.toFixed(3)}</span>
+                        <span className="text-4xl sm:text-5xl font-serif font-black tracking-tight">{stats.credits.toFixed(3)}</span>
                         <span className="text-accent dark:text-primary-foreground font-black text-xs tracking-widest uppercase">CC</span>
                       </div>
                     </div>
-                    <Wallet className="w-8 h-8 opacity-40 text-accent" />
+                    <Wallet className="w-6 h-6 sm:w-8 sm:h-8 opacity-40 text-accent" />
                   </div>
 
-                  <div className="relative z-10 flex gap-3 border-t border-primary-foreground/15 pt-6 justify-between items-center">
+                  <div className="relative z-10 flex gap-3 border-t border-primary-foreground/15 pt-4 sm:pt-6 justify-between items-center">
                     <div>
                       <p className="text-[8px] font-mono tracking-widest uppercase text-primary-foreground/60 mb-1">Contract Address</p>
                       <p className="text-[10px] font-mono text-accent dark:text-primary-foreground">0x71C...9A23{walletSuffix}</p>
@@ -382,19 +382,19 @@ export default function AccountPage() {
               </div>
 
               {/* Verified ESG Certificate Panel */}
-              <div className="space-y-6">
-                <h2 className="text-3xl font-serif font-bold text-primary flex items-center gap-3">
-                  <Award className="text-accent w-7 h-7" /> Certificates
+              <div className="space-y-4 sm:space-y-6">
+                <h2 className="text-2xl sm:text-3xl font-serif font-bold text-primary flex items-center gap-3">
+                  <Award className="text-accent w-6 h-6 sm:w-7 sm:h-7" /> Certificates
                 </h2>
                 
                 {stats.totalCo2 > 0 ? (
                   <motion.div 
-                    whileHover={{ y: -6 }}
-                    className="bg-card border border-border/80 p-8 rounded-[2.5rem] shadow-soft group hover:border-accent/40 transition-all duration-300 space-y-6"
+                     whileHover={{ y: -6 }}
+                     className="bg-card border border-border/80 p-6 sm:p-8 rounded-[2rem] sm:rounded-[2.5rem] shadow-soft group hover:border-accent/40 transition-all duration-300 space-y-4 sm:space-y-6"
                   >
                     <div className="flex justify-between items-start">
-                      <div className="p-3 bg-primary/5 rounded-2xl text-primary group-hover:bg-accent group-hover:text-accent-foreground transition-all">
-                        <Award className="w-6 h-6" />
+                      <div className="p-2.5 sm:p-3 bg-primary/5 rounded-2xl text-primary group-hover:bg-accent group-hover:text-accent-foreground transition-all">
+                        <Award className="w-5 h-5 sm:w-6 sm:h-6" />
                       </div>
                       <span className="flex items-center gap-1.5 text-[9px] font-mono text-emerald-600 bg-emerald-500/10 px-3 py-1 rounded-full font-bold">
                         <Leaf className="w-3 h-3" /> VERIFIED ESG
@@ -402,7 +402,7 @@ export default function AccountPage() {
                     </div>
 
                     <div className="text-left space-y-2">
-                      <h3 className="text-xl font-serif font-bold text-primary">Stewardship Certificate</h3>
+                      <h3 className="text-lg sm:text-xl font-serif font-bold text-primary">Stewardship Certificate</h3>
                       <p className="text-xs text-muted-foreground leading-relaxed">
                         Acknowledging the verified diversion of <strong className="text-primary">{stats.totalCo2.toFixed(1)} kg CO2</strong> emissions and <strong className="text-primary">{stats.totalWaste.toFixed(1)} kg</strong> landfill waste.
                       </p>
@@ -416,8 +416,8 @@ export default function AccountPage() {
                     </button>
                   </motion.div>
                 ) : (
-                  <div className="bg-card border border-border/60 p-8 rounded-[2rem] text-center space-y-4">
-                    <Award className="w-8 h-8 text-muted-foreground/30 mx-auto" />
+                  <div className="bg-card border border-border/60 p-6 sm:p-8 rounded-[1.5rem] sm:rounded-[2rem] text-center space-y-4">
+                    <Award className="w-6 h-6 sm:w-8 sm:h-8 text-muted-foreground/30 mx-auto" />
                     <p className="text-xs text-muted-foreground italic leading-relaxed">
                       Complete checkout purchases to verify carbon offsets and generate certificates.
                     </p>

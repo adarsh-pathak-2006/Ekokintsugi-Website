@@ -8,23 +8,23 @@ export default function Footer() {
   const { t } = useLanguage();
 
   return (
-    <footer className="py-20 bg-card border-t border-border">
+    <footer className="py-12 sm:py-20 bg-card border-t border-border text-left">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="grid md:grid-cols-4 gap-12 mb-16">
-          <div className="md:col-span-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12 mb-12 sm:mb-16">
+          <div className="sm:col-span-2">
             <div className="mb-6">
-              <span className="logo-surface">
-                <img src="/logo_eko.png" alt="EkoKintsugi Logo" className="h-14 w-auto" />
+              <span className="logo-surface inline-block">
+                <img src="/logo_eko.png" alt="EkoKintsugi Logo" className="h-12 sm:h-14 w-auto" />
               </span>
             </div>
-            <p className="text-muted-foreground text-lg max-w-sm leading-relaxed">
+            <p className="text-muted-foreground text-base sm:text-lg max-w-sm leading-relaxed">
               {t("footer.tagline")}
             </p>
           </div>
 
           <div>
-            <h4 className="font-serif text-primary text-xl font-bold mb-6">{t("footer.quick_links")}</h4>
-            <ul className="space-y-4">
+            <h4 className="font-serif text-primary text-lg sm:text-xl font-bold mb-4 sm:mb-6">{t("footer.quick_links")}</h4>
+            <ul className="space-y-3 sm:space-y-4">
               {[
                 { name: t("nav.home"), path: "/" },
                 { name: t("nav.about"), path: "/about" },
@@ -36,7 +36,7 @@ export default function Footer() {
                 <li key={link.name}>
                   <Link
                     to={link.path}
-                    className="text-muted-foreground hover:text-accent transition-colors font-medium cursor-pointer"
+                    className="text-sm sm:text-base text-muted-foreground hover:text-accent transition-colors font-medium cursor-pointer"
                   >
                     {link.name}
                   </Link>
@@ -46,8 +46,8 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="font-serif text-primary text-xl font-bold mb-6">{t("footer.products")}</h4>
-            <ul className="space-y-4">
+            <h4 className="font-serif text-primary text-lg sm:text-xl font-bold mb-4 sm:mb-6">{t("footer.products")}</h4>
+            <ul className="space-y-3 sm:space-y-4">
               {[...PRODUCT_CATEGORIES, { slug: "", shortTitle: t("footer.view_all_products") }].map((product) => (
                 <li key={product.slug || product.shortTitle}>
                   <button
@@ -58,7 +58,7 @@ export default function Footer() {
                         navigate("/products");
                       }
                     }}
-                    className="text-muted-foreground hover:text-accent transition-colors text-left cursor-pointer"
+                    className="text-sm sm:text-base text-muted-foreground hover:text-accent transition-colors text-left cursor-pointer"
                   >
                     {product.shortTitle}
                   </button>
@@ -68,9 +68,9 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-border/50">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
-            <p className="text-sm text-muted-foreground">Copyright {currentYear} EkoKintsugi LLP. {t("footer.copyright")}</p>
+        <div className="pt-8 border-t border-border/50 text-center sm:text-left">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-6">
+            <p className="text-xs sm:text-sm text-muted-foreground">Copyright {currentYear} EkoKintsugi LLP. {t("footer.copyright")}</p>
             <div className="flex gap-8">
               <Link to="/" className="text-sm text-muted-foreground hover:text-accent transition-colors font-medium">
                 {t("footer.privacy")}
