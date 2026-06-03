@@ -151,17 +151,18 @@ export default function ProductsPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   whileHover={{ y: -8, scale: 1.015 }} transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                  className="group bg-card border border-border/60 rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden shadow-soft hover:border-accent/40 hover:shadow-strong transition-all duration-300 cursor-pointer"
+                  className="group bg-card border border-border/60 rounded-[2rem] sm:rounded-[2.5rem] overflow-hidden shadow-soft lg:hover:border-accent/30 hover:border-accent/40 hover:shadow-strong transition-all duration-300 cursor-pointer"
                 >
                   <div className="grid sm:grid-cols-[1fr_1.1fr] md:grid-cols-[1.05fr_1.2fr] h-full">
-                    <div className="relative min-h-60 sm:min-h-72 overflow-hidden">
+                    <div className="relative min-h-60 sm:min-h-72 md:min-h-0 md:aspect-square overflow-hidden">
                       <img
                         src={category.image}
                         alt={category.shortTitle}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108"
+                        className="w-full h-full object-cover transition-transform duration-700 lg:group-hover:scale-105 group-hover:scale-108"
                         style={{ objectPosition: category.imagePosition ?? "center" }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-primary/10 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent pointer-events-none md:block hidden" />
                       <div className="absolute left-6 bottom-6 right-6">
                         <p className="text-[10px] font-mono tracking-[0.35em] uppercase text-accent font-bold mb-2">
                           {category.eyebrow}

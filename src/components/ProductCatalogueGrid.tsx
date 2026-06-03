@@ -61,15 +61,16 @@ export default function ProductCatalogueGrid({
           animate={{ opacity: 1, y: 0 }}
           whileHover={{ y: -8, scale: 1.015 }}
           transition={{ type: "spring", stiffness: 400, damping: 25, delay: idx * 0.05 }}
-          className="bg-card border border-border/50 rounded-[2rem] overflow-hidden group hover:border-accent/40 shadow-soft hover:shadow-strong transition-all duration-300 flex flex-col cursor-pointer"
+          className="bg-card border border-border/50 rounded-[2rem] overflow-hidden group lg:hover:border-accent/30 hover:border-accent/40 shadow-soft hover:shadow-strong transition-all duration-300 flex flex-col cursor-pointer"
         >
           <Link to={`/products/item/${item.id}`} className="flex flex-col h-full hover:no-underline">
             <div className="aspect-square bg-muted overflow-hidden relative">
               <img
                 src={item.image_url || item.image || "/logo_eko.png"}
                 alt={item.name}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108"
+                className="w-full h-full object-cover transition-transform duration-700 lg:group-hover:scale-105 group-hover:scale-108"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent pointer-events-none lg:block hidden" />
             </div>
 
             <div className="p-6 flex-grow flex flex-col">

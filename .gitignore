@@ -32,4 +32,10 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
-Ekokintsugi- Products_categorywise
+email_outbox_logs.txt
+product_images_contact_sheet.jpg
+WEBSITE_CHANGES_README.md
+
+# Local dev databases & scripts
+server_db.json
+query_db.ts

@@ -32,9 +32,9 @@ export default function ProductSection() {
               transition={{ delay: idx * 0.1 }}
               whileHover={{ y: -5 }}
               onClick={() => navigate(`/products/category/${category.slug}`)}
-              className="group bg-card border border-primary-foreground/5 rounded-3xl sm:rounded-[2.5rem] overflow-hidden shadow-strong transition-all cursor-pointer flex flex-col md:flex-row h-full text-left"
+              className="group bg-card border border-primary-foreground/5 rounded-3xl sm:rounded-[2.5rem] overflow-hidden shadow-strong transition-all cursor-pointer flex flex-col md:flex-row h-full text-left lg:hover:border-accent/30"
             >
-              <div className="w-full md:w-2/5 h-48 sm:h-56 md:h-auto overflow-hidden relative shrink-0 flex items-center justify-center bg-muted/10">
+              <div className="w-full md:w-2/5 h-48 sm:h-56 md:h-auto md:aspect-square overflow-hidden relative shrink-0 flex items-center justify-center bg-muted/10">
                 {/* Premium scaled & blurred backdrop to prevent stripping off the product */}
                 <img
                   src={category.image}
@@ -44,9 +44,11 @@ export default function ProductSection() {
                 <img
                   src={category.image}
                   alt={category.shortTitle}
-                  className="relative z-10 max-w-full max-h-full object-contain p-4 sm:p-6 transition-transform duration-1000 group-hover:scale-105"
+                  className="relative z-10 max-w-full max-h-full object-contain p-4 sm:p-6 transition-transform duration-700 group-hover:scale-105"
+                  style={{ objectPosition: category.imagePosition ?? "center" }}
                 />
                 <div className="absolute inset-0 bg-primary/5 group-hover:bg-transparent transition-colors duration-500 z-20 pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent pointer-events-none md:block hidden z-20" />
               </div>
 
               <div className="p-6 sm:p-8 md:p-10 flex flex-col flex-grow justify-center">
