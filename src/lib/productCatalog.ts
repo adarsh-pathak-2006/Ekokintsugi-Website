@@ -23,24 +23,24 @@ export interface ProductCategory {
 
 export const PRODUCT_CATEGORIES: ProductCategory[] = [
   {
-    slug: "belts",
-    title: "Leather Belt Products",
-    shortTitle: "Belts",
-    eyebrow: "Zero-Waste Cinch",
-    description: "Earthy leather belts made from circular patchwork strips.",
-    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/BELTS/1.png",
-    categoryLabels: ["belts", "belt"],
-    queryTerms: ["belt", "belts"]
+    slug: "mens-footwear",
+    title: "Men's Footwear Products",
+    shortTitle: "Men's Footwear",
+    eyebrow: "Performance Line",
+    description: "Athletic-inspired sneakers with circular leather panels, comfort-driven construction, and everyday versatility.",
+    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/MEN_S%20FOOTWEAR/1.png",
+    categoryLabels: ["men's footwear", "mens footwear", "men footwear"],
+    queryTerms: ["men", "men's", "mens", "sneaker", "sneakers", "runner", "trainer"]
   },
   {
-    slug: "clutches",
-    title: "Clutch Products",
-    shortTitle: "Clutches",
-    eyebrow: "Refined Wraps",
-    description: "Refined evening clutches and daytime card wraps.",
-    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/CLUTCHES/1.png",
-    categoryLabels: ["clutches", "clutch"],
-    queryTerms: ["clutch", "clutches"]
+    slug: "womens-footwear",
+    title: "Women's Footwear Products",
+    shortTitle: "Women's Footwear",
+    eyebrow: "Floral Flats",
+    description: "Ballet flats finished with floral patchwork uppers, softer palettes, and lightweight comfort for everyday dressing.",
+    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/WOMEN_S%20FOOTWEAR/1.png",
+    categoryLabels: ["women's footwear", "womens footwear", "women footwear"],
+    queryTerms: ["women", "women's", "womens", "flats", "ballet flats", "ballerina", "floral flats", "loafer"]
   },
   {
     slug: "handbag-collections",
@@ -53,26 +53,6 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     queryTerms: ["tote", "shoulder bag", "hobo", "handbag", "satchel", "bag", "bags"]
   },
   {
-    slug: "jackets",
-    title: "Leather Jacket Products",
-    shortTitle: "Jackets",
-    eyebrow: "Circular Tailoring",
-    description: "Collectible circular patchwork jackets celebrating absolute zero-waste tailoring.",
-    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/JACKETS/1.png",
-    categoryLabels: ["jackets", "jacket"],
-    queryTerms: ["jacket", "jackets", "bomber", "rider", "blazer", "crop jacket", "parka", "vest"]
-  },
-  {
-    slug: "keychains",
-    title: "Keychains & Small Goods",
-    shortTitle: "Keychains",
-    eyebrow: "Small Tokens",
-    description: "Charming mini accessories built from precise material offcuts.",
-    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/KEYCHAINS/1.png",
-    categoryLabels: ["keychains", "keychain", "accessories", "accessory"],
-    queryTerms: ["keychain", "keychains", "luggage tag", "charm", "fob"]
-  },
-  {
     slug: "laptop-bags",
     title: "Laptop Bags & Sleeves",
     shortTitle: "Laptop Bags",
@@ -83,14 +63,24 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     queryTerms: ["laptop", "briefcase", "portfolio", "folio", "sleeve"]
   },
   {
-    slug: "mens-footwear",
-    title: "Men's Footwear Products",
-    shortTitle: "Men's Footwear",
-    eyebrow: "Performance Line",
-    description: "Athletic-inspired sneakers with circular leather panels, comfort-driven construction, and everyday versatility.",
-    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/MEN_S%20FOOTWEAR/1.png",
-    categoryLabels: ["men's footwear", "mens footwear", "men footwear"],
-    queryTerms: ["men", "men's", "mens", "sneaker", "sneakers", "runner", "trainer"]
+    slug: "jackets",
+    title: "Leather Jacket Products",
+    shortTitle: "Jackets",
+    eyebrow: "Circular Tailoring",
+    description: "Collectible circular patchwork jackets celebrating absolute zero-waste tailoring.",
+    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/JACKETS/1.png",
+    categoryLabels: ["jackets", "jacket"],
+    queryTerms: ["jacket", "jackets", "bomber", "rider", "blazer", "crop jacket", "parka", "vest"]
+  },
+  {
+    slug: "belts",
+    title: "Leather Belt Products",
+    shortTitle: "Belts",
+    eyebrow: "Zero-Waste Cinch",
+    description: "Earthy leather belts made from circular patchwork strips.",
+    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/BELTS/1.png",
+    categoryLabels: ["belts", "belt"],
+    queryTerms: ["belt", "belts"]
   },
   {
     slug: "wallets",
@@ -103,14 +93,14 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     queryTerms: ["wallet", "wallets", "cardholder", "cardholders", "passport", "passport holder", "bifold", "billfold"]
   },
   {
-    slug: "womens-footwear",
-    title: "Women's Footwear Products",
-    shortTitle: "Women's Footwear",
-    eyebrow: "Floral Flats",
-    description: "Ballet flats finished with floral patchwork uppers, softer palettes, and lightweight comfort for everyday dressing.",
-    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/WOMEN_S%20FOOTWEAR/1.png",
-    categoryLabels: ["women's footwear", "womens footwear", "women footwear"],
-    queryTerms: ["women", "women's", "womens", "flats", "ballet flats", "ballerina", "floral flats", "loafer"]
+    slug: "accessories",
+    title: "Accessories & Small Goods",
+    shortTitle: "Accessories",
+    eyebrow: "Artisanal Accents",
+    description: "Refined evening clutches, card wraps, keychains, and small goods built from precise material offcuts.",
+    image: "https://adykwrunnuwgwmbzfsxj.supabase.co/storage/v1/object/public/product-images/Ekokintsugi-Products_categorywise/CLUTCHES/1.png",
+    categoryLabels: ["accessories", "accessory", "clutches", "clutch", "keychains", "keychain", "accessories & small goods"],
+    queryTerms: ["accessory", "accessories", "clutch", "clutches", "keychain", "keychains", "luggage tag", "charm", "fob"]
   }
 ];
 

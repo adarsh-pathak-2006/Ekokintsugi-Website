@@ -39,14 +39,14 @@ const productsList = [
   { name: "Carbon Zero Belt", category: "Belts", description: "Elegant midnight black double-ply offcut leather.", base_price: 50, co2_factor: 1.2, waste_factor: 0.15, rel_path: "BELTS/6.png" },
   { name: "Desert Hue Belt", category: "Belts", description: "Warm sand-toned nubuck and grain leather composite.", base_price: 58, co2_factor: 1.6, waste_factor: 0.20, rel_path: "BELTS/7.png" },
 
-  // 2. Clutches
-  { name: "Evening Mosaic Clutch", category: "Clutches", description: "Radiant geometric clutch with high-contrast triangular panels.", base_price: 84, co2_factor: 2.8, waste_factor: 0.45, rel_path: "CLUTCHES/1.png" },
-  { name: "Terra Fold Clutch", category: "Clutches", description: "Elegant envelope fold style in soft ochre and tan leather.", base_price: 88, co2_factor: 3.0, waste_factor: 0.48, rel_path: "CLUTCHES/2.png" },
-  { name: "Graphite Zip Wrap", category: "Clutches", description: "Modern charcoal zip-top clutch with dynamic hand-stitched detailing.", base_price: 82, co2_factor: 2.7, waste_factor: 0.42, rel_path: "CLUTCHES/3.png" },
-  { name: "Emerald Wristlet", category: "Clutches", description: "Forest green mosaic wristlet with detachable organic cotton strap.", base_price: 86, co2_factor: 2.9, waste_factor: 0.46, rel_path: "CLUTCHES/4.png" },
-  { name: "Pebbled Sienna Clutch", category: "Clutches", description: "Textured chestnut brown clutch with soft brass hardware.", base_price: 90, co2_factor: 3.1, waste_factor: 0.50, rel_path: "CLUTCHES/5.png" },
-  { name: "Zero Waste Shell Wrap", category: "Clutches", description: "Sleek asymmetric flap clutch in contrasting cream and tan.", base_price: 92, co2_factor: 3.2, waste_factor: 0.52, rel_path: "CLUTCHES/6.png" },
-  { name: "Orchid Bloom Clutch", category: "Clutches", description: "Delicate dusty pink and sand floral patchwork clutch.", base_price: 94, co2_factor: 3.3, waste_factor: 0.54, rel_path: "CLUTCHES/7.png" },
+  // 2. Accessories (formerly Clutches & Keychains)
+  { name: "Evening Mosaic Clutch", category: "Accessories", description: "Radiant geometric clutch with high-contrast triangular panels.", base_price: 84, co2_factor: 2.8, waste_factor: 0.45, rel_path: "CLUTCHES/1.png" },
+  { name: "Terra Fold Clutch", category: "Accessories", description: "Elegant envelope fold style in soft ochre and tan leather.", base_price: 88, co2_factor: 3.0, waste_factor: 0.48, rel_path: "CLUTCHES/2.png" },
+  { name: "Graphite Zip Wrap", category: "Accessories", description: "Modern charcoal zip-top clutch with dynamic hand-stitched detailing.", base_price: 82, co2_factor: 2.7, waste_factor: 0.42, rel_path: "CLUTCHES/3.png" },
+  { name: "Emerald Wristlet", category: "Accessories", description: "Forest green mosaic wristlet with detachable organic cotton strap.", base_price: 86, co2_factor: 2.9, waste_factor: 0.46, rel_path: "CLUTCHES/4.png" },
+  { name: "Pebbled Sienna Clutch", category: "Accessories", description: "Textured chestnut brown clutch with soft brass hardware.", base_price: 90, co2_factor: 3.1, waste_factor: 0.50, rel_path: "CLUTCHES/5.png" },
+  { name: "Zero Waste Shell Wrap", category: "Accessories", description: "Sleek asymmetric flap clutch in contrasting cream and tan.", base_price: 92, co2_factor: 3.2, waste_factor: 0.52, rel_path: "CLUTCHES/6.png" },
+  { name: "Orchid Bloom Clutch", category: "Accessories", description: "Delicate dusty pink and sand floral patchwork clutch.", base_price: 94, co2_factor: 3.3, waste_factor: 0.54, rel_path: "CLUTCHES/7.png" },
 
   // 3. Handbag Collections
   { name: "Signature Mosaic Tote", category: "Handbag Collections", description: "Spacious daily tote featuring a beautiful front panel of dynamic leather tiles.", base_price: 142, co2_factor: 4.8, waste_factor: 1.1, rel_path: "HANDBAG COLLECTIONS/1.png" },
@@ -66,14 +66,14 @@ const productsList = [
   { name: "Stark Carbon Blazer", category: "Jackets", description: "Architectural single-breasted blazer in textured matte black.", base_price: 340, co2_factor: 11.0, waste_factor: 2.6, rel_path: "JACKETS/6.png" },
   { name: "Desert Nomad Parka", category: "Jackets", description: "Hooded luxury parka featuring mixed texture cream and stone panels.", base_price: 330, co2_factor: 10.8, waste_factor: 2.5, rel_path: "JACKETS/7.png" },
 
-  // 5. Keychains
-  { name: "Braid Loop Keychain", category: "Keychains", description: "Beautiful braided leather lanyard with circular brass key loop.", base_price: 18, co2_factor: 0.2, waste_factor: 0.04, rel_path: "KEYCHAINS/1.png" },
-  { name: "Hex Tassel Fob", category: "Keychains", description: "Geometric hexagon tile with hanging soft leather tassels.", base_price: 22, co2_factor: 0.25, waste_factor: 0.05, rel_path: "KEYCHAINS/2.png" },
-  { name: "Mini Sneaker Charm", category: "Keychains", description: "Adorable miniature sneaker replica made entirely from microscopic offcuts.", base_price: 26, co2_factor: 0.3, waste_factor: 0.06, rel_path: "KEYCHAINS/3.png" },
-  { name: "Agra Emblem Tag", category: "Keychains", description: "Embossed tree-motif circular tag in warm chestnut brown.", base_price: 20, co2_factor: 0.22, waste_factor: 0.04, rel_path: "KEYCHAINS/4.png" },
-  { name: "Forest Leaf Charm", category: "Keychains", description: "Hand-cut stylized leaf shape in vibrant olive green leather.", base_price: 19, co2_factor: 0.21, waste_factor: 0.04, rel_path: "KEYCHAINS/5.png" },
-  { name: "Stark Loop Fob", category: "Keychains", description: "Sleek matte black leather strap with gunmetal black ring.", base_price: 16, co2_factor: 0.18, waste_factor: 0.03, rel_path: "KEYCHAINS/6.png" },
-  { name: "Dune Trio Charm", category: "Keychains", description: "Stacked three-tone leather pebbles on a reinforced steel cord.", base_price: 24, co2_factor: 0.28, waste_factor: 0.05, rel_path: "KEYCHAINS/7.png" },
+  // 5. Accessories (Keychains subset)
+  { name: "Braid Loop Keychain", category: "Accessories", description: "Beautiful braided leather lanyard with circular brass key loop.", base_price: 18, co2_factor: 0.2, waste_factor: 0.04, rel_path: "KEYCHAINS/1.png" },
+  { name: "Hex Tassel Fob", category: "Accessories", description: "Geometric hexagon tile with hanging soft leather tassels.", base_price: 22, co2_factor: 0.25, waste_factor: 0.05, rel_path: "KEYCHAINS/2.png" },
+  { name: "Mini Sneaker Charm", category: "Accessories", description: "Adorable miniature sneaker replica made entirely from microscopic offcuts.", base_price: 26, co2_factor: 0.3, waste_factor: 0.06, rel_path: "KEYCHAINS/3.png" },
+  { name: "Agra Emblem Tag", category: "Accessories", description: "Embossed tree-motif circular tag in warm chestnut brown.", base_price: 20, co2_factor: 0.22, waste_factor: 0.04, rel_path: "KEYCHAINS/4.png" },
+  { name: "Forest Leaf Charm", category: "Accessories", description: "Hand-cut stylized leaf shape in vibrant olive green leather.", base_price: 19, co2_factor: 0.21, waste_factor: 0.04, rel_path: "KEYCHAINS/5.png" },
+  { name: "Stark Loop Fob", category: "Accessories", description: "Sleek matte black leather strap with gunmetal black ring.", base_price: 16, co2_factor: 0.18, waste_factor: 0.03, rel_path: "KEYCHAINS/6.png" },
+  { name: "Dune Trio Charm", category: "Accessories", description: "Stacked three-tone leather pebbles on a reinforced steel cord.", base_price: 24, co2_factor: 0.28, waste_factor: 0.05, rel_path: "KEYCHAINS/7.png" },
 
   // 6. Laptop Bags
   { name: "Commuter Laptop Sleeve", category: "Laptop Bags", description: "Slim envelope sleeve with magnetic closure for 14-inch laptops.", base_price: 68, co2_factor: 2.2, waste_factor: 0.35, rel_path: "LAPTOP BAGS/1.png" },

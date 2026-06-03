@@ -23,13 +23,13 @@ export default function ProductCategoryPage() {
           eyebrow: t("category.belts.eyebrow"),
           description: t("category.belts.desc")
         };
-      case "clutches":
+      case "accessories":
         return {
           ...category,
-          title: t("category.clutches.title"),
-          shortTitle: t("category.clutches.short"),
-          eyebrow: t("category.clutches.eyebrow"),
-          description: t("category.clutches.desc")
+          title: t("category.accessories.title"),
+          shortTitle: t("category.accessories.short"),
+          eyebrow: t("category.accessories.eyebrow"),
+          description: t("category.accessories.desc")
         };
       case "handbag-collections":
         return {
@@ -47,14 +47,7 @@ export default function ProductCategoryPage() {
           eyebrow: t("category.jackets.eyebrow"),
           description: t("category.jackets.desc")
         };
-      case "keychains":
-        return {
-          ...category,
-          title: t("category.keychains.title"),
-          shortTitle: t("category.keychains.short"),
-          eyebrow: t("category.keychains.eyebrow"),
-          description: t("category.keychains.desc")
-        };
+
       case "laptop-bags":
         return {
           ...category,
